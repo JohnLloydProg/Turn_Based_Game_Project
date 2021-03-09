@@ -1,0 +1,124 @@
+{"frames": {
+
+"Skeleton Boss 0.png":
+{
+	"frame": {"x":0,"y":0,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 1.png":
+{
+	"frame": {"x":410,"y":0,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 2.png":
+{
+	"frame": {"x":820,"y":0,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 3.png":
+{
+	"frame": {"x":0,"y":350,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 4.png":
+{
+	"frame": {"x":410,"y":350,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 5.png":
+{
+	"frame": {"x":820,"y":350,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 6.png":
+{
+	"frame": {"x":0,"y":700,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 7.png":
+{
+	"frame": {"x":410,"y":700,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 8.png":
+{
+	"frame": {"x":820,"y":700,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 9.png":
+{
+	"frame": {"x":0,"y":1050,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}``
+},
+"Skeleton Boss 10.png":
+{
+	"frame": {"x":410,"y":1050,"w":410,"h":350},
+	"rotated": false,``
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 11.png":
+{
+	"frame": {"x":820,"y":1050,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 12.png":
+{
+	"frame": {"x":0,"y":1400,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+},
+"Skeleton Boss 13.png":
+{
+	"frame": {"x":0,"y":0,"w":410,"h":350},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":410,"h":350},
+	"sourceSize": {"w":410,"h":350}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "Idle Spritesheet.png",
+	"format": "RGBA8888",
+	"size": {"w":1230,"h":1750},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:bafaa24ba5c2e047155c1e1502845773:050629fcaee168f0aa5cf4b67afe3e82:814928b4568851ab288b1347d494892f$"
+}
+}
