@@ -1044,5 +1044,4 @@ def demo():
         pygame.display.update()
         Clock.tick(120)
 
-
 demo()
