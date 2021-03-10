@@ -187,10 +187,10 @@ SkeletonMage = Mage(7020, 549, 106, MageFrame)
 SkeletonBoss = Boss(11700, 725, 95, BossFrame)
 
 test1 = Boss(9224, 900, 100, BossFrame)
-test2 = Boss(9224, 900, 99, BossFrame)
+test2 = Spear(9224, 900, 99, SpearFrame)
 test3 = Boss(9224, 900, 98, BossFrame)
 test4 = Archer(9224, 900, 97, ArcherFrame)
-test5 = Archer(9224, 900, 96, ArcherFrame)
+test5 = Mage(9224, 900, 96, MageFrame)
 test6 = Archer(9224, 900, 95, ArcherFrame)
 
 
@@ -526,7 +526,7 @@ def demo():
     global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
     global turn
     running = True
-    combatants = [test1, False, test3, test4, False, test6]
+    combatants = [test1, test2, test3, test4, test5, test6]
 
     unit1attackbarbool = False
     unit2attackbarbool = False

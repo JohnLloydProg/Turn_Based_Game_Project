@@ -4,6 +4,7 @@ import pygame
 def loadtransimg(imgname):
     return pygame.image.load(imgname).convert_alpha()
 
+tickspeed = 16
 
 class Unit:
     def __init__(self, attack, hitpoints, speed, stillframe):
@@ -24,15 +25,17 @@ class Archer(Unit):
                                loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 7.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 8.png'),
                                loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 9.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 10.png'),
                                loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 11.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 12.png'),
-                               loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 13.png')]
+                               loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 13.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 13.png'),
+                               loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 13.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 13.png'),
+                               loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 13.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 13.png')]
         self.state = "idle"
         self.animation_counter = 0
 
     def update(self):
         if self.state == "idle":
-            if self.animation_counter == len(self.idle_animation)*6:
+            if self.animation_counter == len(self.idle_animation)*tickspeed:
                 self.animation_counter = 0
-            self.stillframe = self.idle_animation[self.animation_counter//6]
+            self.stillframe = self.idle_animation[self.animation_counter//tickspeed]
         self.animation_counter += 1
 
 
@@ -46,15 +49,17 @@ class Spear(Unit):
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton7.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton8.png'),
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton9.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton10.png'),
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton11.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton12.png'),
-                               loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png')]
+                               loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'),
+                               loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'),
+                               loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png')]
         self.state = "idle"
         self.animation_counter = 0
 
     def update(self):
         if self.state == "idle":
-            if self.animation_counter == len(self.idle_animation)*6:
+            if self.animation_counter == len(self.idle_animation)*tickspeed:
                 self.animation_counter = 0
-            self.stillframe = self.idle_animation[self.animation_counter//6]
+            self.stillframe = self.idle_animation[self.animation_counter//tickspeed]
         self.animation_counter += 1
 
 
@@ -68,15 +73,17 @@ class Mage(Unit):
                                loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export7.png'), loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export8.png'),
                                loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export9.png'), loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export10.png'),
                                loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export11.png'), loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export12.png'),
-                               loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export13.png')]
+                               loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export13.png'), loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export13.png'),
+                               loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export13.png'), loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export13.png'),
+                               loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export13.png'), loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export13.png')]
         self.state = "idle"
         self.animation_counter = 0
 
     def update(self):
         if self.state == "idle":
-            if self.animation_counter == len(self.idle_animation)*6:
+            if self.animation_counter == len(self.idle_animation)*tickspeed:
                 self.animation_counter = 0
-            self.stillframe = self.idle_animation[self.animation_counter//6]
+            self.stillframe = self.idle_animation[self.animation_counter//tickspeed]
         self.animation_counter += 1
 
 
@@ -90,13 +97,16 @@ class Boss(Unit):
                                loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss7.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss8.png'),
                                loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss9.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss10.png'),
                                loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss11.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss12.png'),
-                               loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss13.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss14.png')]
+                               loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss13.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss14.png'),
+                               loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss14.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss14.png'),
+                               loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss14.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss14.png'),
+                               loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss14.png')]
         self.state = "idle"
         self.animation_counter = 0
 
     def update(self):
         if self.state == "idle":
-            if self.animation_counter == len(self.idle_animation)*6:
+            if self.animation_counter == len(self.idle_animation)*tickspeed:
                 self.animation_counter = 0
-            self.stillframe = self.idle_animation[self.animation_counter//6]
+            self.stillframe = self.idle_animation[self.animation_counter//tickspeed]
         self.animation_counter += 1
