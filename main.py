@@ -530,6 +530,10 @@ rollforthree = random.randrange(3)
 turninit = False
 recieveinput = False
 
+coordx = screenx / 2
+coordy = screeny / 2
+
+
 
 def demo():
     global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
@@ -593,6 +597,7 @@ def demo():
             percentspeed = speedquotient * 100
             return percentspeed
 
+        global coordx, coordy
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -600,6 +605,34 @@ def demo():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     running = False
+
+                # if event.key == K_a:
+                #     coordx -= 5
+                #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
+                # if event.key == K_d:
+                #     coordx += 5
+                #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
+                # if event.key == K_w:
+                #     coordy -= 5
+                #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
+                # if event.key == K_s:
+                #     coordy += 5
+                #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
+                #
+                # if event.key == K_KP4:
+                #     coordx -= 50
+                #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
+                # if event.key == K_KP6:
+                #     coordx += 50
+                #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
+                # if event.key == K_KP8:
+                #     coordy -= 50
+                #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
+                # if event.key == K_KP2:
+                #     coordy += 50
+                #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
+
+
             if event.type == pygame.USEREVENT + 1:
                 if not turninit:
                     if combatants[0]:
@@ -615,69 +648,69 @@ def demo():
                     if combatants[5]:
                         unit6attackbar += speedpercentage(combatants[5].speed)
             if unit1attackbar >= 100:
-                print('unit 1 turn')
+
                 turninit = True
                 recieveinput = False
                 if not recieveinput:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_UP:
                             unit1attackbar = 0
-                            print('unit 1 turn end')
+
                             recieveinput = True
                             turninit = False
             elif unit2attackbar >= 100:
-                print('unit 2 turn')
+
                 turninit = True
                 recieveinput = False
                 if not recieveinput:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_UP:
                             unit2attackbar = 0
-                            print('unit 2 turn end')
+
                             recieveinput = True
                             turninit = False
             elif unit3attackbar >= 100:
-                print('unit 3 turn')
+
                 turninit = True
                 recieveinput = False
                 if not recieveinput:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_UP:
                             unit3attackbar = 0
-                            print('unit 3 turn end')
+
                             recieveinput = True
                             turninit = False
             elif unit4attackbar >= 100:
-                print('unit 4 turn')
+
                 turninit = True
                 recieveinput = False
                 if not recieveinput:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_UP:
                             unit4attackbar = 0
-                            print('unit 4 turn end')
+
                             recieveinput = True
                             turninit = False
             elif unit5attackbar >= 100:
-                print('unit 5 turn')
+
                 turninit = True
                 recieveinput = False
                 if not recieveinput:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_UP:
                             unit5attackbar = 0
-                            print('unit 5 turn end')
+
                             recieveinput = True
                             turninit = False
             elif unit6attackbar >= 100:
-                print('unit 6 turn')
+
                 turninit = True
                 recieveinput = False
                 if not recieveinput:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_UP:
                             unit6attackbar = 0
-                            print('unit 6 turn end')
+
                             recieveinput = True
                             turninit = False
 
@@ -806,7 +839,6 @@ def demo():
             global circleY
             global circleX
             global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar
-
             # combatantsspeedindex = []
             # combatantsspeed = []
             #
@@ -832,6 +864,8 @@ def demo():
 
             pygame.time.set_timer(pygame.USEREVENT + 1, 1)
 
+            # Turn Circle Positions
+
             top_left_3 = (358, 690)
             mid_left_3 = (194, 786)
             bot_left_3 = (44, 890)
@@ -850,6 +884,28 @@ def demo():
 
             mid_right_1 = (1480, 792)
 
+            # Unit Hud Positions
+            # HUD_mid_left_1 = (210, 792) + 30 -242
+
+            HUD_top_left_3 = (388, 448)
+            HUD_mid_left_3 = (224, 544)
+            HUD_bot_left_3 = (74, 648)
+
+            HUD_top_left_2 = (342, 498)
+            HUD_bot_left_2 = (120, 600)
+
+            HUD_mid_left_1 = (240, 550)
+
+            HUD_top_right_3 = (1310, 446)
+            HUD_mid_right_3 = (1458, 552)
+            HUD_bot_right_3 = (1610, 646)
+
+            HUD_top_right_2 = (1356, 500)
+            HUD_bot_right_2 = (1556, 600)
+
+            HUD_mid_right_1 = (1460, 550)
+
+
             if unit1attackbar >= 100:
                 turn = 0
             elif unit2attackbar >= 100:
@@ -865,6 +921,8 @@ def demo():
 
             else:
                 turn = None
+
+            # Defining unit positioning
 
             lefttwo = False
             leftsolomid = False
@@ -904,69 +962,7 @@ def demo():
             if combatants[3] != False and combatants[4] != False and combatants[5] != False:
                 rightthree = True
 
-            if rightsolomid == True and turn == 3:
-                screen.blit(turncircle, mid_right_1)
-            elif rightsolomid == True and turn == 4:
-                screen.blit(turncircle, mid_right_1)
-            elif rightsolomid == True and turn == 5:
-                screen.blit(turncircle, mid_right_1)
-
-            if righttwo == True and turn == 3 and combatants[5] == False:
-                screen.blit(turncircle, top_right_2)
-
-            elif righttwo == True and turn == 4 and combatants[5] == False:
-                screen.blit(turncircle, bot_right_2)
-
-            elif righttwo == True and turn == 5 and combatants[4] == False:
-                screen.blit(turncircle, bot_right_2)
-
-            elif righttwo == True and turn == 3 and combatants[4] == False:
-                screen.blit(turncircle, top_right_2)
-
-            elif righttwo == True and turn == 4 and combatants[3] == False:
-                screen.blit(turncircle, top_right_2)
-
-            elif righttwo == True and turn == 5 and combatants[3] == False:
-                screen.blit(turncircle, bot_right_2)
-
-            if rightthree == True and turn == 3:
-                screen.blit(turncircle, top_right_3)
-            elif rightthree == True and turn == 4:
-                screen.blit(turncircle, mid_right_3)
-            elif rightthree == True and turn == 5:
-                screen.blit(turncircle, bot_right_3)
-
-            if leftsolomid == True and turn == 0:
-                screen.blit(turncircle, mid_left_1)
-            elif leftsolomid == True and turn == 1:
-                screen.blit(turncircle, mid_left_1)
-            elif leftsolomid == True and turn == 2:
-                screen.blit(turncircle, mid_left_1)
-
-            if lefttwo == True and turn == 0 and combatants[2] == False:
-                screen.blit(turncircle, top_left_2)
-
-            elif lefttwo == True and turn == 1 and combatants[2] == False:
-                screen.blit(turncircle, bot_left_2)
-
-            elif lefttwo == True and turn == 2 and combatants[1] == False:
-                screen.blit(turncircle, bot_left_2)
-
-            elif lefttwo == True and turn == 0 and combatants[1] == False:
-                screen.blit(turncircle, top_left_2)
-
-            elif lefttwo == True and turn == 1 and combatants[0] == False:
-                screen.blit(turncircle, top_left_2)
-
-            elif lefttwo == True and turn == 2 and combatants[0] == False:
-                screen.blit(turncircle, bot_left_2)
-
-            if leftthree == True and turn == 0:
-                screen.blit(turncircle, top_left_3)
-            elif leftthree == True and turn == 1:
-                screen.blit(turncircle, mid_left_3)
-            elif leftthree == True and turn == 2:
-                screen.blit(turncircle, bot_left_3)
+            # Displaying turn circles
 
             if rightsolomid == True and turn == 3:
                 screen.blit(turncircle, mid_right_1)
@@ -1031,6 +1027,67 @@ def demo():
                 screen.blit(turncircle, mid_left_3)
             elif leftthree == True and turn == 2:
                 screen.blit(turncircle, bot_left_3)
+
+            # Displaying Unit Bars
+
+            if rightsolomid == True:
+                screen.blit(UnitHud, HUD_mid_right_1)
+            elif rightsolomid == True:
+                screen.blit(UnitHud, HUD_mid_right_1)
+            elif rightsolomid == True:
+                screen.blit(UnitHud, HUD_mid_right_1)
+
+            if righttwo == True and combatants[3] != False and combatants[5] == False:
+                screen.blit(UnitHud, HUD_top_right_2)
+
+            if righttwo == True and combatants[4] != False and combatants[5] == False:
+                screen.blit(UnitHud, HUD_bot_right_2)
+
+            if righttwo == True and combatants[5] != False and combatants[4] == False:
+                screen.blit(UnitHud, HUD_bot_right_2)
+
+            if righttwo == True and combatants[3] != False and combatants[4] == False:
+                screen.blit(UnitHud, HUD_top_right_2)
+
+            if righttwo == True and combatants[4] != False and combatants[3] == False:
+                screen.blit(UnitHud, HUD_top_right_2)
+
+            if righttwo == True and combatants[5] != False and combatants[3] == False:
+                screen.blit(UnitHud, HUD_bot_right_2)
+
+            if rightthree == True:
+                screen.blit(UnitHud, HUD_top_right_3)
+                screen.blit(UnitHud, HUD_mid_right_3)
+                screen.blit(UnitHud, HUD_bot_right_3)
+
+
+            if leftsolomid == True:
+                screen.blit(UnitHud, HUD_mid_left_1)
+
+
+            if lefttwo == True and combatants[0] != False and combatants[2] == False:
+                screen.blit(UnitHud, HUD_top_left_2)
+
+            if lefttwo == True and combatants[1] != False and combatants[2] == False:
+                screen.blit(UnitHud, HUD_bot_left_2)
+
+            if lefttwo == True and combatants[2] != False and combatants[1] == False:
+                screen.blit(UnitHud, HUD_bot_left_2)
+
+            if lefttwo == True and combatants[0] != False and combatants[1] == False:
+                screen.blit(UnitHud, HUD_top_left_2)
+
+            if lefttwo == True and combatants[1] != False and combatants[0] == False:
+                screen.blit(UnitHud, HUD_top_left_2)
+
+            if lefttwo == True and combatants[2] != False and combatants[0] == False:
+                screen.blit(UnitHud, HUD_bot_left_2)
+
+
+            if leftthree == True:
+                screen.blit(UnitHud, HUD_top_left_3)
+                screen.blit(UnitHud, HUD_mid_left_3)
+                screen.blit(UnitHud, HUD_bot_left_3)
 
         combat(combatants)
         combatimages(combatants)
@@ -1043,5 +1100,6 @@ def demo():
 
         pygame.display.update()
         Clock.tick(120)
+
 
 demo()
