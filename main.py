@@ -181,34 +181,14 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-
-SkeletonArcher1 = Archer(9224, 900, 103, ArcherFrame)
-SkeletonArcher2 = Archer(9224, 900, 103, ArcherFrame)
-SkeletonArcher3 = Archer(9224, 900, 103, ArcherFrame)
-SkeletonArcher4 = Archer(9224, 900, 103, ArcherFrame)
-SkeletonArcher5 = Archer(9224, 900, 103, ArcherFrame)
-SkeletonArcher6 = Archer(9224, 900, 103, ArcherFrame)
-
-SkeletonSpear1 = Spear(11040, 834, 105, SpearFrame)
 SkeletonSpear2 = Spear(11040, 834, 105, SpearFrame)
-SkeletonSpear3 = Spear(11040, 834, 105, SpearFrame)
-SkeletonSpear4 = Spear(11040, 834, 105, SpearFrame)
-SkeletonSpear5 = Spear(11040, 834, 105, SpearFrame)
-SkeletonSpear6 = Spear(11040, 834, 105, SpearFrame)
 
 SkeletonMage1 = Mage(7020, 549, 106, MageFrame)
 SkeletonMage2 = Mage(7020, 549, 106, MageFrame)
-SkeletonMage3 = Mage(7020, 549, 106, MageFrame)
-SkeletonMage4 = Mage(7020, 549, 106, MageFrame)
-SkeletonMage5 = Mage(7020, 549, 106, MageFrame)
-SkeletonMage6 = Mage(7020, 549, 106, MageFrame)
 
 SkeletonBoss1 = Boss(11700, 725, 95, BossFrame)
 SkeletonBoss2 = Boss(11700, 725, 95, BossFrame)
 SkeletonBoss3 = Boss(11700, 725, 95, BossFrame)
-SkeletonBoss4 = Boss(11700, 725, 95, BossFrame)
-SkeletonBoss5 = Boss(11700, 725, 95, BossFrame)
-SkeletonBoss6 = Boss(11700, 725, 95, BossFrame)
 
 
 
@@ -621,8 +601,8 @@ def demo():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
                     running = False
 
                 # if event.key == K_a:
@@ -651,51 +631,51 @@ def demo():
                 #     coordy += 50
                 #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
 
+
             if event.type == pygame.USEREVENT + 1:
                 if not turninit:
                     if combatants[0] and combatants[0].state != "dead":
                         unit1attackbar += speedpercentage(combatants[0].speed)
-                    if combatants[1]:
+                    if combatants[1] and combatants[1].state != "dead":
                         unit2attackbar += speedpercentage(combatants[1].speed)
-                    if combatants[2]:
+                    if combatants[2] and combatants[2].state != "dead":
                         unit3attackbar += speedpercentage(combatants[2].speed)
-                    if combatants[3]:
+                    if combatants[3] and combatants[3].state != "dead":
                         unit4attackbar += speedpercentage(combatants[3].speed)
-                    if combatants[4]:
+                    if combatants[4] and combatants[4].state != "dead":
                         unit5attackbar += speedpercentage(combatants[4].speed)
-                    if combatants[5]:
+                    if combatants[5] and combatants[5].state != "dead":
                         unit6attackbar += speedpercentage(combatants[5].speed)
-
             if unit1attackbar >= 100:
                 turninit = True
                 recieveinput = False
                 guis = combatants[0].moves
                 if not recieveinput:
-                    for gui in guis:
-                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        for gui in guis:
                             if gui.is_inside():
                                 unit1attackbar = 0
-                                print("Unit 1 Dealt damage: "+str(combatants[0].attack*gui.damage_multiplier))
+                                print("Unit 1 Dealt Damage: "+str(combatants[0].attack*gui.damage_multiplier))
                                 recieveinput = True
                                 turninit = False
                                 guis = []
-                        if event.type == pygame.KEYDOWN:
-                            if event.key == pygame.K_d:
-                                unit1attackbar = 0
-                                combatants[0].state = "dead"
-                                recieveinput = True
-                                turninit = False
-                                guis = []
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_d:
+                            unit1attackbar = 0
+                            combatants[0].state = "dead"
+                            recieveinput = True
+                            turninit = False
+                            guis = []
             elif unit2attackbar >= 100:
                 turninit = True
                 recieveinput = False
                 guis = combatants[1].moves
                 if not recieveinput:
-                    for gui in guis:
-                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        for gui in guis:
                             if gui.is_inside():
                                 unit2attackbar = 0
-                                print("Unit 2 Dealt damage: " + str(combatants[1].attack * gui.damage_multiplier))
+                                print("Unit 2 Dealt Damage: " + str(combatants[1].attack * gui.damage_multiplier))
                                 recieveinput = True
                                 turninit = False
                                 guis = []
@@ -704,11 +684,11 @@ def demo():
                 recieveinput = False
                 guis = combatants[2].moves
                 if not recieveinput:
-                    for gui in guis:
-                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        for gui in guis:
                             if gui.is_inside():
                                 unit3attackbar = 0
-                                print("Unit 3 Dealt damage: " + str(combatants[2].attack * gui.damage_multiplier))
+                                print("Unit 3 Dealt Damage: " + str(combatants[2].attack * gui.damage_multiplier))
                                 recieveinput = True
                                 turninit = False
                                 guis = []
@@ -862,34 +842,44 @@ def demo():
             # Displaying Unit Bars
 
             if rightsolomid == True:
-                screen.blit(UnitHud, HUD_mid_right_1)
-            elif rightsolomid == True:
-                screen.blit(UnitHud, HUD_mid_right_1)
-            elif rightsolomid == True:
-                screen.blit(UnitHud, HUD_mid_right_1)
+                if combatants[3] and combatants[3].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_right_1)
+                elif combatants[4] and combatants[4].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_right_1)
+                elif combatants[5] and combatants[5].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_right_1)
 
             if righttwo == True and combatants[3] != False and combatants[5] == False:
-                screen.blit(UnitHud, HUD_top_right_2)
+                if combatants[3].state != "dead":
+                    screen.blit(UnitHud, HUD_top_right_2)
 
             if righttwo == True and combatants[4] != False and combatants[5] == False:
-                screen.blit(UnitHud, HUD_bot_right_2)
+                if combatants[4].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_right_2)
 
             if righttwo == True and combatants[5] != False and combatants[4] == False:
-                screen.blit(UnitHud, HUD_bot_right_2)
+                if combatants[5].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_right_2)
 
             if righttwo == True and combatants[3] != False and combatants[4] == False:
-                screen.blit(UnitHud, HUD_top_right_2)
+                if combatants[3].state != "dead":
+                    screen.blit(UnitHud, HUD_top_right_2)
 
             if righttwo == True and combatants[4] != False and combatants[3] == False:
-                screen.blit(UnitHud, HUD_top_right_2)
+                if combatants[4].state != "dead":
+                    screen.blit(UnitHud, HUD_top_right_2)
 
             if righttwo == True and combatants[5] != False and combatants[3] == False:
-                screen.blit(UnitHud, HUD_bot_right_2)
+                if combatants[5].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_right_2)
 
             if rightthree == True:
-                screen.blit(UnitHud, HUD_top_right_3)
-                screen.blit(UnitHud, HUD_mid_right_3)
-                screen.blit(UnitHud, HUD_bot_right_3)
+                if combatants[3].state != "dead":
+                    screen.blit(UnitHud, HUD_top_right_3)
+                if combatants[4].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_right_3)
+                if combatants[5].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_right_3)
 
             if leftsolomid == True:
                 if combatants[0] and combatants[0].state != "dead":
@@ -916,7 +906,7 @@ def demo():
                     screen.blit(UnitHud, HUD_top_left_2)
 
             if lefttwo == True and combatants[1] != False and combatants[0] == False:
-                if combatants[1].state != "dead":
+                if  combatants[1].state != "dead":
                     screen.blit(UnitHud, HUD_top_left_2)
 
             if lefttwo == True and combatants[2] != False and combatants[0] == False:
@@ -1132,17 +1122,17 @@ def demo():
             if combatant:
                 if combatant.state == "idle":
                     combatant.idle()
-                if combatant.state == "dead":
+                elif combatant.state == "dead":
                     combatant.dead()
+
+        for gui in guis:
+            gui.draw(screen)
 
         combat(combatants)
         combatimages(combatants)
         mx, my = pygame.mouse.get_pos()
 
         # Mouse icon change
-
-        for gui in guis:
-            gui.draw(screen)
 
         pygame.mouse.set_visible(False)
         screen.blit(cursorimg, (pygame.mouse.get_pos()))
