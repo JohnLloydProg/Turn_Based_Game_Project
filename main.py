@@ -535,7 +535,7 @@ def demo():
     global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
     global turn
     running = True
-    combatants = [test1, test2, test3, test4, test5, test6]
+    combatants = [test1, False, test3, test4, test5, test6]
 
     unit1attackbarbool = False
     unit2attackbarbool = False
