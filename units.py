@@ -30,9 +30,9 @@ class Archer(Unit):
 
     def update(self):
         if self.state == "idle":
-            if self.animation_counter == len(self.idle_animation)*5:
+            if self.animation_counter == len(self.idle_animation)*6:
                 self.animation_counter = 0
-            self.stillframe = self.idle_animation[self.animation_counter//5]
+            self.stillframe = self.idle_animation[self.animation_counter//6]
         self.animation_counter += 1
 
 
@@ -52,9 +52,9 @@ class Spear(Unit):
 
     def update(self):
         if self.state == "idle":
-            if self.animation_counter == len(self.idle_animation)*5:
+            if self.animation_counter == len(self.idle_animation)*6:
                 self.animation_counter = 0
-            self.stillframe = self.idle_animation[self.animation_counter//5]
+            self.stillframe = self.idle_animation[self.animation_counter//6]
         self.animation_counter += 1
 
 
@@ -74,9 +74,9 @@ class Mage(Unit):
 
     def update(self):
         if self.state == "idle":
-            if self.animation_counter == len(self.idle_animation)*5:
+            if self.animation_counter == len(self.idle_animation)*6:
                 self.animation_counter = 0
-            self.stillframe = self.idle_animation[self.animation_counter//5]
+            self.stillframe = self.idle_animation[self.animation_counter//6]
         self.animation_counter += 1
 
 
@@ -96,7 +96,7 @@ class Boss(Unit):
 
     def update(self):
         if self.state == "idle":
-            if self.animation_counter == len(self.idle_animation)*5:
+            if self.animation_counter == len(self.idle_animation)*6:
                 self.animation_counter = 0
-            self.stillframe = self.idle_animation[self.animation_counter//5]
+            self.stillframe = self.idle_animation[self.animation_counter//6]
         self.animation_counter += 1
