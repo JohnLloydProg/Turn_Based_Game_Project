@@ -3,6 +3,7 @@ import json
 import os
 import random
 import sys
+from units import Unit, Archer, Mage, Spear, Boss
 
 import pygame
 from pygame.locals import *
@@ -180,31 +181,17 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-class Unit:
-    def __init__(self, attack, hitpoints, speed, stillframe):
-        self.attack = attack
-        self.hitpoints = hitpoints
-        self.speed = speed
-        self.stillframe = stillframe
-        if stillframe == BossFrame:
-            self.xpos = stillframe.get_width() / 2 - 60
-        else:
-            self.xpos = stillframe.get_width() / 2
+SkeletonArcher = Archer(9224, 900, 103, ArcherFrame)
+SkeletonSpear = Spear(11040, 834, 105, SpearFrame)
+SkeletonMage = Mage(7020, 549, 106, MageFrame)
+SkeletonBoss = Boss(11700, 725, 95, BossFrame)
 
-            self.ypos = stillframe.get_height() / 2
-
-
-SkeletonArcher = Unit(9224, 900, 103, ArcherFrame)
-SkeletonSpear = Unit(11040, 834, 105, SpearFrame)
-SkeletonMage = Unit(7020, 549, 106, MageFrame)
-SkeletonBoss = Unit(11700, 725, 95, BossFrame)
-
-test1 = Unit(9224, 900, 100, BossFrame)
-test2 = Unit(9224, 900, 99, BossFrame)
-test3 = Unit(9224, 900, 98, BossFrame)
-test4 = Unit(9224, 900, 97, ArcherFrame)
-test5 = Unit(9224, 900, 96, ArcherFrame)
-test6 = Unit(9224, 900, 95, ArcherFrame)
+test1 = Boss(9224, 900, 100, BossFrame)
+test2 = Boss(9224, 900, 99, BossFrame)
+test3 = Boss(9224, 900, 98, BossFrame)
+test4 = Archer(9224, 900, 97, ArcherFrame)
+test5 = Archer(9224, 900, 96, ArcherFrame)
+test6 = Archer(9224, 900, 95, ArcherFrame)
 
 
 def main_menu():
@@ -539,7 +526,7 @@ def demo():
     global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
     global turn
     running = True
-    combatants = [test1, test2, test3, test4, test5, test6]
+    combatants = [test1, False, test3, test4, False, test6]
 
     unit1attackbarbool = False
     unit2attackbarbool = False
