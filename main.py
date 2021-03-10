@@ -187,11 +187,11 @@ class Unit:
         self.speed = speed
         self.stillframe = stillframe
         if stillframe == BossFrame:
-            self.xpos = stillframe.get_width() / 2 + 50
+            self.xpos = stillframe.get_width() / 2 - 60
         else:
             self.xpos = stillframe.get_width() / 2
 
-        self.ypos = stillframe.get_height() / 2
+            self.ypos = stillframe.get_height() / 2
 
 
 SkeletonArcher = Unit(9224, 900, 103, ArcherFrame)
@@ -199,9 +199,9 @@ SkeletonSpear = Unit(11040, 834, 105, SpearFrame)
 SkeletonMage = Unit(7020, 549, 106, MageFrame)
 SkeletonBoss = Unit(11700, 725, 95, BossFrame)
 
-test1 = Unit(9224, 900, 100, ArcherFrame)
-test2 = Unit(9224, 900, 99, ArcherFrame)
-test3 = Unit(9224, 900, 98, ArcherFrame)
+test1 = Unit(9224, 900, 100, BossFrame)
+test2 = Unit(9224, 900, 99, BossFrame)
+test3 = Unit(9224, 900, 98, BossFrame)
 test4 = Unit(9224, 900, 97, ArcherFrame)
 test5 = Unit(9224, 900, 96, ArcherFrame)
 test6 = Unit(9224, 900, 95, ArcherFrame)
