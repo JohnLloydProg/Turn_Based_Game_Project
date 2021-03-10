@@ -181,17 +181,35 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-SkeletonArcher = Archer(9224, 900, 103, ArcherFrame)
-SkeletonSpear = Spear(11040, 834, 105, SpearFrame)
-SkeletonMage = Mage(7020, 549, 106, MageFrame)
-SkeletonBoss = Boss(11700, 725, 95, BossFrame)
 
-test1 = Boss(9224, 900, 100, BossFrame)
-test2 = Spear(9224, 900, 99, SpearFrame)
-test3 = Boss(9224, 900, 98, BossFrame)
-test4 = Archer(9224, 900, 97, ArcherFrame)
-test5 = Mage(9224, 900, 96, MageFrame)
-test6 = Archer(9224, 900, 95, ArcherFrame)
+SkeletonArcher1 = Archer(9224, 900, 103, ArcherFrame)
+SkeletonArcher2 = Archer(9224, 900, 103, ArcherFrame)
+SkeletonArcher3 = Archer(9224, 900, 103, ArcherFrame)
+SkeletonArcher4 = Archer(9224, 900, 103, ArcherFrame)
+SkeletonArcher5 = Archer(9224, 900, 103, ArcherFrame)
+SkeletonArcher6 = Archer(9224, 900, 103, ArcherFrame)
+
+SkeletonSpear1 = Spear(11040, 834, 105, SpearFrame)
+SkeletonSpear2 = Spear(11040, 834, 105, SpearFrame)
+SkeletonSpear3 = Spear(11040, 834, 105, SpearFrame)
+SkeletonSpear4 = Spear(11040, 834, 105, SpearFrame)
+SkeletonSpear5 = Spear(11040, 834, 105, SpearFrame)
+SkeletonSpear6 = Spear(11040, 834, 105, SpearFrame)
+
+SkeletonMage1 = Mage(7020, 549, 106, MageFrame)
+SkeletonMage2 = Mage(7020, 549, 106, MageFrame)
+SkeletonMage3 = Mage(7020, 549, 106, MageFrame)
+SkeletonMage4 = Mage(7020, 549, 106, MageFrame)
+SkeletonMage5 = Mage(7020, 549, 106, MageFrame)
+SkeletonMage6 = Mage(7020, 549, 106, MageFrame)
+
+SkeletonBoss1 = Boss(11700, 725, 95, BossFrame)
+SkeletonBoss2 = Boss(11700, 725, 95, BossFrame)
+SkeletonBoss3 = Boss(11700, 725, 95, BossFrame)
+SkeletonBoss4 = Boss(11700, 725, 95, BossFrame)
+SkeletonBoss5 = Boss(11700, 725, 95, BossFrame)
+SkeletonBoss6 = Boss(11700, 725, 95, BossFrame)
+
 
 
 def main_menu():
@@ -526,7 +544,20 @@ def demo():
     global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
     global turn
     running = True
-    combatants = [test1, test2, test3, test4, test5, test6]
+    combatants = [SkeletonBoss2, SkeletonBoss1, SkeletonSpear2, SkeletonMage1, SkeletonBoss3, SkeletonMage2]
+
+    allyteam = combatants[0:3]
+    enemyteam = combatants[3:6]
+
+    for combatant in combatants:
+        if combatant.stillframe == BossFrame and combatant in allyteam:
+            combatant.xpos = combatant.stillframe.get_width() / 2 - 60
+
+        if combatant.stillframe == BossFrame and combatant in enemyteam:
+            combatant.xpos = combatant.stillframe.get_width() / 2 + 60
+
+
+
 
     unit1attackbarbool = False
     unit2attackbarbool = False
@@ -905,8 +936,6 @@ def demo():
             #
             # turn = combatants[x]
 
-            allyteam = combatants[0:3]
-            enemyteam = combatants[3:6]
 
             # if turn in allyteam:
             #    allyturn = True

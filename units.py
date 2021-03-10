@@ -90,7 +90,7 @@ class Mage(Unit):
 class Boss(Unit):
     def __init__(self, attack, hitpoints, speed, stillframe):
         Unit.__init__(self, attack, hitpoints, speed, stillframe)
-        self.xpos = stillframe.get_width() / 2 - 60
+        self.xpos = stillframe.get_width() / 2
         self.idle_animation = [loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss1.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss2.png'),
                                loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss3.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss4.png'),
                                loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss5.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss6.png'),
