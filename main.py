@@ -1080,8 +1080,8 @@ def demo():
             if combatant:
                 combatant.update()
 
-        combat(combatants)
         combatimages(combatants)
+        combat(combatants)
         mx, my = pygame.mouse.get_pos()
 
         # Mouse icon change
