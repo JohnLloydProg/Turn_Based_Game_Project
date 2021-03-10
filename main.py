@@ -594,9 +594,6 @@ def demo():
 
     combatant_0_health_bar_max = combatants[0].hitpoints
 
-    currentHP = combatants[0].hitpoints
-    maxHP = combatants[0].hitpoints
-    int(max(min(currentHP / float(maxHP) * 200, ), 0))
 
 
 
