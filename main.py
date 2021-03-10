@@ -1076,6 +1076,10 @@ def demo():
                 screen.blit(UnitHud, HUD_mid_left_3)
                 screen.blit(UnitHud, HUD_bot_left_3)
 
+        for combatant in combatants:
+            if combatant:
+                combatant.update()
+
         combat(combatants)
         combatimages(combatants)
         mx, my = pygame.mouse.get_pos()
