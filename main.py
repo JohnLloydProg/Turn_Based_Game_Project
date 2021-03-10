@@ -820,12 +820,74 @@ def demo():
                 screen.blit(pygame.transform.flip(rightactorbot, True, False),
                             (screenx / 2 - list[5].xpos + 750, screeny / 2 + 100))
 
+            # Displaying Unit Bars
+
+            if rightsolomid == True:
+                screen.blit(UnitHud, HUD_mid_right_1)
+            elif rightsolomid == True:
+                screen.blit(UnitHud, HUD_mid_right_1)
+            elif rightsolomid == True:
+                screen.blit(UnitHud, HUD_mid_right_1)
+
+            if righttwo == True and combatants[3] != False and combatants[5] == False:
+                screen.blit(UnitHud, HUD_top_right_2)
+
+            if righttwo == True and combatants[4] != False and combatants[5] == False:
+                screen.blit(UnitHud, HUD_bot_right_2)
+
+            if righttwo == True and combatants[5] != False and combatants[4] == False:
+                screen.blit(UnitHud, HUD_bot_right_2)
+
+            if righttwo == True and combatants[3] != False and combatants[4] == False:
+                screen.blit(UnitHud, HUD_top_right_2)
+
+            if righttwo == True and combatants[4] != False and combatants[3] == False:
+                screen.blit(UnitHud, HUD_top_right_2)
+
+            if righttwo == True and combatants[5] != False and combatants[3] == False:
+                screen.blit(UnitHud, HUD_bot_right_2)
+
+            if rightthree == True:
+                screen.blit(UnitHud, HUD_top_right_3)
+                screen.blit(UnitHud, HUD_mid_right_3)
+                screen.blit(UnitHud, HUD_bot_right_3)
+
+            if leftsolomid == True:
+                screen.blit(UnitHud, HUD_mid_left_1)
+
+            if lefttwo == True and combatants[0] != False and combatants[2] == False:
+                screen.blit(UnitHud, HUD_top_left_2)
+
+            if lefttwo == True and combatants[1] != False and combatants[2] == False:
+                screen.blit(UnitHud, HUD_bot_left_2)
+
+            if lefttwo == True and combatants[2] != False and combatants[1] == False:
+                screen.blit(UnitHud, HUD_bot_left_2)
+
+            if lefttwo == True and combatants[0] != False and combatants[1] == False:
+                screen.blit(UnitHud, HUD_top_left_2)
+
+            if lefttwo == True and combatants[1] != False and combatants[0] == False:
+                screen.blit(UnitHud, HUD_top_left_2)
+
+            if lefttwo == True and combatants[2] != False and combatants[0] == False:
+                screen.blit(UnitHud, HUD_bot_left_2)
+
+            if leftthree == True:
+                screen.blit(UnitHud, HUD_top_left_3)
+                screen.blit(UnitHud, HUD_mid_left_3)
+                screen.blit(UnitHud, HUD_bot_left_3)
+
         def combat(lst):
             global turninit
             global recieveinput
             global circleY
             global circleX
             global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar
+            global leftsolomid, lefttwo, leftthree, rightsolomid, righttwo, rightthree
+            global HUD_top_left_3, HUD_mid_left_3, HUD_bot_left_3, HUD_top_right_3, HUD_mid_right_3, HUD_bot_right_3
+            global HUD_top_left_2, HUD_bot_left_2, HUD_top_right_2, HUD_bot_right_2
+            global HUD_mid_left_1, HUD_mid_right_1
             # combatantsspeedindex = []
             # combatantsspeed = []
             #
@@ -1015,73 +1077,12 @@ def demo():
             elif leftthree == True and turn == 2:
                 screen.blit(turncircle, bot_left_3)
 
-            # Displaying Unit Bars
-
-            if rightsolomid == True:
-                screen.blit(UnitHud, HUD_mid_right_1)
-            elif rightsolomid == True:
-                screen.blit(UnitHud, HUD_mid_right_1)
-            elif rightsolomid == True:
-                screen.blit(UnitHud, HUD_mid_right_1)
-
-            if righttwo == True and combatants[3] != False and combatants[5] == False:
-                screen.blit(UnitHud, HUD_top_right_2)
-
-            if righttwo == True and combatants[4] != False and combatants[5] == False:
-                screen.blit(UnitHud, HUD_bot_right_2)
-
-            if righttwo == True and combatants[5] != False and combatants[4] == False:
-                screen.blit(UnitHud, HUD_bot_right_2)
-
-            if righttwo == True and combatants[3] != False and combatants[4] == False:
-                screen.blit(UnitHud, HUD_top_right_2)
-
-            if righttwo == True and combatants[4] != False and combatants[3] == False:
-                screen.blit(UnitHud, HUD_top_right_2)
-
-            if righttwo == True and combatants[5] != False and combatants[3] == False:
-                screen.blit(UnitHud, HUD_bot_right_2)
-
-            if rightthree == True:
-                screen.blit(UnitHud, HUD_top_right_3)
-                screen.blit(UnitHud, HUD_mid_right_3)
-                screen.blit(UnitHud, HUD_bot_right_3)
-
-
-            if leftsolomid == True:
-                screen.blit(UnitHud, HUD_mid_left_1)
-
-
-            if lefttwo == True and combatants[0] != False and combatants[2] == False:
-                screen.blit(UnitHud, HUD_top_left_2)
-
-            if lefttwo == True and combatants[1] != False and combatants[2] == False:
-                screen.blit(UnitHud, HUD_bot_left_2)
-
-            if lefttwo == True and combatants[2] != False and combatants[1] == False:
-                screen.blit(UnitHud, HUD_bot_left_2)
-
-            if lefttwo == True and combatants[0] != False and combatants[1] == False:
-                screen.blit(UnitHud, HUD_top_left_2)
-
-            if lefttwo == True and combatants[1] != False and combatants[0] == False:
-                screen.blit(UnitHud, HUD_top_left_2)
-
-            if lefttwo == True and combatants[2] != False and combatants[0] == False:
-                screen.blit(UnitHud, HUD_bot_left_2)
-
-
-            if leftthree == True:
-                screen.blit(UnitHud, HUD_top_left_3)
-                screen.blit(UnitHud, HUD_mid_left_3)
-                screen.blit(UnitHud, HUD_bot_left_3)
-
         for combatant in combatants:
             if combatant:
                 combatant.update()
 
-        combatimages(combatants)
         combat(combatants)
+        combatimages(combatants)
         mx, my = pygame.mouse.get_pos()
 
         # Mouse icon change
