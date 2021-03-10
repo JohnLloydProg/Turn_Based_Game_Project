@@ -1,21 +1,19 @@
-# Ruben Smith
-
-
 # Setup Functions ------------------------------------- #
 import json
 import os
 import random
 import sys
+from units import Unit, Archer, Mage, Spear, Boss
+
 import pygame
 from pygame.locals import *
-from units import Archer, Mage, Spear, Boss
 
 # Setup pygame and window ------------------------------------- #
 pygame.init()
 click = False
 
 
-# use def loadtransimg if the image has transparent parts!!
+# loadimg and loadtransimg are better ways to load an image, use def loadtransimg if the image has transparent parts!!
 
 def loadimg(imgname) -> object:
     return pygame.image.load(imgname).convert()
@@ -100,53 +98,6 @@ BossFrame = loadtransimg('Still Frames test/Boss skeleton.png')
 
 UnitHud = loadtransimg('images/Empty unit gui.png')
 
-AttackBar0_0 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_0.png')
-AttackBar0_5 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_1.png')
-AttackBar5_10 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_2.png')
-AttackBar10_15 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_3.png')
-AttackBar15_20= loadtransimg('images/Unit Gui/AttackBars/AttackBar_4.png')
-AttackBar20_25 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_5.png')
-AttackBar25_30 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_6.png')
-AttackBar30_35 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_7.png')
-AttackBar35_40 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_8.png')
-AttackBar40_45 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_9.png')
-AttackBar45_50 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_10.png')
-AttackBar50_55 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_11.png')
-AttackBar55_60 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_12.png')
-AttackBar60_65 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_13.png')
-AttackBar65_70 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_14.png')
-AttackBar70_75 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_15.png')
-AttackBar75_80 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_16.png')
-AttackBar80_85 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_17.png')
-AttackBar85_90 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_18.png')
-AttackBar90_95 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_19.png')
-AttackBar95_100 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_20.png')
-
-HealthBar0_0 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_0.png')
-HealthBar0_5 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_1.png')
-HealthBar5_10 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_2.png')
-HealthBar10_15 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_3.png')
-HealthBar15_20= loadtransimg('images/Unit Gui/HealthBars/HealthBar_4.png')
-HealthBar20_25 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_5.png')
-HealthBar25_30 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_6.png')
-HealthBar30_35 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_7.png')
-HealthBar35_40 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_8.png')
-HealthBar40_45 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_9.png')
-HealthBar45_50 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_10.png')
-HealthBar50_55 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_11.png')
-HealthBar55_60 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_12.png')
-HealthBar60_65 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_13.png')
-HealthBar65_70 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_14.png')
-HealthBar70_75 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_15.png')
-HealthBar75_80 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_16.png')
-HealthBar80_85 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_17.png')
-HealthBar85_90 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_18.png')
-HealthBar90_95 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_19.png')
-HealthBar95_100 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_20.png')
-
-
-
-
 # Animated Menu Backround
 
 
@@ -230,33 +181,15 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-SkeletonArcher1 = Archer(9224, 900, 82, ArcherFrame)
-SkeletonArcher2 = Archer(9224, 900, 82, ArcherFrame)
-SkeletonArcher3 = Archer(9224, 900, 82, ArcherFrame)
-SkeletonArcher4 = Archer(9224, 900, 82, ArcherFrame)
-SkeletonArcher5 = Archer(9224, 900, 82, ArcherFrame)
-SkeletonArcher6 = Archer(9224, 900, 82, ArcherFrame)
-
-SkeletonSpear1 = Spear(11040, 834, 105, SpearFrame)
 SkeletonSpear2 = Spear(11040, 834, 105, SpearFrame)
-SkeletonSpear3 = Spear(11040, 834, 105, SpearFrame)
-SkeletonSpear4 = Spear(11040, 834, 105, SpearFrame)
-SkeletonSpear5 = Spear(11040, 834, 105, SpearFrame)
-SkeletonSpear6 = Spear(11040, 834, 105, SpearFrame)
 
-SkeletonMage1 = Mage(7020, 549, 73, MageFrame)
-SkeletonMage2 = Mage(7020, 549, 73, MageFrame)
-SkeletonMage3 = Mage(7020, 549, 73, MageFrame)
-SkeletonMage4 = Mage(7020, 549, 73, MageFrame)
-SkeletonMage5 = Mage(7020, 549, 73, MageFrame)
-SkeletonMage6 = Mage(7020, 549, 73, MageFrame)
+SkeletonMage1 = Mage(7020, 549, 106, MageFrame)
+SkeletonMage2 = Mage(7020, 549, 106, MageFrame)
 
-SkeletonBoss1 = Boss(11700, 725, 65, BossFrame)
-SkeletonBoss2 = Boss(11700, 725, 65, BossFrame)
-SkeletonBoss3 = Boss(11700, 725, 65, BossFrame)
-SkeletonBoss4 = Boss(11700, 725, 65, BossFrame)
-SkeletonBoss5 = Boss(11700, 725, 65, BossFrame)
-SkeletonBoss6 = Boss(11700, 725, 65, BossFrame)
+SkeletonBoss1 = Boss(11700, 725, 95, BossFrame)
+SkeletonBoss2 = Boss(11700, 725, 95, BossFrame)
+SkeletonBoss3 = Boss(11700, 725, 95, BossFrame)
+
 
 
 def main_menu():
@@ -586,16 +519,13 @@ coordx = screenx / 2
 coordy = screeny / 2
 
 
+
 def demo():
     global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
     global turn
     running = True
-    combatants = [SkeletonSpear1, SkeletonBoss1, SkeletonSpear2, SkeletonMage1, SkeletonBoss3, SkeletonMage2]
-
-    combatant_0_health_bar_max = combatants[0].hitpoints
-
-
-
+    combatants = [SkeletonBoss2, SkeletonBoss1, SkeletonSpear2, SkeletonMage1, SkeletonBoss3, SkeletonMage2]
+    guis = []
 
     allyteam = combatants[0:3]
     enemyteam = combatants[3:6]
@@ -606,6 +536,9 @@ def demo():
 
         if combatant.stillframe == BossFrame and combatant in enemyteam:
             combatant.xpos = combatant.stillframe.get_width() / 2 + 60
+
+
+
 
     unit1attackbarbool = False
     unit2attackbarbool = False
@@ -668,8 +601,8 @@ def demo():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
                     running = False
 
                 # if event.key == K_a:
@@ -698,84 +631,92 @@ def demo():
                 #     coordy += 50
                 #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
 
+
             if event.type == pygame.USEREVENT + 1:
                 if not turninit:
-                    if combatants[0]:
+                    if combatants[0] and combatants[0].state != "dead":
                         unit1attackbar += speedpercentage(combatants[0].speed)
-                    if combatants[1]:
+                    if combatants[1] and combatants[1].state != "dead":
                         unit2attackbar += speedpercentage(combatants[1].speed)
-                    if combatants[2]:
+                    if combatants[2] and combatants[2].state != "dead":
                         unit3attackbar += speedpercentage(combatants[2].speed)
-                    if combatants[3]:
+                    if combatants[3] and combatants[3].state != "dead":
                         unit4attackbar += speedpercentage(combatants[3].speed)
-                    if combatants[4]:
+                    if combatants[4] and combatants[4].state != "dead":
                         unit5attackbar += speedpercentage(combatants[4].speed)
-                    if combatants[5]:
+                    if combatants[5] and combatants[5].state != "dead":
                         unit6attackbar += speedpercentage(combatants[5].speed)
             if unit1attackbar >= 100:
-
                 turninit = True
                 recieveinput = False
+                guis = combatants[0].moves
                 if not recieveinput:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        for gui in guis:
+                            if gui.is_inside():
+                                unit1attackbar = 0
+                                print("Unit 1 Dealt Damage: "+str(combatants[0].attack*gui.damage_multiplier))
+                                recieveinput = True
+                                turninit = False
+                                guis = []
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_d:
                             unit1attackbar = 0
-
+                            combatants[0].state = "dead"
                             recieveinput = True
                             turninit = False
+                            guis = []
             elif unit2attackbar >= 100:
-
                 turninit = True
                 recieveinput = False
+                guis = combatants[1].moves
                 if not recieveinput:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
-                            unit2attackbar = 0
-
-                            recieveinput = True
-                            turninit = False
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        for gui in guis:
+                            if gui.is_inside():
+                                unit2attackbar = 0
+                                print("Unit 2 Dealt Damage: " + str(combatants[1].attack * gui.damage_multiplier))
+                                recieveinput = True
+                                turninit = False
+                                guis = []
             elif unit3attackbar >= 100:
-
                 turninit = True
                 recieveinput = False
+                guis = combatants[2].moves
                 if not recieveinput:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
-                            unit3attackbar = 0
-
-                            recieveinput = True
-                            turninit = False
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        for gui in guis:
+                            if gui.is_inside():
+                                unit3attackbar = 0
+                                print("Unit 3 Dealt Damage: " + str(combatants[2].attack * gui.damage_multiplier))
+                                recieveinput = True
+                                turninit = False
+                                guis = []
             elif unit4attackbar >= 100:
-
                 turninit = True
                 recieveinput = False
                 if not recieveinput:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_UP:
                             unit4attackbar = 0
-
                             recieveinput = True
                             turninit = False
             elif unit5attackbar >= 100:
-
                 turninit = True
                 recieveinput = False
                 if not recieveinput:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_UP:
                             unit5attackbar = 0
-
                             recieveinput = True
                             turninit = False
             elif unit6attackbar >= 100:
-
                 turninit = True
                 recieveinput = False
                 if not recieveinput:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_UP:
                             unit6attackbar = 0
-
                             recieveinput = True
                             turninit = False
 
@@ -901,60 +842,84 @@ def demo():
             # Displaying Unit Bars
 
             if rightsolomid == True:
-                screen.blit(UnitHud, HUD_mid_right_1)
-            elif rightsolomid == True:
-                screen.blit(UnitHud, HUD_mid_right_1)
-            elif rightsolomid == True:
-                screen.blit(UnitHud, HUD_mid_right_1)
+                if combatants[3] and combatants[3].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_right_1)
+                elif combatants[4] and combatants[4].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_right_1)
+                elif combatants[5] and combatants[5].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_right_1)
 
             if righttwo == True and combatants[3] != False and combatants[5] == False:
-                screen.blit(UnitHud, HUD_top_right_2)
+                if combatants[3].state != "dead":
+                    screen.blit(UnitHud, HUD_top_right_2)
 
             if righttwo == True and combatants[4] != False and combatants[5] == False:
-                screen.blit(UnitHud, HUD_bot_right_2)
+                if combatants[4].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_right_2)
 
             if righttwo == True and combatants[5] != False and combatants[4] == False:
-                screen.blit(UnitHud, HUD_bot_right_2)
+                if combatants[5].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_right_2)
 
             if righttwo == True and combatants[3] != False and combatants[4] == False:
-                screen.blit(UnitHud, HUD_top_right_2)
+                if combatants[3].state != "dead":
+                    screen.blit(UnitHud, HUD_top_right_2)
 
             if righttwo == True and combatants[4] != False and combatants[3] == False:
-                screen.blit(UnitHud, HUD_top_right_2)
+                if combatants[4].state != "dead":
+                    screen.blit(UnitHud, HUD_top_right_2)
 
             if righttwo == True and combatants[5] != False and combatants[3] == False:
-                screen.blit(UnitHud, HUD_bot_right_2)
+                if combatants[5].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_right_2)
 
             if rightthree == True:
-                screen.blit(UnitHud, HUD_top_right_3)
-                screen.blit(UnitHud, HUD_mid_right_3)
-                screen.blit(UnitHud, HUD_bot_right_3)
+                if combatants[3].state != "dead":
+                    screen.blit(UnitHud, HUD_top_right_3)
+                if combatants[4].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_right_3)
+                if combatants[5].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_right_3)
 
             if leftsolomid == True:
-                screen.blit(UnitHud, HUD_mid_left_1)
+                if combatants[0] and combatants[0].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_left_1)
+                elif combatants[1] and combatants[1].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_left_1)
+                elif combatants[2] and combatants[2].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_left_1)
 
             if lefttwo == True and combatants[0] != False and combatants[2] == False:
-                screen.blit(UnitHud, HUD_top_left_2)
+                if combatants[0].state != "dead":
+                    screen.blit(UnitHud, HUD_top_left_2)
 
             if lefttwo == True and combatants[1] != False and combatants[2] == False:
-                screen.blit(UnitHud, HUD_bot_left_2)
+                if combatants[1].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_left_2)
 
             if lefttwo == True and combatants[2] != False and combatants[1] == False:
-                screen.blit(UnitHud, HUD_bot_left_2)
+                if combatants[2].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_left_2)
 
             if lefttwo == True and combatants[0] != False and combatants[1] == False:
-                screen.blit(UnitHud, HUD_top_left_2)
+                if combatants[0].state != "dead":
+                    screen.blit(UnitHud, HUD_top_left_2)
 
             if lefttwo == True and combatants[1] != False and combatants[0] == False:
-                screen.blit(UnitHud, HUD_top_left_2)
+                if  combatants[1].state != "dead":
+                    screen.blit(UnitHud, HUD_top_left_2)
 
             if lefttwo == True and combatants[2] != False and combatants[0] == False:
-                screen.blit(UnitHud, HUD_bot_left_2)
+                if combatants[2].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_left_2)
 
             if leftthree == True:
-                screen.blit(UnitHud, HUD_top_left_3)
-                screen.blit(UnitHud, HUD_mid_left_3)
-                screen.blit(UnitHud, HUD_bot_left_3)
+                if combatants[0].state != "dead":
+                    screen.blit(UnitHud, HUD_top_left_3)
+                if combatants[1].state != "dead":
+                    screen.blit(UnitHud, HUD_mid_left_3)
+                if combatants[2].state != "dead":
+                    screen.blit(UnitHud, HUD_bot_left_3)
 
         def combat(lst):
             global turninit
@@ -982,6 +947,7 @@ def demo():
             # x = combatantsspeedindex[fastestinindexpos]
             #
             # turn = combatants[x]
+
 
             # if turn in allyteam:
             #    allyturn = True
@@ -1011,23 +977,24 @@ def demo():
             # Unit Hud Positions
             # HUD_mid_left_1 = (210, 792) + 30 -242
 
-            HUD_top_left_3 = (388 + 30, 448)
-            HUD_mid_left_3 = (224 + 30, 544)
-            HUD_bot_left_3 = (74 + 30, 648)
+            HUD_top_left_3 = (388, 448)
+            HUD_mid_left_3 = (224, 544)
+            HUD_bot_left_3 = (74, 648)
 
-            HUD_top_left_2 = (342 + 30, 498)
-            HUD_bot_left_2 = (120 + 30, 600)
+            HUD_top_left_2 = (342, 498)
+            HUD_bot_left_2 = (120, 600)
 
-            HUD_mid_left_1 = (240 + 30, 550)
+            HUD_mid_left_1 = (240, 550)
 
-            HUD_top_right_3 = (1310 + 30, 446)
-            HUD_mid_right_3 = (1458 + 30, 552)
-            HUD_bot_right_3 = (1610 + 30, 646)
+            HUD_top_right_3 = (1310, 446)
+            HUD_mid_right_3 = (1458, 552)
+            HUD_bot_right_3 = (1610, 646)
 
-            HUD_top_right_2 = (1356 + 30, 500)
-            HUD_bot_right_2 = (1556 + 30, 600)
+            HUD_top_right_2 = (1356, 500)
+            HUD_bot_right_2 = (1556, 600)
 
-            HUD_mid_right_1 = (1460 + 30, 550)
+            HUD_mid_right_1 = (1460, 550)
+
 
             if unit1attackbar >= 100:
                 turn = 0
@@ -1153,7 +1120,13 @@ def demo():
 
         for combatant in combatants:
             if combatant:
-                combatant.update()
+                if combatant.state == "idle":
+                    combatant.idle()
+                elif combatant.state == "dead":
+                    combatant.dead()
+
+        for gui in guis:
+            gui.draw(screen)
 
         combat(combatants)
         combatimages(combatants)
