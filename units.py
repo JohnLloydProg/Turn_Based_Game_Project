@@ -12,6 +12,7 @@ tickspeed = 16
 class Unit:
     def __init__(self, attack, hitpoints, speed, stillframe):
         self.attack = attack
+        self.base_attack = attack
         self.hitpoints = hitpoints
         self.full_health = hitpoints
         self.speed = speed
@@ -121,7 +122,7 @@ class Mage(Unit):
                                 loadtransimg('UnitAnimations/MageSkeleton/Death/Mage Skeleton-export36.png'),
                                 loadtransimg('UnitAnimations/MageSkeleton/Death/Mage Skeleton-export37.png'),
                                 loadtransimg('UnitAnimations/MageSkeleton/Death/Mage Skeleton-export38.png')]
-        self.moves = [moves.MageAttack(1800, 960, 100, 100, (255, 0, 255))]
+        self.moves = [moves.MageAttack(1800, 960, 100, 100, (255, 0, 255)), moves.MageBuff(1680, 960, 100, 100, (0, 255, 0))]
         
     def dead(self):
         if self.state == "dead":

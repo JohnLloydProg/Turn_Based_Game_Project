@@ -225,7 +225,7 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-unit1 = Archer(11040, 834, 105, ArcherFrame)
+unit1 = Mage(11040, 834, 105, MageFrame)
 unit2 = Boss(7020, 831, 107, BossFrame)
 unit3 = Archer(7020, 831, 110, ArcherFrame)
 unit4 = Archer(7020, 831, 109, ArcherFrame)
@@ -566,6 +566,9 @@ def demo():
     global turn
     running = True
     combatants = [unit1, unit2, unit3, unit4, unit5, unit6]
+    ally_turns = 0
+    enemy_turns = 0
+    buffs = []
     guis = []
 
     allyteam = combatants[0:3]
@@ -696,11 +699,20 @@ def demo():
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         for gui in guis:
                             if gui.is_inside():
+                                if gui.type == "attack":
+                                    print("Unit 1 Dealt Damage: " + str(combatants[0].attack * gui.damage_multiplier))
+                                elif gui.type == "buff":
+                                    for ally in allyteam:
+                                        if gui.stat_target == "attack":
+                                            ally.attack += ally.attack*gui.stat_increase
+                                            buffs.append(("allies", gui.stat_target, gui.stat_increase, ally_turns, gui.duration))
+                                            ally_turns -= 1
+                                    print(combatants[1].attack)
                                 unit1attackbar = 0
-                                print("Unit 1 Dealt Damage: "+str(combatants[0].attack*gui.damage_multiplier))
                                 recieveinput = True
                                 turninit = False
                                 guis = []
+                                ally_turns += 1
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_d:
                             combatants[0].animation_counter = 0
@@ -722,6 +734,7 @@ def demo():
                                 recieveinput = True
                                 turninit = False
                                 guis = []
+                                ally_turns += 1
             elif unit3attackbar >= 100:
                 turninit = True
                 recieveinput = False
@@ -735,6 +748,7 @@ def demo():
                                 recieveinput = True
                                 turninit = False
                                 guis = []
+                                ally_turns += 1
             elif unit4attackbar >= 100:
                 turninit = True
                 recieveinput = False
@@ -744,6 +758,7 @@ def demo():
                             unit4attackbar = 0
                             recieveinput = True
                             turninit = False
+                            enemy_turns += 1
             elif unit5attackbar >= 100:
                 turninit = True
                 recieveinput = False
@@ -753,6 +768,7 @@ def demo():
                             unit5attackbar = 0
                             recieveinput = True
                             turninit = False
+                            enemy_turns += 1
             elif unit6attackbar >= 100:
                 turninit = True
                 recieveinput = False
@@ -762,6 +778,7 @@ def demo():
                             unit6attackbar = 0
                             recieveinput = True
                             turninit = False
+                            enemy_turns += 1
 
         def combatimages(list):
 
@@ -1241,11 +1258,21 @@ def demo():
                 elif combatant.state == "dead":
                     combatant.dead()
 
-        for gui in guis:
-            gui.draw(screen)
+        # ("allies", gui.stat_target, gui.stat_increase, turns, gui.duration)
+        for buff in buffs:
+            if buff[0] == "allies":
+                if ally_turns - buff[3] == buff[4]:
+                    if buff[1] == "attack":
+                        for ally in allyteam:
+                            ally.attack = ally.base_attack
+                        buffs.remove(buff)
 
         combat(combatants)
         combatimages(combatants)
+
+        for gui in guis:
+            gui.draw(screen)
+
         mx, my = pygame.mouse.get_pos()
 
         # Mouse icon change
