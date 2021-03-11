@@ -19,6 +19,20 @@ class Unit:
         self.state = "idle"
         self.idle_animation = []
         self.animation_counter = 0
+        self.health_bar_images = [loadtransimg('images/Unit Gui/HealthBars/HealthBar_0.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_1.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_2.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_3.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_4.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_5.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_6.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_7.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_8.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_9.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_10.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_11.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_12.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_13.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_14.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_15.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_16.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_17.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_18.png'), loadtransimg('images/Unit Gui/HealthBars/HealthBar_19.png'),
+                                  loadtransimg('images/Unit Gui/HealthBars/HealthBar_20.png')]
+
+    def hud(self):
+        healt_bar = self.health_bar_images[0]
 
     def idle(self):
         if self.state == "idle":

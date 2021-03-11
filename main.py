@@ -225,10 +225,13 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-SkeletonSpear = Spear(11040, 834, 105, SpearFrame)
-SkeletonMage = Mage(7020, 831, 106, MageFrame)
-SkeletonBoss = Boss(11700, 925, 95, BossFrame)
-SkeletonArcher = Archer(8020, 712, 102, ArcherFrame)
+unit1 = Boss(11040, 834, 105, BossFrame)
+unit2 = Archer(7020, 831, 107, ArcherFrame)
+unit3 = Archer(7020, 831, 110, ArcherFrame)
+unit4 = Archer(7020, 831, 109, ArcherFrame)
+unit5 = Archer(7020, 831, 108, ArcherFrame)
+unit6 = Archer(7020, 831, 106, ArcherFrame)
+
 
 def main_menu():
     running = True
@@ -562,7 +565,7 @@ def demo():
     global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
     global turn
     running = True
-    combatants = [SkeletonBoss, SkeletonArcher, SkeletonArcher, SkeletonArcher, SkeletonArcher, SkeletonArcher]
+    combatants = [unit1, unit2, unit3, unit4, unit5, unit6]
     guis = []
 
     allyteam = combatants[0:3]
@@ -699,6 +702,7 @@ def demo():
                                 guis = []
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_d:
+                            combatants[0].animation_counter = 0
                             unit1attackbar = 0
                             combatants[0].state = "dead"
                             recieveinput = True
