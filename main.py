@@ -225,11 +225,11 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-unit1 = Boss(11040, 834, 105, BossFrame)
-unit2 = Archer(7020, 831, 107, ArcherFrame)
+unit1 = Archer(11040, 834, 105, ArcherFrame)
+unit2 = Boss(7020, 831, 107, BossFrame)
 unit3 = Archer(7020, 831, 110, ArcherFrame)
 unit4 = Archer(7020, 831, 109, ArcherFrame)
-unit5 = Archer(7020, 831, 108, ArcherFrame)
+unit5 = Mage(7020, 831, 108, MageFrame)
 unit6 = Archer(7020, 831, 106, ArcherFrame)
 
 
