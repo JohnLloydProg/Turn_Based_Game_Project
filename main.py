@@ -98,6 +98,50 @@ BossFrame = loadtransimg('Still Frames test/Boss skeleton.png')
 
 UnitHud = loadtransimg('images/Empty unit gui.png')
 
+AttackBar0_0 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_0.png')
+AttackBar0_5 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_1.png')
+AttackBar5_10 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_2.png')
+AttackBar10_15 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_3.png')
+AttackBar15_20= loadtransimg('images/Unit Gui/AttackBars/AttackBar_4.png')
+AttackBar20_25 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_5.png')
+AttackBar25_30 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_6.png')
+AttackBar30_35 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_7.png')
+AttackBar35_40 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_8.png')
+AttackBar40_45 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_9.png')
+AttackBar45_50 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_10.png')
+AttackBar50_55 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_11.png')
+AttackBar55_60 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_12.png')
+AttackBar60_65 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_13.png')
+AttackBar65_70 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_14.png')
+AttackBar70_75 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_15.png')
+AttackBar75_80 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_16.png')
+AttackBar80_85 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_17.png')
+AttackBar85_90 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_18.png')
+AttackBar90_95 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_19.png')
+AttackBar95_100 = loadtransimg('images/Unit Gui/AttackBars/AttackBar_20.png')
+
+HealthBar0_0 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_0.png')
+HealthBar0_5 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_1.png')
+HealthBar5_10 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_2.png')
+HealthBar10_15 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_3.png')
+HealthBar15_20= loadtransimg('images/Unit Gui/HealthBars/HealthBar_4.png')
+HealthBar20_25 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_5.png')
+HealthBar25_30 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_6.png')
+HealthBar30_35 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_7.png')
+HealthBar35_40 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_8.png')
+HealthBar40_45 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_9.png')
+HealthBar45_50 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_10.png')
+HealthBar50_55 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_11.png')
+HealthBar55_60 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_12.png')
+HealthBar60_65 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_13.png')
+HealthBar65_70 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_14.png')
+HealthBar70_75 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_15.png')
+HealthBar75_80 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_16.png')
+HealthBar80_85 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_17.png')
+HealthBar85_90 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_18.png')
+HealthBar90_95 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_19.png')
+HealthBar95_100 = loadtransimg('images/Unit Gui/HealthBars/HealthBar_20.png')
+
 # Animated Menu Backround
 
 
@@ -181,16 +225,10 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-SkeletonSpear2 = Spear(11040, 834, 105, SpearFrame)
-
-SkeletonMage1 = Mage(7020, 549, 106, MageFrame)
-SkeletonMage2 = Mage(7020, 549, 106, MageFrame)
-
-SkeletonBoss1 = Boss(11700, 725, 95, BossFrame)
-SkeletonBoss2 = Boss(11700, 725, 95, BossFrame)
-SkeletonBoss3 = Boss(11700, 725, 95, BossFrame)
-
-
+SkeletonSpear = Spear(11040, 834, 105, SpearFrame)
+SkeletonMage = Mage(7020, 831, 106, MageFrame)
+SkeletonBoss = Boss(11700, 925, 95, BossFrame)
+SkeletonArcher = Archer(8020, 712, 102, ArcherFrame)
 
 def main_menu():
     running = True
@@ -524,7 +562,7 @@ def demo():
     global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
     global turn
     running = True
-    combatants = [SkeletonBoss2, SkeletonBoss1, SkeletonSpear2, SkeletonMage1, SkeletonBoss3, SkeletonMage2]
+    combatants = [SkeletonBoss, SkeletonArcher, SkeletonArcher, SkeletonArcher, SkeletonArcher, SkeletonArcher]
     guis = []
 
     allyteam = combatants[0:3]
