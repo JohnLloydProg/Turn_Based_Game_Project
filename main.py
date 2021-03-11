@@ -572,11 +572,12 @@ def demo():
     enemyteam = combatants[3:6]
 
     for combatant in combatants:
-        if combatant.stillframe == BossFrame and combatant in allyteam:
-            combatant.xpos = combatant.stillframe.get_width() / 2 - 60
+        if combatant:
+            if combatant.stillframe == BossFrame and combatant in allyteam:
+                combatant.xpos = combatant.stillframe.get_width() / 2 - 60
 
-        if combatant.stillframe == BossFrame and combatant in enemyteam:
-            combatant.xpos = combatant.stillframe.get_width() / 2 + 60
+            if combatant.stillframe == BossFrame and combatant in enemyteam:
+                combatant.xpos = combatant.stillframe.get_width() / 2 + 60
 
 
 
@@ -885,83 +886,156 @@ def demo():
 
             if rightsolomid == True:
                 if combatants[3] and combatants[3].state != "dead":
-                    screen.blit(UnitHud, HUD_mid_right_1)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[3].hud(unit4attackbar,
+                                                                                                       HUD_mid_right_1)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                 elif combatants[4] and combatants[4].state != "dead":
-                    screen.blit(UnitHud, HUD_mid_right_1)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[4].hud(unit5attackbar,
+                                                                                                       HUD_mid_right_1)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                 elif combatants[5] and combatants[5].state != "dead":
-                    screen.blit(UnitHud, HUD_mid_right_1)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[5].hud(unit6attackbar,
+                                                                                                       HUD_mid_right_1)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if righttwo == True and combatants[3] != False and combatants[5] == False:
                 if combatants[3].state != "dead":
-                    screen.blit(UnitHud, HUD_top_right_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[3].hud(unit4attackbar,
+                                                                                                       HUD_top_right_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if righttwo == True and combatants[4] != False and combatants[5] == False:
                 if combatants[4].state != "dead":
-                    screen.blit(UnitHud, HUD_bot_right_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[4].hud(unit5attackbar,
+                                                                                                       HUD_bot_right_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if righttwo == True and combatants[5] != False and combatants[4] == False:
                 if combatants[5].state != "dead":
-                    screen.blit(UnitHud, HUD_bot_right_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[5].hud(unit6attackbar,
+                                                                                                       HUD_bot_right_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if righttwo == True and combatants[3] != False and combatants[4] == False:
                 if combatants[3].state != "dead":
-                    screen.blit(UnitHud, HUD_top_right_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[3].hud(unit4attackbar,
+                                                                                                       HUD_top_right_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if righttwo == True and combatants[4] != False and combatants[3] == False:
                 if combatants[4].state != "dead":
-                    screen.blit(UnitHud, HUD_top_right_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[4].hud(unit5attackbar,
+                                                                                                       HUD_top_right_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if righttwo == True and combatants[5] != False and combatants[3] == False:
                 if combatants[5].state != "dead":
-                    screen.blit(UnitHud, HUD_bot_right_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[5].hud(unit6attackbar,
+                                                                                                       HUD_bot_right_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if rightthree == True:
                 if combatants[3].state != "dead":
-                    screen.blit(UnitHud, HUD_top_right_3)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[3].hud(unit4attackbar,
+                                                                                                       HUD_top_right_3)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                 if combatants[4].state != "dead":
-                    screen.blit(UnitHud, HUD_mid_right_3)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[4].hud(unit5attackbar,
+                                                                                                       HUD_mid_right_3)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                 if combatants[5].state != "dead":
-                    screen.blit(UnitHud, HUD_bot_right_3)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[5].hud(unit6attackbar,
+                                                                                                       HUD_bot_right_3)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if leftsolomid == True:
                 if combatants[0] and combatants[0].state != "dead":
-                    screen.blit(UnitHud, HUD_mid_left_1)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[0].hud(unit1attackbar,
+                                                                                                       HUD_mid_left_1)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                 elif combatants[1] and combatants[1].state != "dead":
-                    screen.blit(UnitHud, HUD_mid_left_1)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[1].hud(unit2attackbar,
+                                                                                                       HUD_mid_left_1)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                 elif combatants[2] and combatants[2].state != "dead":
-                    screen.blit(UnitHud, HUD_mid_left_1)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[2].hud(unit3attackbar,
+                                                                                                       HUD_mid_left_1)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if lefttwo == True and combatants[0] != False and combatants[2] == False:
                 if combatants[0].state != "dead":
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[0].hud(unit1attackbar,
+                                                                                                       HUD_top_left_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                     screen.blit(UnitHud, HUD_top_left_2)
 
             if lefttwo == True and combatants[1] != False and combatants[2] == False:
                 if combatants[1].state != "dead":
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[1].hud(unit2attackbar,
+                                                                                                       HUD_bot_left_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                     screen.blit(UnitHud, HUD_bot_left_2)
 
             if lefttwo == True and combatants[2] != False and combatants[1] == False:
                 if combatants[2].state != "dead":
-                    screen.blit(UnitHud, HUD_bot_left_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[2].hud(unit3attackbar,
+                                                                                                       HUD_bot_left_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if lefttwo == True and combatants[0] != False and combatants[1] == False:
                 if combatants[0].state != "dead":
-                    screen.blit(UnitHud, HUD_top_left_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[0].hud(unit1attackbar,
+                                                                                                       HUD_top_left_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if lefttwo == True and combatants[1] != False and combatants[0] == False:
                 if  combatants[1].state != "dead":
-                    screen.blit(UnitHud, HUD_top_left_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[1].hud(unit2attackbar,
+                                                                                                       HUD_top_left_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if lefttwo == True and combatants[2] != False and combatants[0] == False:
                 if combatants[2].state != "dead":
-                    screen.blit(UnitHud, HUD_bot_left_2)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[2].hud(unit3attackbar,
+                                                                                                       HUD_bot_left_2)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
             if leftthree == True:
                 if combatants[0].state != "dead":
-                    screen.blit(UnitHud, HUD_top_left_3)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[0].hud(unit1attackbar, HUD_top_left_3)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                 if combatants[1].state != "dead":
-                    screen.blit(UnitHud, HUD_mid_left_3)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[1].hud(unit2attackbar,
+                                                                                                       HUD_mid_left_3)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
                 if combatants[2].state != "dead":
-                    screen.blit(UnitHud, HUD_bot_left_3)
+                    [(health_bar, health_bar_coor), (attack_bar, attack_bar_coor)] = combatants[2].hud(unit3attackbar,
+                                                                                                       HUD_bot_left_3)
+                    screen.blit(health_bar, health_bar_coor)
+                    screen.blit(attack_bar, attack_bar_coor)
 
         def combat(lst):
             global turninit
