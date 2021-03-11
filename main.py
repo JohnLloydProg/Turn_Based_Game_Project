@@ -225,12 +225,12 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-unit1 = Mage(11040, 834, 105, MageFrame)
-unit2 = Boss(7020, 831, 107, BossFrame)
-unit3 = Archer(7020, 831, 110, ArcherFrame)
-unit4 = Archer(7020, 831, 109, ArcherFrame)
-unit5 = Mage(7020, 831, 108, MageFrame)
-unit6 = Archer(7020, 831, 106, ArcherFrame)
+unit1 = Mage(11040, 834, 400, 105, MageFrame)
+unit2 = Boss(7020, 831, 700, 107, BossFrame)
+unit3 = Archer(7020, 831, 500, 110, ArcherFrame)
+unit4 = Archer(7020, 831, 490, 109, ArcherFrame)
+unit5 = Mage(7020, 831, 390, 108, MageFrame)
+unit6 = Archer(7020, 831, 495, 106, ArcherFrame)
 
 
 def main_menu():
@@ -568,6 +568,7 @@ def demo():
     combatants = [unit1, unit2, unit3, unit4, unit5, unit6]
     ally_turns = 0
     enemy_turns = 0
+    current_turn = None
     buffs = []
     guis = []
 
@@ -699,28 +700,34 @@ def demo():
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         for gui in guis:
                             if gui.is_inside():
-                                if gui.type == "attack":
-                                    print("Unit 1 Dealt Damage: " + str(combatants[0].attack * gui.damage_multiplier))
-                                elif gui.type == "buff":
-                                    for ally in allyteam:
-                                        if gui.stat_target == "attack":
-                                            ally.attack += ally.attack*gui.stat_increase
+                                if combatants[0].turns - gui.starting_turn >= gui.cd:
+                                    if gui.type == "attack":
+                                        current_turn = (combatants[0], gui)
+                                    elif gui.type == "buff":
+                                        for ally in allyteam:
+                                            if gui.stat_target == "attack":
+                                                ally.attack += ally.attack*gui.stat_increase
+                                                gui.cd = 2
+                                            elif gui.stat_target == "armor":
+                                                ally.armor += ally.armor*gui.stat_increase
+                                                gui.cd = 3
+                                            elif gui.stat_target == "health":
+                                                if ally.hitpoints < ally.full_health:
+                                                    ally.hitpoints += ally.full_health*gui.stat_increase
+                                                    if ally.hitpoints > ally.full_health:
+                                                        ally.hitpoints = ally.full_health
+                                                gui.cd = 4
+                                        if gui.stat_target != "health":
                                             buffs.append(("allies", gui.stat_target, gui.stat_increase, ally_turns, gui.duration))
                                             ally_turns -= 1
-                                    print(combatants[1].attack)
-                                unit1attackbar = 0
-                                recieveinput = True
-                                turninit = False
-                                guis = []
-                                ally_turns += 1
-                    elif event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_d:
-                            combatants[0].animation_counter = 0
-                            unit1attackbar = 0
-                            combatants[0].state = "dead"
-                            recieveinput = True
-                            turninit = False
-                            guis = []
+                                        gui.starting_turn = combatants[0].turns+1
+                                        unit1attackbar = 0
+                                        recieveinput = True
+                                        turninit = False
+                                        guis = []
+                                        combatants[0].turns += 1
+                                        ally_turns += 1
+                                        current_turn = None
             elif unit2attackbar >= 100:
                 turninit = True
                 recieveinput = False
@@ -729,12 +736,35 @@ def demo():
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         for gui in guis:
                             if gui.is_inside():
-                                unit2attackbar = 0
-                                print("Unit 2 Dealt Damage: " + str(combatants[1].attack * gui.damage_multiplier))
-                                recieveinput = True
-                                turninit = False
-                                guis = []
-                                ally_turns += 1
+                                if combatants[1].turns - gui.starting_turn >= gui.cd:
+                                    if gui.type == "attack":
+                                        current_turn = (combatants[1], gui)
+                                    elif gui.type == "buff":
+                                        for ally in allyteam:
+                                            if gui.stat_target == "attack":
+                                                ally.attack += ally.attack * gui.stat_increase
+                                                gui.cd = 2
+                                            elif gui.stat_target == "armor":
+                                                ally.armor += ally.armor * gui.stat_increase
+                                                gui.cd = 3
+                                            elif gui.stat_target == "health":
+                                                if ally.hitpoints < ally.full_health:
+                                                    ally.hitpoints += ally.full_health * gui.stat_increase
+                                                    if ally.hitpoints > ally.full_health:
+                                                        ally.hitpoints = ally.full_health
+                                                gui.cd = 4
+                                        if gui.stat_target != "health":
+                                            buffs.append(("allies", gui.stat_target, gui.stat_increase, ally_turns,
+                                                          gui.duration))
+                                            ally_turns -= 1
+                                        gui.starting_turn = combatants[1].turns + 1
+                                        unit2attackbar = 0
+                                        recieveinput = True
+                                        turninit = False
+                                        guis = []
+                                        combatants[1].turns += 1
+                                        ally_turns += 1
+                                        current_turn = None
             elif unit3attackbar >= 100:
                 turninit = True
                 recieveinput = False
@@ -743,12 +773,35 @@ def demo():
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         for gui in guis:
                             if gui.is_inside():
-                                unit3attackbar = 0
-                                print("Unit 3 Dealt Damage: " + str(combatants[2].attack * gui.damage_multiplier))
-                                recieveinput = True
-                                turninit = False
-                                guis = []
-                                ally_turns += 1
+                                if combatants[2].turns - gui.starting_turn >= gui.cd:
+                                    if gui.type == "attack":
+                                        current_turn = (combatants[2], gui)
+                                    elif gui.type == "buff":
+                                        for ally in allyteam:
+                                            if gui.stat_target == "attack":
+                                                ally.attack += ally.attack * gui.stat_increase
+                                                gui.cd = 2
+                                            elif gui.stat_target == "armor":
+                                                ally.armor += ally.armor * gui.stat_increase
+                                                gui.cd = 3
+                                            elif gui.stat_target == "health":
+                                                if ally.hitpoints < ally.full_health:
+                                                    ally.hitpoints += ally.full_health * gui.stat_increase
+                                                    if ally.hitpoints > ally.full_health:
+                                                        ally.hitpoints = ally.full_health
+                                                gui.cd = 4
+                                        if gui.stat_target != "health":
+                                            buffs.append(("allies", gui.stat_target, gui.stat_increase, ally_turns,
+                                                          gui.duration))
+                                            ally_turns -= 1
+                                        gui.starting_turn = combatants[2].turns + 1
+                                        unit3attackbar = 0
+                                        recieveinput = True
+                                        turninit = False
+                                        guis = []
+                                        combatants[2].turns += 1
+                                        ally_turns += 1
+                                        current_turn = None
             elif unit4attackbar >= 100:
                 turninit = True
                 recieveinput = False
@@ -779,6 +832,59 @@ def demo():
                             recieveinput = True
                             turninit = False
                             enemy_turns += 1
+
+            if current_turn:
+                if current_turn[0] == combatants[0]:
+                    for enemy in enemyteam:
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                            if enemy.is_inside():
+                                if random.choice([False, False, True, False]):
+                                    critical_multiplier = 2
+                                    print("Critical Hit!")
+                                else:
+                                    critical_multiplier = 1
+                                enemy.hitpoints -= ((combatants[0].attack*current_turn[1].damage_multiplier) - enemy.armor) * critical_multiplier
+                                unit1attackbar = 0
+                                recieveinput = True
+                                turninit = False
+                                guis = []
+                                combatants[0].turns += 1
+                                ally_turns += 1
+                                current_turn = None
+                elif current_turn[0] == combatants[1]:
+                    for enemy in enemyteam:
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                            if enemy.is_inside():
+                                if random.choice([False, False, True, False]):
+                                    critical_multiplier = 2
+                                    print("Critical Hit!")
+                                else:
+                                    critical_multiplier = 1
+                                enemy.hitpoints -= ((combatants[1].attack*current_turn[1].damage_multiplier) - enemy.armor) * critical_multiplier
+                                unit2attackbar = 0
+                                recieveinput = True
+                                turninit = False
+                                guis = []
+                                combatants[1].turns += 1
+                                ally_turns += 1
+                                current_turn = None
+                elif current_turn[0] == combatants[2]:
+                    for enemy in enemyteam:
+                        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                            if enemy.is_inside():
+                                if random.choice([False, False, True, False]):
+                                    critical_multiplier = 2
+                                    print("Critical Hit!")
+                                else:
+                                    critical_multiplier = 1
+                                enemy.hitpoints -= ((combatants[2].attack*current_turn[1].damage_multiplier) - enemy.armor) * critical_multiplier
+                                unit3attackbar = 0
+                                recieveinput = True
+                                turninit = False
+                                guis = []
+                                combatants[2].turns += 1
+                                ally_turns += 1
+                                current_turn = None
 
         def combatimages(list):
 
@@ -859,6 +965,8 @@ def demo():
                             (screenx / 2 - list[3].xpos + 500, screeny / 2 - 50))
                 screen.blit(pygame.transform.flip(rightactormid, True, False),
                             (screenx / 2 - list[4].xpos + 700, screeny / 2 + 50))
+                list[3].pos = (screenx / 2 - list[3].xpos + 500, screeny / 2 - 50)
+                list[4].pos = (screenx / 2 - list[4].xpos + 700, screeny / 2 + 50)
                 rightactortopplacement = True
                 rightactormiddleplacement = True
             if rightactortoppreflip != False and rightactorbottompreflip != False and rightactormiddlepreflip == False:
@@ -866,6 +974,8 @@ def demo():
                             (screenx / 2 - list[3].xpos + 500, screeny / 2 - 50))
                 screen.blit(pygame.transform.flip(rightactorbot, True, False),
                             (screenx / 2 - list[5].xpos + 700, screeny / 2 + 50))
+                list[3].pos = (screenx / 2 - list[3].xpos + 500, screeny / 2 - 50)
+                list[5].pos = (screenx / 2 - list[5].xpos + 700, screeny / 2 + 50)
                 rightactortopplacement = True
                 rightactorbottomplacement = True
             if rightactormiddlepreflip != False and rightactorbottompreflip != False and rightactortoppreflip == False:
@@ -873,31 +983,39 @@ def demo():
                             (screenx / 2 - list[4].xpos + 500, screeny / 2 - 50))
                 screen.blit(pygame.transform.flip(rightactorbot, True, False),
                             (screenx / 2 - list[5].xpos + 700, screeny / 2 + 50))
+                list[4].pos = (screenx / 2 - list[4].xpos + 500, screeny / 2 - 50)
+                list[5].pos = (screenx / 2 - list[5].xpos + 700, screeny / 2 + 50)
                 rightactormiddleplacement = True
                 rightactorbottomplacement = True
 
             elif rightactortoppreflip != False and rightactormiddlepreflip == False and rightactorbottompreflip == False:
                 screen.blit(pygame.transform.flip(rightactortop, True, False),
                             (screenx / 2 - list[3].xpos + 600, screeny / 2))
+                list[3].pos = (screenx / 2 - list[3].xpos + 600, screeny / 2)
                 rightactortopplacement = True
             elif rightactormiddlepreflip != False and rightactortoppreflip == False and rightactorbottompreflip == False:
                 screen.blit(pygame.transform.flip(rightactormid, True, False),
                             (screenx / 2 - list[4].xpos + 600, screeny / 2))
+                list[4].pos = (screenx / 2 - list[4].xpos + 600, screeny / 2)
                 rightactormiddleplacement = True
             elif rightactorbottompreflip != False and rightactortoppreflip == False and rightactormiddlepreflip == False:
                 screen.blit(pygame.transform.flip(rightactorbot, True, False),
                             (screenx / 2 - list[5].xpos + 600, screeny / 2))
+                list[5].pos = (screenx / 2 - list[5].xpos + 600, screeny / 2)
                 rightactorbottomplacement = True
 
             if rightactortoppreflip != False and rightactortopplacement != True:
                 screen.blit(pygame.transform.flip(rightactortop, True, False),
                             (screenx / 2 - list[3].xpos + 450, screeny / 2 - 100))
+                list[3].pos = (screenx / 2 - list[3].xpos + 450, screeny / 2 - 100)
             if rightactormiddlepreflip != False and rightactormiddleplacement != True:
                 screen.blit(pygame.transform.flip(rightactormid, True, False),
                             (screenx / 2 - list[4].xpos + 600, screeny / 2))
+                list[4].pos = (screenx / 2 - list[4].xpos + 600, screeny / 2)
             if rightactorbottompreflip != False and rightactorbottomplacement != True:
                 screen.blit(pygame.transform.flip(rightactorbot, True, False),
                             (screenx / 2 - list[5].xpos + 750, screeny / 2 + 100))
+                list[5].pos = (screenx / 2 - list[5].xpos + 750, screeny / 2 + 100)
 
             # Displaying Unit Bars
 
@@ -1251,12 +1369,28 @@ def demo():
             elif leftthree == True and turn == 2:
                 screen.blit(turncircle, bot_left_3)
 
-        for combatant in combatants:
+        for i in range(len(combatants)):
+            combatant = combatants[i]
             if combatant:
                 if combatant.state == "idle":
                     combatant.idle()
                 elif combatant.state == "dead":
                     combatant.dead()
+                if combatant.hitpoints == 0 and combatant.state != "dead":
+                    if i == 0:
+                        unit1attackbar = 0
+                    elif i == 1:
+                        unit2attackbar = 0
+                    elif i == 2:
+                        unit3attackbar = 0
+                    elif i == 3:
+                        unit4attackbar = 0
+                    elif i == 4:
+                        unit5attackbar = 0
+                    elif i == 5:
+                        unit6attackbar = 0
+                    combatant.animation_counter = 0
+                    combatant.state = "dead"
 
         # ("allies", gui.stat_target, gui.stat_increase, turns, gui.duration)
         for buff in buffs:
@@ -1265,7 +1399,10 @@ def demo():
                     if buff[1] == "attack":
                         for ally in allyteam:
                             ally.attack = ally.base_attack
-                        buffs.remove(buff)
+                    elif buff[1] == "armor":
+                        for ally in allyteam:
+                            ally.armor = ally.base_armor
+                    buffs.remove(buff)
 
         combat(combatants)
         combatimages(combatants)

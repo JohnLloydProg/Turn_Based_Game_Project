@@ -9,6 +9,8 @@ class Move:
         self.h = h
         self.color = color
         self.type = None
+        self.starting_turn = 0
+        self.cd = 0
 
     def is_inside(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -48,6 +50,23 @@ class BossAttack(Move):
 
 
 class MageBuff(Move):
+    def __init__(self, x, y, w, h, color):
+        Move.__init__(self, x, y, w, h, color)
+        self.type = "buff"
+        self.stat_target = "health"
+        self.stat_increase = 0.1
+
+
+class BossBuff(Move):
+    def __init__(self, x, y, w, h, color):
+        Move.__init__(self, x, y, w, h, color)
+        self.type = "buff"
+        self.stat_target = "armor"
+        self.duration = 3
+        self.stat_increase = 0.75
+
+
+class SpearBuff(Move):
     def __init__(self, x, y, w, h, color):
         Move.__init__(self, x, y, w, h, color)
         self.type = "buff"

@@ -10,11 +10,13 @@ tickspeed = 16
 
 
 class Unit:
-    def __init__(self, attack, hitpoints, speed, stillframe):
+    def __init__(self, attack, hitpoints, armor, speed, stillframe):
         self.attack = attack
         self.base_attack = attack
         self.hitpoints = hitpoints
         self.full_health = hitpoints
+        self.armor = armor
+        self.base_armor = armor
         self.speed = speed
         self.stillframe = stillframe
         self.ypos = stillframe.get_height() / 2
@@ -43,10 +45,15 @@ class Unit:
                                   loadtransimg('images/Unit Gui/AttackBars/AttackBar_16.png'), loadtransimg('images/Unit Gui/AttackBars/AttackBar_17.png'),
                                   loadtransimg('images/Unit Gui/AttackBars/AttackBar_18.png'), loadtransimg('images/Unit Gui/AttackBars/AttackBar_19.png'),
                                   loadtransimg('images/Unit Gui/AttackBars/AttackBar_20.png')]
+        self.xpos = None
+        self.pos = None
+        self.turns = 0
 
     def hud(self, attackbar, coordinates):
         if attackbar > 100:
             attackbar = 100
+        if self.hitpoints < 0:
+            self.hitpoints = 0
         healt_bar_image = self.health_bar_images[int((self.hitpoints/self.full_health)*100//5)]
         attack_bar_image = self.attack_bar_images[int(attackbar//5)]
         return [(healt_bar_image, coordinates), (attack_bar_image, (coordinates[0], coordinates[1]+32))]
@@ -58,10 +65,15 @@ class Unit:
             self.stillframe = self.idle_animation[self.animation_counter//tickspeed]
         self.animation_counter += 1
 
+    def is_inside(self):
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        if self.pos[0]+self.xpos >= mouse_x >= self.pos[0] and self.pos[1]+self.ypos >= mouse_y >= self.pos[1]:
+            return True
+
 
 class Archer(Unit):
-    def __init__(self, attack, hitpoints, speed, stillframe):
-        Unit.__init__(self, attack, hitpoints, speed, stillframe)
+    def __init__(self, attack, hitpoints, armor, speed, stillframe):
+        Unit.__init__(self, attack, hitpoints, armor, speed, stillframe)
         self.xpos = stillframe.get_width() / 2
         self.idle_animation = [loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 1.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 2.png'),
                                loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 3.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Idle/Archer Skeleton 4.png'),
@@ -87,8 +99,8 @@ class Archer(Unit):
 
 
 class Spear(Unit):
-    def __init__(self, attack, hitpoints, speed, stillframe):
-        Unit.__init__(self, attack, hitpoints, speed, stillframe)
+    def __init__(self, attack, hitpoints, armor, speed, stillframe):
+        Unit.__init__(self, attack, hitpoints, armor, speed, stillframe)
         self.xpos = stillframe.get_width() / 2
         self.idle_animation = [loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton1.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton2.png'),
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton3.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton4.png'),
@@ -99,12 +111,12 @@ class Spear(Unit):
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'),
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'),
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png')]
-        self.moves = [moves.SpearAttack(1800, 960, 100, 100, (0, 255, 255))]
+        self.moves = [moves.SpearAttack(1800, 960, 100, 100, (0, 255, 255)), moves.SpearBuff(1680, 960, 100, 100, (0, 255, 0))]
 
 
 class Mage(Unit):
-    def __init__(self, attack, hitpoints, speed, stillframe):
-        Unit.__init__(self, attack, hitpoints, speed, stillframe)
+    def __init__(self, attack, hitpoints, armor, speed, stillframe):
+        Unit.__init__(self, attack, hitpoints, armor, speed, stillframe)
         self.xpos = stillframe.get_width() / 2
         self.idle_animation = [loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export1.png'), loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export2.png'),
                                loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export3.png'), loadtransimg('UnitAnimations/MageSkeleton/Idle/Mage Skeleton-export4.png'),
@@ -132,8 +144,8 @@ class Mage(Unit):
 
 
 class Boss(Unit):
-    def __init__(self, attack, hitpoints, speed, stillframe):
-        Unit.__init__(self, attack, hitpoints, speed, stillframe)
+    def __init__(self, attack, hitpoints, armor, speed, stillframe):
+        Unit.__init__(self, attack, hitpoints, armor, speed, stillframe)
         self.xpos = stillframe.get_width() / 2
         self.idle_animation = [loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss1.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss2.png'),
                                loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss3.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Idle/Skeleton Boss4.png'),
@@ -149,7 +161,7 @@ class Boss(Unit):
                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss37.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss38.png'),
                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss39.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss40.png'),
                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss41.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss42.png')]
-        self.moves = [moves.BossAttack(1800, 960, 100, 100, (255, 0, 0))]
+        self.moves = [moves.BossAttack(1800, 960, 100, 100, (255, 0, 0)), moves.BossBuff(1680, 960, 100, 100, (0, 255, 0))]
 
     def dead(self):
         if self.state == "dead":
