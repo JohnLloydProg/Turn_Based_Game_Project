@@ -225,12 +225,12 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
-unit1 = Mage(11040, 834, 400, 105, MageFrame)
-unit2 = Boss(7020, 831, 700, 107, BossFrame)
-unit3 = Archer(7020, 831, 500, 110, ArcherFrame)
-unit4 = Archer(7020, 831, 490, 109, ArcherFrame)
-unit5 = Mage(7020, 831, 390, 108, MageFrame)
-unit6 = Archer(7020, 831, 495, 106, ArcherFrame)
+unit1 = Mage(404, 8595, 476, 111, MageFrame)
+unit2 = Boss(725, 11700, 637, 95, BossFrame)
+unit3 = Archer(581, 6540, 436, 101, ArcherFrame)
+unit4 = Spear(541, 8155, 371, 106, SpearFrame)
+unit5 = Mage(404, 8595, 476, 111, MageFrame)
+unit6 = Archer(581, 6540, 436, 101, ArcherFrame)
 
 
 def main_menu():
