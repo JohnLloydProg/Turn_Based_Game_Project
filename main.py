@@ -226,12 +226,15 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
+
 unit1 = Mage(808, 8595, 476, 111, MageFrame)
 unit2 = Boss(1450, 11700, 637, 95, BossFrame)
 unit3 = Archer(1602, 6540, 436, 101, ArcherFrame)
 unit4 = Spear(1082, 8155, 371, 106, SpearFrame)
 unit5 = Mage(808, 8595, 476, 111, MageFrame)
 unit6 = Archer(1602, 6540, 436, 101, ArcherFrame)
+
+
 
 
 def main_menu():
@@ -566,7 +569,7 @@ def demo():
     global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
     global turn
     running = True
-    combatants = [unit1, unit2, unit3, unit4, unit5, unit6]
+    combatants = [False, unit2, False, unit4, unit5, unit6]
     ally_turns = 0
     enemy_turns = 0
     current_turn = None
@@ -1427,4 +1430,4 @@ def demo():
         Clock.tick(120)
 
 
-demo()
+main_menu()
