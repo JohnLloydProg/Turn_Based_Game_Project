@@ -929,35 +929,47 @@ def demo():
             if leftactortop != False and leftactormiddle != False and leftactorbottom == False:
                 screen.blit(leftactortop, (screenx / 2 - list[0].xpos - 500, screeny / 2 - 50))
                 screen.blit(leftactormiddle, (screenx / 2 - list[1].xpos - 700, screeny / 2 + 50))
+                list[0].pos = (screenx / 2 - list[0].xpos - 500, screeny / 2 - 50)
+                list[1].pos = (screenx / 2 - list[1].xpos - 700, screeny / 2 + 50)
                 leftactortopplacement = True
                 leftactormiddleplacement = True
             if leftactortop != False and leftactorbottom != False and leftactormiddle == False:
                 screen.blit(leftactortop, (screenx / 2 - list[0].xpos - 500, screeny / 2 - 50))
                 screen.blit(leftactorbottom, (screenx / 2 - list[2].xpos - 700, screeny / 2 + 50))
+                list[0].pos = (screenx / 2 - list[0].xpos - 500, screeny / 2 - 50)
+                list[2].pos = (screenx / 2 - list[2].xpos - 700, screeny / 2 + 50)
                 leftactortopplacement = True
                 leftactorbottomplacement = True
             if leftactormiddle != False and leftactorbottom != False and leftactortop == False:
                 screen.blit(leftactormiddle, (screenx / 2 - list[1].xpos - 500, screeny / 2 - 50))
                 screen.blit(leftactorbottom, (screenx / 2 - list[2].xpos - 700, screeny / 2 + 50))
+                list[1].pos = (screenx / 2 - list[1].xpos - 500, screeny / 2 - 50)
+                list[2].pos = (screenx / 2 - list[2].xpos - 700, screeny / 2 + 50)
                 leftactormiddleplacement = True
                 leftactorbottomplacement = True
 
             elif leftactortop != False and leftactormiddle == False and leftactorbottom == False:
                 screen.blit(leftactortop, (screenx / 2 - list[0].xpos - 600, screeny / 2))
+                list[0].pos = (screenx / 2 - list[0].xpos - 600, screeny / 2)
                 leftactortopplacement = True
             elif leftactormiddle != False and leftactortop == False and leftactorbottom == False:
                 screen.blit(leftactormiddle, (screenx / 2 - list[1].xpos - 600, screeny / 2))
+                list[1].pos = (screenx / 2 - list[1].xpos - 600, screeny / 2)
                 leftactormiddleplacement = True
             elif leftactorbottom != False and leftactortop == False and leftactormiddle == False:
                 screen.blit(leftactorbottom, (screenx / 2 - list[2].xpos - 600, screeny / 2))
+                list[2].pos = (screenx / 2 - list[2].xpos - 600, screeny / 2)
                 leftactorbottomplacement = True
 
             if leftactortop != False and leftactortopplacement != True:
                 screen.blit(leftactortop, (screenx / 2 - list[0].xpos - 450, screeny / 2 - 100))
+                list[0].pos = (screenx / 2 - list[0].xpos - 450, screeny / 2 - 100)
             if leftactormiddle != False and leftactormiddleplacement != True:
                 screen.blit(leftactormiddle, (screenx / 2 - list[1].xpos - 600, screeny / 2))
+                list[1].pos = (screenx / 2 - list[1].xpos - 600, screeny / 2)
             if leftactorbottom != False and leftactorbottomplacement != True:
                 screen.blit(leftactorbottom, (screenx / 2 - list[2].xpos - 750, screeny / 2 + 100))
+                list[2].pos = (screenx / 2 - list[2].xpos - 750, screeny / 2 + 100)
 
             rightactortop = rightactortoppreflip
             rightactormid = rightactormiddlepreflip
@@ -1174,6 +1186,7 @@ def demo():
                                                                                                        HUD_bot_left_3)
                     screen.blit(health_bar, health_bar_coor)
                     screen.blit(attack_bar, attack_bar_coor)
+
 
         def combat(lst):
             global turninit
@@ -1395,18 +1408,6 @@ def demo():
                     combatant.animation_counter = 0
                     combatant.state = "dead"
 
-        # ("allies", gui.stat_target, gui.stat_increase, turns, gui.duration)
-        for buff in buffs:
-            if buff[0] == "allies":
-                if ally_turns - buff[3] == buff[4]:
-                    if buff[1] == "attack":
-                        for ally in allyteam:
-                            ally.attack = ally.base_attack
-                    elif buff[1] == "armor":
-                        for ally in allyteam:
-                            ally.armor = ally.base_armor
-                    buffs.remove(buff)
-
         combat(combatants)
         combatimages(combatants)
 
@@ -1416,7 +1417,20 @@ def demo():
         if location:
             screen.blit(pygame.image.load("pixelarrow.png"), location)
 
-        mx, my = pygame.mouse.get_pos()
+        # ("allies", gui.stat_target, gui.stat_increase, turns, gui.duration)
+        for ally in allyteam:
+            for i, buff in enumerate(buffs):
+                if buff[0] == "allies":
+                    if ally_turns - buff[3] == buff[4]:
+                        if buff[1] == "attack":
+                            ally.attack = ally.base_attack
+                        elif buff[1] == "armor":
+                            ally.armor = ally.base_armor
+                        buffs.remove(buff)
+                    if buff[1] == "attack":
+                        pygame.draw.rect(screen, (255, 0, 0), ((ally.pos[0]+20)+(40*i), ally.pos[1]-30, 30, 30))
+                    elif buff[1] == "armor":
+                        pygame.draw.rect(screen, (0, 0, 255), ((ally.pos[0]+20)+(40*i), ally.pos[1]-30, 30, 30))
 
         # Mouse icon change
 
