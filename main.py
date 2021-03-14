@@ -3,7 +3,8 @@ import json
 import os
 import random
 import sys
-from units import Unit, Archer, Mage, Spear, Boss
+import time
+from units import Archer, Mage, Spear, Boss
 
 import pygame
 from pygame.locals import *
@@ -569,6 +570,7 @@ def demo():
     ally_turns = 0
     enemy_turns = 0
     current_turn = None
+    location = None
     buffs = []
     guis = []
 
@@ -677,7 +679,6 @@ def demo():
                 #     coordy += 50
                 #     print('\n\n\n\n\n\nX = ' + str(coordx) + '\nY = ' + str(coordy))
 
-
             if event.type == pygame.USEREVENT + 1:
                 if not turninit:
                     if combatants[0] and combatants[0].state != "dead":
@@ -702,7 +703,7 @@ def demo():
                             if gui.is_inside():
                                 if combatants[0].turns - gui.starting_turn >= gui.cd:
                                     if gui.type == "attack":
-                                        current_turn = (combatants[0], gui)
+                                        current_turn = combatants[0]
                                     elif gui.type == "buff":
                                         for ally in allyteam:
                                             if gui.stat_target == "attack":
@@ -738,7 +739,7 @@ def demo():
                             if gui.is_inside():
                                 if combatants[1].turns - gui.starting_turn >= gui.cd:
                                     if gui.type == "attack":
-                                        current_turn = (combatants[1], gui)
+                                        current_turn = combatants[1]
                                     elif gui.type == "buff":
                                         for ally in allyteam:
                                             if gui.stat_target == "attack":
@@ -775,7 +776,7 @@ def demo():
                             if gui.is_inside():
                                 if combatants[2].turns - gui.starting_turn >= gui.cd:
                                     if gui.type == "attack":
-                                        current_turn = (combatants[2], gui)
+                                        current_turn = combatants[2]
                                     elif gui.type == "buff":
                                         for ally in allyteam:
                                             if gui.stat_target == "attack":
@@ -833,58 +834,60 @@ def demo():
                             turninit = False
                             enemy_turns += 1
 
-            if current_turn:
-                if current_turn[0] == combatants[0]:
-                    for enemy in enemyteam:
+            if current_turn == combatants[0]:
+                for enemy in enemyteam:
+                    if enemy.is_inside() and enemy.state != "dead":
+                        location = (enemy.pos[0] + 120, enemy.pos[1] - 80)
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                            if enemy.is_inside():
-                                if random.choice([False, False, True, False]):
-                                    critical_multiplier = 2
-                                    print("Critical Hit!")
-                                else:
-                                    critical_multiplier = 1
-                                enemy.hitpoints -= ((combatants[0].attack*current_turn[1].damage_multiplier) - enemy.armor) * critical_multiplier
-                                unit1attackbar = 0
-                                recieveinput = True
-                                turninit = False
-                                guis = []
-                                combatants[0].turns += 1
-                                ally_turns += 1
-                                current_turn = None
-                elif current_turn[0] == combatants[1]:
-                    for enemy in enemyteam:
+                            if random.choice([False, False, True, False]):
+                                critical_multiplier = 2
+                            else:
+                                critical_multiplier = 1
+                            enemy.hitpoints -= ((combatants[0].attack*combatants[0].attack_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                            unit1attackbar = 0
+                            recieveinput = True
+                            turninit = False
+                            guis = []
+                            combatants[0].turns += 1
+                            ally_turns += 1
+                            current_turn = None
+                            location = None
+            elif current_turn == combatants[1]:
+                for enemy in enemyteam:
+                    if enemy.is_inside() and enemy.state != "dead":
+                        location = (enemy.pos[0] + 120, enemy.pos[1] - 80)
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                            if enemy.is_inside():
-                                if random.choice([False, False, True, False]):
-                                    critical_multiplier = 2
-                                    print("Critical Hit!")
-                                else:
-                                    critical_multiplier = 1
-                                enemy.hitpoints -= ((combatants[1].attack*current_turn[1].damage_multiplier) - enemy.armor) * critical_multiplier
-                                unit2attackbar = 0
-                                recieveinput = True
-                                turninit = False
-                                guis = []
-                                combatants[1].turns += 1
-                                ally_turns += 1
-                                current_turn = None
-                elif current_turn[0] == combatants[2]:
-                    for enemy in enemyteam:
+                            if random.choice([False, False, True, False]):
+                                critical_multiplier = 2
+                            else:
+                                critical_multiplier = 1
+                            enemy.hitpoints -= ((combatants[1].attack*combatants[1].attack_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                            unit2attackbar = 0
+                            recieveinput = True
+                            turninit = False
+                            guis = []
+                            combatants[1].turns += 1
+                            ally_turns += 1
+                            current_turn = None
+                            location = None
+            elif current_turn == combatants[2]:
+                for enemy in enemyteam:
+                    if enemy.is_inside() and enemy.state != "dead":
+                        location = (enemy.pos[0] + 120, enemy.pos[1] - 80)
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                            if enemy.is_inside():
-                                if random.choice([False, False, True, False]):
-                                    critical_multiplier = 2
-                                    print("Critical Hit!")
-                                else:
-                                    critical_multiplier = 1
-                                enemy.hitpoints -= ((combatants[2].attack*current_turn[1].damage_multiplier) - enemy.armor) * critical_multiplier
-                                unit3attackbar = 0
-                                recieveinput = True
-                                turninit = False
-                                guis = []
-                                combatants[2].turns += 1
-                                ally_turns += 1
-                                current_turn = None
+                            if random.choice([False, False, True, False]):
+                                critical_multiplier = 2
+                            else:
+                                critical_multiplier = 1
+                            enemy.hitpoints -= ((combatants[2].attack*combatants[2].attack_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                            unit3attackbar = 0
+                            recieveinput = True
+                            turninit = False
+                            guis = []
+                            combatants[2].turns += 1
+                            ally_turns += 1
+                            current_turn = None
+                            location = None
 
         def combatimages(list):
 
@@ -1409,6 +1412,9 @@ def demo():
 
         for gui in guis:
             gui.draw(screen)
+
+        if location:
+            screen.blit(pygame.image.load("pixelarrow.png"), location)
 
         mx, my = pygame.mouse.get_pos()
 
