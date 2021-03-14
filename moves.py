@@ -24,7 +24,7 @@ class Move:
 class ArcherAttack(Move):
     def __init__(self, x, y, w, h, color):
         Move.__init__(self, x, y, w, h, color)
-        self.damage_multiplier = 0.5
+        self.damage_multiplier = 1.5
         self.type = "attack"
 
 
@@ -38,7 +38,7 @@ class SpearAttack(Move):
 class MageAttack(Move):
     def __init__(self, x, y, w, h, color):
         Move.__init__(self, x, y, w, h, color)
-        self.damage_multiplier = 0.75
+        self.damage_multiplier = 1.75
         self.type = "attack"
 
 

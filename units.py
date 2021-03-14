@@ -90,6 +90,7 @@ class Archer(Unit):
                                 loadtransimg('UnitAnimations/ArcherSkeleton/Death/Archer Skeleton 43.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Death/Archer Skeleton 44.png'),
                                 loadtransimg('UnitAnimations/ArcherSkeleton/Death/Archer Skeleton 45.png')]
         self.moves = [moves.ArcherAttack(1800, 960, 100, 100, (255, 255, 0))]
+        self.attack_move = self.moves[0]
 
     def dead(self):
         if self.state == "dead":
@@ -112,6 +113,7 @@ class Spear(Unit):
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'),
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png')]
         self.moves = [moves.SpearAttack(1800, 960, 100, 100, (0, 255, 255)), moves.SpearBuff(1680, 960, 100, 100, (0, 255, 0))]
+        self.attack_move = self.moves[0]
 
 
 class Mage(Unit):
@@ -135,6 +137,7 @@ class Mage(Unit):
                                 loadtransimg('UnitAnimations/MageSkeleton/Death/Mage Skeleton-export37.png'),
                                 loadtransimg('UnitAnimations/MageSkeleton/Death/Mage Skeleton-export38.png')]
         self.moves = [moves.MageAttack(1800, 960, 100, 100, (255, 0, 255)), moves.MageBuff(1680, 960, 100, 100, (0, 255, 0))]
+        self.attack_move = self.moves[0]
         
     def dead(self):
         if self.state == "dead":
@@ -162,6 +165,7 @@ class Boss(Unit):
                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss39.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss40.png'),
                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss41.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss42.png')]
         self.moves = [moves.BossAttack(1800, 960, 100, 100, (255, 0, 0)), moves.BossBuff(1680, 960, 100, 100, (0, 255, 0))]
+        self.attack_move = self.moves[0]
 
     def dead(self):
         if self.state == "dead":
