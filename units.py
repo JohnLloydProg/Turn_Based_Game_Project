@@ -112,6 +112,7 @@ class Spear(Unit):
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'),
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'),
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png')]
+        self.death_animation = []
         self.moves = [moves.SpearAttack(1800, 960, 100, 100, (0, 255, 255)), moves.SpearBuff(1680, 960, 100, 100, (0, 255, 0))]
         self.attack_move = self.moves[0]
 

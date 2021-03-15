@@ -26,6 +26,7 @@ class ArcherAttack(Move):
         Move.__init__(self, x, y, w, h, color)
         self.damage_multiplier = 1.5
         self.type = "attack"
+        self.effect = None
 
 
 class SpearAttack(Move):
@@ -33,6 +34,7 @@ class SpearAttack(Move):
         Move.__init__(self, x, y, w, h, color)
         self.damage_multiplier = 1
         self.type = "attack"
+        self.effect = None
 
 
 class MageAttack(Move):
@@ -40,6 +42,7 @@ class MageAttack(Move):
         Move.__init__(self, x, y, w, h, color)
         self.damage_multiplier = 1.75
         self.type = "attack"
+        self.effect = None
 
 
 class BossAttack(Move):
@@ -47,12 +50,13 @@ class BossAttack(Move):
         Move.__init__(self, x, y, w, h, color)
         self.damage_multiplier = 2
         self.type = "attack"
+        self.effect = None
 
 
 class MageBuff(Move):
     def __init__(self, x, y, w, h, color):
         Move.__init__(self, x, y, w, h, color)
-        self.type = "buff"
+        self.type = "healing"
         self.stat_target = "health"
         self.stat_increase = 0.1
 
@@ -73,3 +77,11 @@ class SpearBuff(Move):
         self.stat_target = "attack"
         self.duration = 3
         self.stat_increase = 0.5
+
+
+class SpearStun(Move):
+    def __init__(self, x, y, w, h, color):
+        Move.__init__(self, x, y, w, h, color)
+        self.type = "attack"
+        self.effect = "stun"
+        self.damage_multiplier = 1
