@@ -1,6 +1,4 @@
 # Setup Functions ------------------------------------- #
-import faulthandler
-faulthandler.enable()
 import json
 import os
 import random
@@ -558,7 +556,7 @@ coordy = screeny / 2
 
 
 def demo():
-    global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit
+    global unit1attackbar, unit2attackbar, unit3attackbar, unit4attackbar, unit5attackbar, unit6attackbar, turninit, selected_move
     global turn
     running = True
     combatants = [unit1, unit2, unit3, unit4, unit5, unit6]
@@ -693,9 +691,17 @@ def demo():
                     if combatants[5] and combatants[5].state != "dead":
                         unit6attackbar += speedpercentage(combatants[5].speed)
             if unit1attackbar >= 100:
-                turninit = True
-                recieveinput = False
-                guis = combatants[0].moves
+                if combatants[0].stunned:
+                    unit1attackbar = 0
+                    recieveinput = True
+                    turninit = False
+                    combatants[0].turns += 1
+                    ally_turns += 1
+                    combatants[0].stunned = False
+                else:
+                    turninit = True
+                    recieveinput = False
+                    guis = combatants[0].moves
                 if not recieveinput:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         for gui in guis:
@@ -730,9 +736,17 @@ def demo():
                                         ally_turns += 1
                                         current_turn = "None"
             elif unit2attackbar >= 100:
-                turninit = True
-                recieveinput = False
-                guis = combatants[1].moves
+                if combatants[1].stunned:
+                    unit2attackbar = 0
+                    recieveinput = True
+                    turninit = False
+                    combatants[1].turns += 1
+                    ally_turns += 1
+                    combatants[1].stunned = False
+                else:
+                    turninit = True
+                    recieveinput = False
+                    guis = combatants[1].moves
                 if not recieveinput:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         for gui in guis:
@@ -766,9 +780,17 @@ def demo():
                                         ally_turns += 1
                                         current_turn = "None"
             elif unit3attackbar >= 100:
-                turninit = True
-                recieveinput = False
-                guis = combatants[2].moves
+                if combatants[2].stunned:
+                    unit3attackbar = 0
+                    recieveinput = True
+                    turninit = False
+                    combatants[2].turns += 1
+                    ally_turns += 1
+                    combatants[2].stunned = False
+                else:
+                    turninit = True
+                    recieveinput = False
+                    guis = combatants[2].moves
                 if not recieveinput:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         for gui in guis:
@@ -812,13 +834,79 @@ def demo():
                 else:
                     turninit = True
                     recieveinput = False
+                selected_move = "None"
                 if not recieveinput:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
+                    if isinstance(combatants[3], Mage):
+                        heal = False
+                        for ally in enemyteam:
+                            if ally.hitpoints < ally.full_health*0.5:
+                                heal = True
+                                break
+                        if heal and combatants[3].turns - combatants[3].moves[1].starting_turn >= combatants[3].moves[1].cd:
+                            for ally in enemyteam:
+                                ally.hitpoints += int(ally.full_health * combatants[3].moves[1].stat_increase)
+                                if ally.hitpoints > ally.full_health:
+                                    ally.hitpoints = ally.full_health
+                            combatants[3].moves[1].starting_turn = combatants[3].turns + 1
+                            combatants[3].moves[1].cd = 4
                             unit4attackbar = 0
                             recieveinput = True
                             turninit = False
+                            combatants[3].turns += 1
                             enemy_turns += 1
+                    for move in combatants[3].moves:
+                        if combatants[3].turns - move.starting_turn >= move.cd:
+                            if move.type == "buff":
+                                if move.stat_target != "health":
+                                    selected_move = move
+                                    break
+                            elif move.type == "attack":
+                                if move.effect == "stun":
+                                    selected_move = move
+                                else:
+                                    selected_move = move
+                    if selected_move.type == "buff":
+                        for ally in enemyteam:
+                            if ally:
+                                if selected_move.stat_target == "attack":
+                                    ally.attack += int(ally.attack * selected_move.stat_increase)
+                                elif selected_move.stat_target == "armor":
+                                    ally.armor += int(ally.armor * selected_move.stat_increase)
+                        enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, enemy_turns,
+                                           selected_move.duration))
+                        enemy_turns -= 1
+                        selected_move.starting_turn = combatants[3].turns + 1
+                        selected_move.cd = 4
+                        unit4attackbar = 0
+                        recieveinput = True
+                        turninit = False
+                        combatants[3].turns += 1
+                        enemy_turns += 1
+                    elif selected_move.type == "attack":
+                        if combatants[0].state != "dead":
+                            enemy = combatants[0]
+                        elif combatants[1].state != "dead":
+                            enemy = combatants[1]
+                        else:
+                            enemy = combatants[2]
+                        for e in allyteam:
+                            if e.state != "dead":
+                                if e.hitpoints < enemy.hitpoints:
+                                    enemy = e
+                        if random.choice([False, False, True, False]):
+                            critical_multiplier = 2
+                        else:
+                            critical_multiplier = 1
+                        enemy.hitpoints -= ((combatants[3].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                        if selected_move.effect == "stun":
+                            enemy.stunned = True
+                            selected_move.starting_turn = combatants[3].turns + 1
+                            selected_move.cd = 3
+                        unit4attackbar = 0
+                        recieveinput = True
+                        turninit = False
+                        combatants[3].turns += 1
+                        enemy_turns += 1
             elif unit5attackbar >= 100:
                 if combatants[4].stunned:
                     unit5attackbar = 0
@@ -829,13 +917,81 @@ def demo():
                 else:
                     turninit = True
                     recieveinput = False
+                selected_move = "None"
                 if not recieveinput:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
+                    if isinstance(combatants[4], Mage):
+                        heal = False
+                        for ally in enemyteam:
+                            if ally.hitpoints < ally.full_health * 0.5:
+                                heal = True
+                                break
+                        if heal and combatants[4].turns - combatants[4].moves[1].starting_turn >= combatants[4].moves[
+                            1].cd:
+                            for ally in enemyteam:
+                                ally.hitpoints += int(ally.full_health * combatants[4].moves[1].stat_increase)
+                                if ally.hitpoints > ally.full_health:
+                                    ally.hitpoints = ally.full_health
+                            combatants[4].moves[1].starting_turn = combatants[4].turns + 1
+                            combatants[4].moves[1].cd = 4
                             unit5attackbar = 0
                             recieveinput = True
                             turninit = False
+                            combatants[4].turns += 1
                             enemy_turns += 1
+                    for move in combatants[4].moves:
+                        if combatants[4].turns - move.starting_turn >= move.cd:
+                            if move.type == "buff":
+                                if move.stat_target != "health":
+                                    selected_move = move
+                                    break
+                            elif move.type == "attack":
+                                if move.effect == "stun":
+                                    selected_move = move
+                                else:
+                                    selected_move = move
+                    if selected_move.type == "buff":
+                        for ally in enemyteam:
+                            if ally:
+                                if selected_move.stat_target == "attack":
+                                    ally.attack += int(ally.attack * selected_move.stat_increase)
+                                elif selected_move.stat_target == "armor":
+                                    ally.armor += int(ally.armor * selected_move.stat_increase)
+                        enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, enemy_turns,
+                                            selected_move.duration))
+                        enemy_turns -= 1
+                        selected_move.starting_turn = combatants[4].turns + 1
+                        selected_move.cd = 4
+                        unit5attackbar = 0
+                        recieveinput = True
+                        turninit = False
+                        combatants[4].turns += 1
+                        enemy_turns += 1
+                    elif selected_move.type == "attack":
+                        if combatants[0].state != "dead":
+                            enemy = combatants[0]
+                        elif combatants[1].state != "dead":
+                            enemy = combatants[1]
+                        else:
+                            enemy = combatants[2]
+                        for e in allyteam:
+                            if e.state != "dead":
+                                if e.hitpoints < enemy.hitpoints:
+                                    enemy = e
+                        if random.choice([False, False, True, False]):
+                            critical_multiplier = 2
+                        else:
+                            critical_multiplier = 1
+                        enemy.hitpoints -= ((combatants[
+                                                 4].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                        if selected_move.effect == "stun":
+                            enemy.stunned = True
+                            selected_move.starting_turn = combatants[4].turns + 1
+                            selected_move.cd = 3
+                        unit5attackbar = 0
+                        recieveinput = True
+                        turninit = False
+                        combatants[4].turns += 1
+                        enemy_turns += 1
             elif unit6attackbar >= 100:
                 if combatants[5].stunned:
                     unit6attackbar = 0
@@ -847,12 +1003,79 @@ def demo():
                     turninit = True
                     recieveinput = False
                 if not recieveinput:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
+                    if isinstance(combatants[5], Mage):
+                        heal = False
+                        for ally in enemyteam:
+                            if ally.hitpoints < ally.full_health * 0.5:
+                                heal = True
+                                break
+                        if heal and combatants[5].turns - combatants[5].moves[1].starting_turn >= combatants[5].moves[
+                            1].cd:
+                            for ally in enemyteam:
+                                ally.hitpoints += int(ally.full_health * combatants[5].moves[1].stat_increase)
+                                if ally.hitpoints > ally.full_health:
+                                    ally.hitpoints = ally.full_health
+                            combatants[5].moves[1].starting_turn = combatants[5].turns + 1
+                            combatants[5].moves[1].cd = 4
                             unit6attackbar = 0
                             recieveinput = True
                             turninit = False
+                            combatants[5].turns += 1
                             enemy_turns += 1
+                    for move in combatants[5].moves:
+                        if combatants[5].turns - move.starting_turn >= move.cd:
+                            if move.type == "buff":
+                                if move.stat_target != "health":
+                                    selected_move = move
+                                    break
+                            elif move.type == "attack":
+                                if move.effect == "stun":
+                                    selected_move = move
+                                else:
+                                    selected_move = move
+                    if selected_move.type == "buff":
+                        for ally in enemyteam:
+                            if ally:
+                                if selected_move.stat_target == "attack":
+                                    ally.attack += int(ally.attack * selected_move.stat_increase)
+                                elif selected_move.stat_target == "armor":
+                                    ally.armor += int(ally.armor * selected_move.stat_increase)
+                        enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, enemy_turns,
+                                            selected_move.duration))
+                        enemy_turns -= 1
+                        selected_move.starting_turn = combatants[5].turns + 1
+                        selected_move.cd = 4
+                        unit6attackbar = 0
+                        recieveinput = True
+                        turninit = False
+                        combatants[5].turns += 1
+                        enemy_turns += 1
+                    elif selected_move.type == "attack":
+                        if combatants[0].state != "dead":
+                            enemy = combatants[0]
+                        elif combatants[1].state != "dead":
+                            enemy = combatants[1]
+                        else:
+                            enemy = combatants[2]
+                        for e in allyteam:
+                            if e.state != "dead":
+                                if e.hitpoints < enemy.hitpoints:
+                                    enemy = e
+                        if random.choice([False, False, True, False]):
+                            critical_multiplier = 2
+                        else:
+                            critical_multiplier = 1
+                        enemy.hitpoints -= ((combatants[
+                                                 5].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                        if selected_move.effect == "stun":
+                            enemy.stunned = True
+                            selected_move.starting_turn = combatants[5].turns + 1
+                            selected_move.cd = 3
+                        unit6attackbar = 0
+                        recieveinput = True
+                        turninit = False
+                        combatants[5].turns += 1
+                        enemy_turns += 1
             else:
                 turninit = False
                 recieveinput = True
@@ -1419,31 +1642,32 @@ def demo():
             if combatant:
                 for i, buff in enumerate(ally_buffs):
                     if combatant in allyteam:
-                        if ally_turns - buff[2] == buff[3]:
+                        if combatant.state != "dead":
+                            if ally_turns - buff[2] == buff[3]:
+                                if buff[0] == "attack":
+                                    combatant.attack = combatant.base_attack
+                                elif buff[0] == "armor":
+                                    combatant.armor = combatant.base_armor
+                                ally_buffs.remove(buff)
                             if buff[0] == "attack":
-                                combatant.attack = combatant.base_attack
+                                screen.blit(attack_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
                             elif buff[0] == "armor":
-                                combatant.armor = combatant.base_armor
-                            ally_buffs.remove(buff)
-                        if buff[0] == "attack":
-                            screen.blit(attack_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
-                        elif buff[0] == "armor":
-                            screen.blit(defence_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                                screen.blit(defence_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
                 for i, buff in enumerate(enemy_buffs):
                     if combatant in enemyteam:
-                        if enemy_turns - buff[2] == buff[3]:
+                        if combatant.state != "dead":
+                            if enemy_turns - buff[2] == buff[3]:
+                                if buff[0] == "attack":
+                                    combatant.attack = combatant.base_attack
+                                elif buff[0] == "armor":
+                                    combatant.armor = combatant.base_armor
+                                enemy_buffs.remove(buff)
                             if buff[0] == "attack":
-                                combatant.attack = combatant.base_attack
+                                screen.blit(attack_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
                             elif buff[0] == "armor":
-                                combatant.armor = combatant.base_armor
-                            ally_buffs.remove(buff)
-                        if buff[0] == "attack":
-                            screen.blit(attack_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
-                        elif buff[0] == "armor":
-                            screen.blit(defence_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
-                if combatant.stunned:
+                                screen.blit(defence_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                if combatant.stunned and combatant.state != "dead":
                     screen.blit(stun_image, (combatant.pos[0]+170, combatant.pos[1]-60, 30, 30))
-
 
         pygame.mouse.set_visible(False)
         screen.blit(cursorimg, (pygame.mouse.get_pos()))

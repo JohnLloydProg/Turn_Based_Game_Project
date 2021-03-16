@@ -56,9 +56,9 @@ class BossAttack(Move):
 class MageBuff(Move):
     def __init__(self, x, y, w, h, color):
         Move.__init__(self, x, y, w, h, color)
-        self.type = "healing"
+        self.type = "buff"
         self.stat_target = "health"
-        self.stat_increase = 0.1
+        self.stat_increase = 0.2
 
 
 class BossBuff(Move):
