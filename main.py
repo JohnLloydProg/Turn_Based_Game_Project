@@ -1,4 +1,6 @@
 # Setup Functions ------------------------------------- #
+import faulthandler
+faulthandler.enable()
 import json
 import os
 import random
@@ -157,7 +159,7 @@ if randombackroundnum == 0:
 if randombackroundnum == 1:
     menubackround = menubackround2
 
-pygame.mouse.set_cursor(0)
+# pygame.mouse.set_cursor(0)
 
 # Menu buttons become big
 button1img = startbuttonimg
@@ -199,15 +201,6 @@ class Spritesheet:
         x, y, w, h = sprite["x"], sprite["y"], sprite["w"], sprite["h"]
         image = self.get_sprite(x, y, w, h)
         return image
-
-
-# Load NPC's
-
-default = []
-skeleton_mage_idle = []
-skeleton_mage_attack = []
-skeleton_mage_hit = []
-skeleton_mage_death = []
 
 
 def load_image(dirr=None, name="None"):
@@ -571,10 +564,13 @@ def demo():
     combatants = [unit1, unit2, unit3, unit4, unit5, unit6]
     ally_turns = 0
     enemy_turns = 0
-    current_turn = None
-    location = None
-    buff_available = True
-    buffs = []
+    current_turn = "None"
+    location = "None"
+    defence_buff_image = loadtransimg("images/Modifiers/Defence Buff.png")
+    attack_buff_image = loadtransimg("images/Modifiers/Attack Buff.png")
+    stun_image = loadtransimg("images/Modifiers/Stun.png")
+    ally_buffs = []
+    enemy_buffs = []
     guis = []
 
     allyteam = combatants[0:3]
@@ -722,7 +718,7 @@ def demo():
                                                             ally.hitpoints = ally.full_health
                                         gui.cd = 4
                                         if gui.stat_target != "health":
-                                            buffs.append(("allies", gui.stat_target, gui.stat_increase, ally_turns,
+                                            ally_buffs.append((gui.stat_target, gui.stat_increase, ally_turns,
                                                           gui.duration))
                                             ally_turns -= 1
                                         gui.starting_turn = combatants[0].turns + 1
@@ -732,7 +728,7 @@ def demo():
                                         guis = []
                                         combatants[0].turns += 1
                                         ally_turns += 1
-                                        current_turn = None
+                                        current_turn = "None"
             elif unit2attackbar >= 100:
                 turninit = True
                 recieveinput = False
@@ -759,7 +755,7 @@ def demo():
                                                             ally.hitpoints = ally.full_health
                                         gui.cd = 4
                                         if gui.stat_target != "health":
-                                            buffs.append(("allies", gui.stat_target, gui.stat_increase, ally_turns, gui.duration))
+                                            ally_buffs.append((gui.stat_target, gui.stat_increase, ally_turns, gui.duration))
                                             ally_turns -= 1
                                         gui.starting_turn = combatants[1].turns + 1
                                         unit2attackbar = 0
@@ -768,7 +764,7 @@ def demo():
                                         guis = []
                                         combatants[1].turns += 1
                                         ally_turns += 1
-                                        current_turn = None
+                                        current_turn = "None"
             elif unit3attackbar >= 100:
                 turninit = True
                 recieveinput = False
@@ -795,7 +791,7 @@ def demo():
                                                             ally.hitpoints = ally.full_health
                                         gui.cd = 4
                                         if gui.stat_target != "health":
-                                            buffs.append(("allies", gui.stat_target, gui.stat_increase, ally_turns,
+                                            ally_buffs.append((gui.stat_target, gui.stat_increase, ally_turns,
                                                           gui.duration))
                                             ally_turns -= 1
                                         gui.starting_turn = combatants[2].turns + 1
@@ -805,7 +801,7 @@ def demo():
                                         guis = []
                                         combatants[2].turns += 1
                                         ally_turns += 1
-                                        current_turn = None
+                                        current_turn = "None"
             elif unit4attackbar >= 100:
                 if combatants[3].stunned:
                     unit4attackbar = 0
@@ -861,7 +857,7 @@ def demo():
                 turninit = False
                 recieveinput = True
 
-            if current_turn:
+            if current_turn != "None":
                 for enemy in enemyteam:
                     if enemy.is_inside() and enemy.state != "dead":
                         location = (enemy.pos[0] + 120, enemy.pos[1] - 80)
@@ -888,8 +884,8 @@ def demo():
                             guis = []
                             combatant.turns += 1
                             ally_turns += 1
-                            current_turn = None
-                            location = None
+                            current_turn = "None"
+                            location = "None"
 
         def combatimages(list):
 
@@ -1277,9 +1273,8 @@ def demo():
                 turn = 4
             elif unit6attackbar >= 100:
                 turn = 5
-
             else:
-                turn = None
+                turn = "None"
 
             # Defining unit positioning
 
@@ -1416,30 +1411,46 @@ def demo():
         for gui in guis:
             gui.draw(screen)
 
-        if location:
+        if location != "None":
             screen.blit(pygame.image.load("pixelarrow.png"), location)
 
         # ("allies", gui.stat_target, gui.stat_increase, turns, gui.duration)
-        for ally in allyteam:
-            if ally:
-                for i, buff in enumerate(buffs):
-                    if buff[0] == "allies":
-                        if ally_turns - buff[3] == buff[4]:
-                            if buff[1] == "attack":
-                                ally.attack = ally.base_attack
-                            elif buff[1] == "armor":
-                                ally.armor = ally.base_armor
-                            buffs.remove(buff)
-                        if buff[1] == "attack":
-                            pygame.draw.rect(screen, (255, 0, 0), ((ally.pos[0]+20)+(40*i), ally.pos[1]-30, 30, 30))
-                        elif buff[1] == "armor":
-                            pygame.draw.rect(screen, (0, 0, 255), ((ally.pos[0]+20)+(40*i), ally.pos[1]-30, 30, 30))
+        for combatant in combatants:
+            if combatant:
+                for i, buff in enumerate(ally_buffs):
+                    if combatant in allyteam:
+                        if ally_turns - buff[2] == buff[3]:
+                            if buff[0] == "attack":
+                                combatant.attack = combatant.base_attack
+                            elif buff[0] == "armor":
+                                combatant.armor = combatant.base_armor
+                            ally_buffs.remove(buff)
+                        if buff[0] == "attack":
+                            screen.blit(attack_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                        elif buff[0] == "armor":
+                            screen.blit(defence_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                for i, buff in enumerate(enemy_buffs):
+                    if combatant in enemyteam:
+                        if enemy_turns - buff[2] == buff[3]:
+                            if buff[0] == "attack":
+                                combatant.attack = combatant.base_attack
+                            elif buff[0] == "armor":
+                                combatant.armor = combatant.base_armor
+                            ally_buffs.remove(buff)
+                        if buff[0] == "attack":
+                            screen.blit(attack_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                        elif buff[0] == "armor":
+                            screen.blit(defence_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                if combatant.stunned:
+                    screen.blit(stun_image, (combatant.pos[0]+170, combatant.pos[1]-60, 30, 30))
+
 
         pygame.mouse.set_visible(False)
         screen.blit(cursorimg, (pygame.mouse.get_pos()))
 
         pygame.display.update()
         Clock.tick(120)
+
 
 if __name__ == "__main__":
     main_menu()

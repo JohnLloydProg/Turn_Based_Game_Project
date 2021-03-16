@@ -8,7 +8,7 @@ class Move:
         self.w = w
         self.h = h
         self.color = color
-        self.type = None
+        self.type = "None"
         self.starting_turn = 0
         self.cd = 0
 
@@ -26,7 +26,7 @@ class ArcherAttack(Move):
         Move.__init__(self, x, y, w, h, color)
         self.damage_multiplier = 1.5
         self.type = "attack"
-        self.effect = None
+        self.effect = "None"
 
 
 class SpearAttack(Move):
@@ -34,7 +34,7 @@ class SpearAttack(Move):
         Move.__init__(self, x, y, w, h, color)
         self.damage_multiplier = 1
         self.type = "attack"
-        self.effect = None
+        self.effect = "None"
 
 
 class MageAttack(Move):
@@ -42,7 +42,7 @@ class MageAttack(Move):
         Move.__init__(self, x, y, w, h, color)
         self.damage_multiplier = 1.75
         self.type = "attack"
-        self.effect = None
+        self.effect = "None"
 
 
 class BossAttack(Move):
@@ -50,7 +50,7 @@ class BossAttack(Move):
         Move.__init__(self, x, y, w, h, color)
         self.damage_multiplier = 2
         self.type = "attack"
-        self.effect = None
+        self.effect = "None"
 
 
 class MageBuff(Move):

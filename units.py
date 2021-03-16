@@ -45,8 +45,8 @@ class Unit:
                                   loadtransimg('images/Unit Gui/AttackBars/AttackBar_16.png'), loadtransimg('images/Unit Gui/AttackBars/AttackBar_17.png'),
                                   loadtransimg('images/Unit Gui/AttackBars/AttackBar_18.png'), loadtransimg('images/Unit Gui/AttackBars/AttackBar_19.png'),
                                   loadtransimg('images/Unit Gui/AttackBars/AttackBar_20.png')]
-        self.xpos = None
-        self.pos = None
+        self.xpos = 0
+        self.pos = (0, 0)
         self.stunned = False
         self.turns = 0
 
