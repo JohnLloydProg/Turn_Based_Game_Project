@@ -861,8 +861,8 @@ def demo():
                 turninit = False
                 recieveinput = True
 
-            for enemy in enemyteam:
-                if current_turn:
+            if current_turn:
+                for enemy in enemyteam:
                     if enemy.is_inside() and enemy.state != "dead":
                         location = (enemy.pos[0] + 120, enemy.pos[1] - 80)
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
