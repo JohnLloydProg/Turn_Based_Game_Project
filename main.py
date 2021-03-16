@@ -889,6 +889,7 @@ def demo():
                             combatant.turns += 1
                             ally_turns += 1
                             current_turn = None
+                            location = None
 
         def combatimages(list):
 
