@@ -47,6 +47,7 @@ class Unit:
                                   loadtransimg('images/Unit Gui/AttackBars/AttackBar_20.png')]
         self.xpos = None
         self.pos = None
+        self.stunned = False
         self.turns = 0
 
     def hud(self, attackbar, coordinates):
@@ -113,7 +114,7 @@ class Spear(Unit):
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'),
                                loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png'), loadtransimg('UnitAnimations/SpearSkeleton/Idle/spear skeleton13.png')]
         self.death_animation = []
-        self.moves = [moves.SpearAttack(1800, 960, 100, 100, (0, 255, 255)), moves.SpearBuff(1680, 960, 100, 100, (0, 255, 0))]
+        self.moves = [moves.SpearAttack(1800, 960, 100, 100, (0, 255, 255)), moves.SpearBuff(1680, 960, 100, 100, (0, 255, 0)), moves.SpearStun(1560, 960, 100, 100, (255, 255, 0))]
         self.attack_move = self.moves[0]
 
 
