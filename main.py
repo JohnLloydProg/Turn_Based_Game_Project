@@ -729,14 +729,14 @@ def demo():
                                         if gui.stat_target != "health":
                                             ally_buffs.append((gui.stat_target, gui.stat_increase, ally_turns,
                                                           gui.duration))
-                                            ally_turns -= 1
+                                        else:
+                                            ally_turns += 1
                                         gui.starting_turn = combatants[0].turns + 1
                                         unit1attackbar = 0
                                         recieveinput = True
                                         turninit = False
                                         guis = []
                                         combatants[0].turns += 1
-                                        ally_turns += 1
                                         current_turn = "None"
             elif unit2attackbar >= 100:
                 if combatants[1].stunned:
@@ -773,14 +773,14 @@ def demo():
                                         gui.cd = 4
                                         if gui.stat_target != "health":
                                             ally_buffs.append((gui.stat_target, gui.stat_increase, ally_turns, gui.duration))
-                                            ally_turns -= 1
+                                        else:
+                                            ally_turns += 1
                                         gui.starting_turn = combatants[1].turns + 1
                                         unit2attackbar = 0
                                         recieveinput = True
                                         turninit = False
                                         guis = []
                                         combatants[1].turns += 1
-                                        ally_turns += 1
                                         current_turn = "None"
             elif unit3attackbar >= 100:
                 if combatants[2].stunned:
@@ -818,14 +818,14 @@ def demo():
                                         if gui.stat_target != "health":
                                             ally_buffs.append((gui.stat_target, gui.stat_increase, ally_turns,
                                                           gui.duration))
-                                            ally_turns -= 1
+                                        else:
+                                            ally_turns += 1
                                         gui.starting_turn = combatants[2].turns + 1
                                         unit3attackbar = 0
                                         recieveinput = True
                                         turninit = False
                                         guis = []
                                         combatants[2].turns += 1
-                                        ally_turns += 1
                                         current_turn = "None"
             elif unit4attackbar >= 100:
                 if combatants[3].stunned:
@@ -877,14 +877,12 @@ def demo():
                                     ally.armor += int(ally.armor * selected_move.stat_increase)
                         enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, enemy_turns,
                                            selected_move.duration))
-                        enemy_turns -= 1
                         selected_move.starting_turn = combatants[3].turns + 1
                         selected_move.cd = 4
                         unit4attackbar = 0
                         recieveinput = True
                         turninit = False
                         combatants[3].turns += 1
-                        enemy_turns += 1
                     elif selected_move.type == "attack":
                         if combatants[0].state != "dead":
                             enemy = combatants[0]
@@ -961,14 +959,12 @@ def demo():
                                     ally.armor += int(ally.armor * selected_move.stat_increase)
                         enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, enemy_turns,
                                             selected_move.duration))
-                        enemy_turns -= 1
                         selected_move.starting_turn = combatants[4].turns + 1
                         selected_move.cd = 4
                         unit5attackbar = 0
                         recieveinput = True
                         turninit = False
                         combatants[4].turns += 1
-                        enemy_turns += 1
                     elif selected_move.type == "attack":
                         if combatants[0].state != "dead":
                             enemy = combatants[0]
@@ -1045,14 +1041,12 @@ def demo():
                                     ally.armor += int(ally.armor * selected_move.stat_increase)
                         enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, enemy_turns,
                                             selected_move.duration))
-                        enemy_turns -= 1
                         selected_move.starting_turn = combatants[5].turns + 1
                         selected_move.cd = 4
                         unit6attackbar = 0
                         recieveinput = True
                         turninit = False
                         combatants[5].turns += 1
-                        enemy_turns += 1
                     elif selected_move.type == "attack":
                         if combatants[0].state != "dead":
                             enemy = combatants[0]
@@ -1697,6 +1691,7 @@ def demo():
                     if combatant in enemyteam:
                         if combatant.state != "dead":
                             if enemy_turns - buff[2] == buff[3]:
+                                print("end enemy buff")
                                 if buff[0] == "attack":
                                     combatant.attack = combatant.base_attack
                                 elif buff[0] == "armor":
@@ -1708,10 +1703,9 @@ def demo():
                                 screen.blit(defence_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
                 if combatant.stunned and combatant.state != "dead":
                     screen.blit(stun_image, (combatant.pos[0]+170, combatant.pos[1]-60, 30, 30))
-
         pygame.mouse.set_visible(False)
+        print(enemy_turns, enemy_buffs)
         screen.blit(cursorimg, (pygame.mouse.get_pos()))
-
         pygame.display.update()
         Clock.tick(120)
 
