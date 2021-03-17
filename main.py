@@ -217,7 +217,7 @@ def loadedimg(dirr, var):
 
 
 
-unit1 = Spear(808, 8595, 476, 111, SpearFrame)
+unit1 = Mage(808, 8595, 476, 111, MageFrame)
 unit2 = Boss(1450, 11700, 637, 95, BossFrame)
 unit3 = Archer(1602, 6540, 436, 101, ArcherFrame)
 unit4 = Spear(1082, 8155, 371, 106, SpearFrame)
@@ -567,6 +567,9 @@ def demo():
     defence_buff_image = loadtransimg("images/Modifiers/Defence Buff.png")
     attack_buff_image = loadtransimg("images/Modifiers/Attack Buff.png")
     stun_image = loadtransimg("images/Modifiers/Stun.png")
+    selected_enemy = None
+    selected_combatant = None
+
     ally_buffs = []
     enemy_buffs = []
     guis = []
@@ -1087,28 +1090,65 @@ def demo():
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                             if current_turn == combatants[0]:
                                 combatant = combatants[0]
-                                unit1attackbar = 0
+                                if not isinstance(combatant, (Archer, Mage, Boss)):
+                                    unit1attackbar = 0
                             elif current_turn == combatants[1]:
                                 combatant = combatants[1]
-                                unit2attackbar = 0
+                                if not isinstance(combatant, (Archer, Mage, Boss)):
+                                    unit2attackbar = 0
                             elif current_turn == combatants[2]:
                                 combatant = combatants[2]
-                                unit3attackbar = 0
-                            if random.choice([False, False, True, False]):
-                                critical_multiplier = 2
+                                if not isinstance(combatant, (Archer, Mage, Boss)):
+                                    unit3attackbar = 0
+                            if not isinstance(combatant, (Archer, Mage, Boss)):
+                                if random.choice([False, False, True, False]):
+                                    critical_multiplier = 2
+                                else:
+                                    critical_multiplier = 1
+                                enemy.hitpoints -= ((combatant.attack * combatant.attack_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                                if combatant.attack_move.effect == "stun":
+                                    enemy.stunned = True
+                                    combatant.attack_move.cd = 3
+                                recieveinput = True
+                                turninit = False
+                                guis = []
+                                combatant.turns += 1
+                                ally_turns += 1
+                                current_turn = "None"
+                                location = "None"
                             else:
-                                critical_multiplier = 1
-                            enemy.hitpoints -= ((combatant.attack * combatant.attack_move.damage_multiplier) - enemy.armor) * critical_multiplier
-                            if combatant.attack_move.effect == "stun":
-                                enemy.stunned = True
-                                combatant.attack_move.cd = 3
-                            recieveinput = True
-                            turninit = False
-                            guis = []
-                            combatant.turns += 1
-                            ally_turns += 1
-                            current_turn = "None"
-                            location = "None"
+                                selected_enemy = enemy
+                                selected_combatant = combatant
+                                combatant.animation_counter = 0
+                                combatant.state = "attacking"
+
+        if selected_enemy and selected_combatant:
+            if selected_combatant.attacked():
+                if random.choice([False, False, True, False]):
+                    critical_multiplier = 2
+                else:
+                    critical_multiplier = 1
+                selected_enemy.hitpoints -= ((selected_combatant.attack * selected_combatant.attack_move.damage_multiplier) - selected_enemy.armor) * critical_multiplier
+                if selected_combatant.attack_move.effect == "stun":
+                    selected_enemy.stunned = True
+                    selected_combatant.attack_move.cd = 3
+                recieveinput = True
+                turninit = False
+                guis = []
+                selected_combatant.turns += 1
+                ally_turns += 1
+                current_turn = "None"
+                location = "None"
+                selected_combatant.state = "idle"
+                selected_combatant.animation_counter = 0
+                if selected_combatant == combatants[0]:
+                    unit1attackbar = 0
+                elif selected_combatant == combatants[1]:
+                    unit2attackbar = 0
+                elif selected_combatant == combatants[2]:
+                    unit3attackbar = 0
+                selected_enemy = None
+                selected_combatant = None
 
         def combatimages(list):
 

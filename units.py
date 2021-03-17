@@ -90,6 +90,14 @@ class Archer(Unit):
                                 loadtransimg('UnitAnimations/ArcherSkeleton/Death/Archer Skeleton 41.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Death/Archer Skeleton 42.png'),
                                 loadtransimg('UnitAnimations/ArcherSkeleton/Death/Archer Skeleton 43.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Death/Archer Skeleton 44.png'),
                                 loadtransimg('UnitAnimations/ArcherSkeleton/Death/Archer Skeleton 45.png')]
+        self.attack_animation = [loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 14.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 15.png'),
+                                 loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 16.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 17.png'),
+                                 loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 18.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 19.png'),
+                                 loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 20.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 21.png'),
+                                 loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 22.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 23.png'),
+                                 loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 24.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 25.png'),
+                                 loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 26.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 27.png'),
+                                 loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 28.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 29.png')]
         self.moves = [moves.ArcherAttack(1800, 960, 100, 100, (255, 255, 0))]
         self.attack_move = self.moves[0]
 
@@ -98,6 +106,16 @@ class Archer(Unit):
             if self.animation_counter < (len(self.death_animation)-1)*25:
                 self.animation_counter += 1
             self.stillframe = self.death_animation[self.animation_counter//25]
+
+    def attacked(self):
+        if self.state == "attacking":
+            finished = False
+            if self.animation_counter < (len(self.attack_animation)-1)*10:
+                self.animation_counter += 1
+            self.stillframe = self.attack_animation[self.animation_counter//10]
+            if self.animation_counter == (len(self.attack_animation)-1)*10:
+                finished = True
+            return finished
 
 
 class Spear(Unit):
@@ -138,6 +156,12 @@ class Mage(Unit):
                                 loadtransimg('UnitAnimations/MageSkeleton/Death/Mage Skeleton-export36.png'),
                                 loadtransimg('UnitAnimations/MageSkeleton/Death/Mage Skeleton-export37.png'),
                                 loadtransimg('UnitAnimations/MageSkeleton/Death/Mage Skeleton-export38.png')]
+        self.attack_animation = [loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export14.png'), loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export15.png'),
+                                 loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export16.png'), loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export17.png'),
+                                 loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export18.png'), loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export19.png'),
+                                 loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export20.png'), loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export21.png'),
+                                 loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export22.png'), loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export23.png'),
+                                 loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export24.png'), loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export25.png')]
         self.moves = [moves.MageAttack(1800, 960, 100, 100, (255, 0, 255)), moves.MageBuff(1680, 960, 100, 100, (0, 255, 0))]
         self.attack_move = self.moves[0]
         
@@ -146,6 +170,16 @@ class Mage(Unit):
             if self.animation_counter < (len(self.death_animation)-1)*25:
                 self.animation_counter += 1
             self.stillframe = self.death_animation[self.animation_counter//25]
+
+    def attacked(self):
+        if self.state == "attacking":
+            finished = False
+            if self.animation_counter < (len(self.attack_animation)-1)*10:
+                self.animation_counter += 1
+            self.stillframe = self.attack_animation[self.animation_counter//10]
+            if self.animation_counter == (len(self.attack_animation)-1)*10:
+                finished = True
+            return finished
 
 
 class Boss(Unit):
@@ -166,6 +200,10 @@ class Boss(Unit):
                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss37.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss38.png'),
                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss39.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss40.png'),
                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss41.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Death/Skeleton Boss42.png')]
+        self.attack_animation = [loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss21.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss22.png'),
+                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss23.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss24.png'),
+                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss25.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss26.png'),
+                                 loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss27.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss28.png')]
         self.moves = [moves.BossAttack(1800, 960, 100, 100, (255, 0, 0)), moves.BossBuff(1680, 960, 100, 100, (0, 255, 0))]
         self.attack_move = self.moves[0]
 
@@ -174,3 +212,13 @@ class Boss(Unit):
             if self.animation_counter < (len(self.death_animation)-1)*25:
                 self.animation_counter += 1
             self.stillframe = self.death_animation[self.animation_counter//25]
+
+    def attacked(self):
+        if self.state == "attacking":
+            finished = False
+            if self.animation_counter < (len(self.attack_animation)-1)*8:
+                self.animation_counter += 1
+            self.stillframe = self.attack_animation[self.animation_counter//8]
+            if self.animation_counter == (len(self.attack_animation)-1)*8:
+                finished = True
+            return finished
