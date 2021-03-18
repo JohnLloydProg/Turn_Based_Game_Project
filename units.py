@@ -98,6 +98,9 @@ class Archer(Unit):
                                  loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 24.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 25.png'),
                                  loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 26.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 27.png'),
                                  loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 28.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Attack/Archer Skeleton 29.png')]
+        self.hit_animation = [loadtransimg('UnitAnimations/ArcherSkeleton/Hit/Archer Skeleton 31.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Hit/Archer Skeleton 32.png'),
+                              loadtransimg('UnitAnimations/ArcherSkeleton/Hit/Archer Skeleton 33.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Hit/Archer Skeleton 34.png'),
+                              loadtransimg('UnitAnimations/ArcherSkeleton/Hit/Archer Skeleton 35.png'), loadtransimg('UnitAnimations/ArcherSkeleton/Hit/Archer Skeleton 36.png')]
         self.moves = [moves.ArcherAttack(1800, 960, 100, 100, (255, 255, 0))]
         self.attack_move = self.moves[0]
 
@@ -107,13 +110,26 @@ class Archer(Unit):
                 self.animation_counter += 1
             self.stillframe = self.death_animation[self.animation_counter//25]
 
-    def attacked(self):
+    def attacked(self, enemy, speed):
         if self.state == "attacking":
             finished = False
-            if self.animation_counter < (len(self.attack_animation)-1)*10:
+            if self.animation_counter < (len(self.attack_animation)-1)*speed:
                 self.animation_counter += 1
-            self.stillframe = self.attack_animation[self.animation_counter//10]
-            if self.animation_counter == (len(self.attack_animation)-1)*10:
+            self.stillframe = self.attack_animation[self.animation_counter//speed]
+            if self.animation_counter == (len(self.attack_animation)-1)*speed:
+                finished = True
+                if enemy.state != "hit":
+                    enemy.animation_counter = 0
+                    enemy.state = "hit"
+            return finished
+
+    def hit(self, speed):
+        if self.state == "hit":
+            finished = False
+            if self.animation_counter < (len(self.hit_animation)-1)*speed:
+                self.animation_counter += 1
+            self.stillframe = self.hit_animation[self.animation_counter//speed]
+            if self.animation_counter == (len(self.hit_animation)-1)*speed:
                 finished = True
             return finished
 
@@ -162,6 +178,9 @@ class Mage(Unit):
                                  loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export20.png'), loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export21.png'),
                                  loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export22.png'), loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export23.png'),
                                  loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export24.png'), loadtransimg('UnitAnimations/MageSkeleton/Attack/Mage Skeleton-export25.png')]
+        self.hit_animation = [loadtransimg('UnitAnimations/MageSkeleton/Hit/Mage Skeleton-export26.png'), loadtransimg('UnitAnimations/MageSkeleton/Hit/Mage Skeleton-export27.png'),
+                              loadtransimg('UnitAnimations/MageSkeleton/Hit/Mage Skeleton-export28.png'), loadtransimg('UnitAnimations/MageSkeleton/Hit/Mage Skeleton-export29.png'),
+                              loadtransimg('UnitAnimations/MageSkeleton/Hit/Mage Skeleton-export30.png'), loadtransimg('UnitAnimations/MageSkeleton/Hit/Mage Skeleton-export31.png')]
         self.moves = [moves.MageAttack(1800, 960, 100, 100, (255, 0, 255)), moves.MageBuff(1680, 960, 100, 100, (0, 255, 0))]
         self.attack_move = self.moves[0]
         
@@ -171,13 +190,26 @@ class Mage(Unit):
                 self.animation_counter += 1
             self.stillframe = self.death_animation[self.animation_counter//25]
 
-    def attacked(self):
+    def attacked(self, enemy, speed):
         if self.state == "attacking":
             finished = False
-            if self.animation_counter < (len(self.attack_animation)-1)*10:
+            if self.animation_counter < (len(self.attack_animation)-1)*speed:
                 self.animation_counter += 1
-            self.stillframe = self.attack_animation[self.animation_counter//10]
-            if self.animation_counter == (len(self.attack_animation)-1)*10:
+            self.stillframe = self.attack_animation[self.animation_counter//speed]
+            if self.animation_counter == (len(self.attack_animation)-1)*speed:
+                finished = True
+                if enemy.state != "hit":
+                    enemy.animation_counter = 0
+                    enemy.state = "hit"
+            return finished
+
+    def hit(self, speed):
+        if self.state == "hit":
+            finished = False
+            if self.animation_counter < (len(self.hit_animation)-1)*speed:
+                self.animation_counter += 1
+            self.stillframe = self.hit_animation[self.animation_counter//speed]
+            if self.animation_counter == (len(self.hit_animation)-1)*speed:
                 finished = True
             return finished
 
@@ -204,6 +236,9 @@ class Boss(Unit):
                                  loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss23.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss24.png'),
                                  loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss25.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss26.png'),
                                  loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss27.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Attack/Skeleton Boss28.png')]
+        self.hit_animation = [loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss29.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss30.png'),
+                              loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss31.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss32.png'),
+                              loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss33.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss34.png')]
         self.moves = [moves.BossAttack(1800, 960, 100, 100, (255, 0, 0)), moves.BossBuff(1680, 960, 100, 100, (0, 255, 0))]
         self.attack_move = self.moves[0]
 
@@ -213,12 +248,25 @@ class Boss(Unit):
                 self.animation_counter += 1
             self.stillframe = self.death_animation[self.animation_counter//25]
 
-    def attacked(self):
+    def attacked(self, enemy, speed):
         if self.state == "attacking":
             finished = False
-            if self.animation_counter < (len(self.attack_animation)-1)*8:
+            if self.animation_counter < (len(self.attack_animation)-1)*speed:
                 self.animation_counter += 1
-            self.stillframe = self.attack_animation[self.animation_counter//8]
-            if self.animation_counter == (len(self.attack_animation)-1)*8:
+            self.stillframe = self.attack_animation[self.animation_counter//speed]
+            if self.animation_counter == (len(self.attack_animation)-1)*speed:
+                finished = True
+                if enemy.state != "hit":
+                    enemy.animation_counter = 0
+                    enemy.state = "hit"
+            return finished
+
+    def hit(self, speed):
+        if self.state == "hit":
+            finished = False
+            if self.animation_counter < (len(self.hit_animation)-1)*speed:
+                self.animation_counter += 1
+            self.stillframe = self.hit_animation[self.animation_counter//speed]
+            if self.animation_counter == (len(self.hit_animation)-1)*speed:
                 finished = True
             return finished

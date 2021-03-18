@@ -894,20 +894,29 @@ def demo():
                             if e.state != "dead":
                                 if e.hitpoints < enemy.hitpoints:
                                     enemy = e
-                        if random.choice([False, False, True, False]):
-                            critical_multiplier = 2
-                        else:
-                            critical_multiplier = 1
-                        enemy.hitpoints -= ((combatants[3].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
-                        if selected_move.effect == "stun":
-                            enemy.stunned = True
-                            selected_move.starting_turn = combatants[3].turns + 1
-                            selected_move.cd = 3
-                        unit4attackbar = 0
-                        recieveinput = True
-                        turninit = False
-                        combatants[3].turns += 1
-                        enemy_turns += 1
+                        if combatants[3].state != "attacking" and combatants[5].state != "hit":
+                            combatants[3].animation_counter = 0
+                            combatants[3].state = "attacking"
+                        if combatants[3].attacked(enemy, 60):
+                            if enemy.hit(70):
+                                if random.choice([False, False, True, False]):
+                                    critical_multiplier = 2
+                                else:
+                                    critical_multiplier = 1
+                                enemy.hitpoints -= ((combatants[3].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                                if selected_move.effect == "stun":
+                                    enemy.stunned = True
+                                    selected_move.starting_turn = combatants[3].turns + 1
+                                    selected_move.cd = 3
+                                unit4attackbar = 0
+                                recieveinput = True
+                                turninit = False
+                                combatants[3].turns += 1
+                                enemy_turns += 1
+                                combatants[4].state = "idle"
+                                combatants[4].animation_counter = 0
+                                enemy.state = "idle"
+                                enemy.animation_counter = 0
             elif unit5attackbar >= 100:
                 if combatants[4].stunned:
                     unit5attackbar = 0
@@ -976,21 +985,30 @@ def demo():
                             if e.state != "dead":
                                 if e.hitpoints < enemy.hitpoints:
                                     enemy = e
-                        if random.choice([False, False, True, False]):
-                            critical_multiplier = 2
-                        else:
-                            critical_multiplier = 1
-                        enemy.hitpoints -= ((combatants[
-                                                 4].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
-                        if selected_move.effect == "stun":
-                            enemy.stunned = True
-                            selected_move.starting_turn = combatants[4].turns + 1
-                            selected_move.cd = 3
-                        unit5attackbar = 0
-                        recieveinput = True
-                        turninit = False
-                        combatants[4].turns += 1
-                        enemy_turns += 1
+                        if combatants[4].state != "attacking" and combatants[4].state != "hit":
+                            combatants[4].animation_counter = 0
+                            combatants[4].state = "attacking"
+                        if combatants[4].attacked(enemy, 60):
+                            if enemy.hit(70):
+                                if random.choice([False, False, True, False]):
+                                    critical_multiplier = 2
+                                else:
+                                    critical_multiplier = 1
+                                enemy.hitpoints -= ((combatants[
+                                                         4].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                                if selected_move.effect == "stun":
+                                    enemy.stunned = True
+                                    selected_move.starting_turn = combatants[4].turns + 1
+                                    selected_move.cd = 3
+                                unit5attackbar = 0
+                                recieveinput = True
+                                turninit = False
+                                combatants[4].turns += 1
+                                enemy_turns += 1
+                                combatants[4].state = "idle"
+                                combatants[4].animation_counter = 0
+                                enemy.state = "idle"
+                                enemy.animation_counter = 0
             elif unit6attackbar >= 100:
                 if combatants[5].stunned:
                     unit6attackbar = 0
@@ -1058,21 +1076,30 @@ def demo():
                             if e.state != "dead":
                                 if e.hitpoints < enemy.hitpoints:
                                     enemy = e
-                        if random.choice([False, False, True, False]):
-                            critical_multiplier = 2
-                        else:
-                            critical_multiplier = 1
-                        enemy.hitpoints -= ((combatants[
-                                                 5].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
-                        if selected_move.effect == "stun":
-                            enemy.stunned = True
-                            selected_move.starting_turn = combatants[5].turns + 1
-                            selected_move.cd = 3
-                        unit6attackbar = 0
-                        recieveinput = True
-                        turninit = False
-                        combatants[5].turns += 1
-                        enemy_turns += 1
+                        if combatants[5].state != "attacking" and combatants[5].state != "hit":
+                            combatants[5].animation_counter = 0
+                            combatants[5].state = "attacking"
+                        if combatants[5].attacked(enemy, 60):
+                            if enemy.hit(70):
+                                if random.choice([False, False, True, False]):
+                                    critical_multiplier = 2
+                                else:
+                                    critical_multiplier = 1
+                                enemy.hitpoints -= ((combatants[
+                                                         5].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
+                                if selected_move.effect == "stun":
+                                    enemy.stunned = True
+                                    selected_move.starting_turn = combatants[5].turns + 1
+                                    selected_move.cd = 3
+                                unit6attackbar = 0
+                                recieveinput = True
+                                turninit = False
+                                combatants[5].turns += 1
+                                enemy_turns += 1
+                                combatants[5].state = "idle"
+                                combatants[5].animation_counter = 0
+                                enemy.state = "idle"
+                                enemy.animation_counter = 0
             else:
                 turninit = False
                 recieveinput = True
@@ -1117,32 +1144,35 @@ def demo():
                                 combatant.state = "attacking"
 
         if selected_enemy and selected_combatant:
-            if selected_combatant.attacked():
-                if random.choice([False, False, True, False]):
-                    critical_multiplier = 2
-                else:
-                    critical_multiplier = 1
-                selected_enemy.hitpoints -= ((selected_combatant.attack * selected_combatant.attack_move.damage_multiplier) - selected_enemy.armor) * critical_multiplier
-                if selected_combatant.attack_move.effect == "stun":
-                    selected_enemy.stunned = True
-                    selected_combatant.attack_move.cd = 3
-                recieveinput = True
-                turninit = False
-                guis = []
-                selected_combatant.turns += 1
-                ally_turns += 1
-                current_turn = "None"
-                location = "None"
-                selected_combatant.state = "idle"
-                selected_combatant.animation_counter = 0
-                if selected_combatant == combatants[0]:
-                    unit1attackbar = 0
-                elif selected_combatant == combatants[1]:
-                    unit2attackbar = 0
-                elif selected_combatant == combatants[2]:
-                    unit3attackbar = 0
-                selected_enemy = None
-                selected_combatant = None
+            if selected_combatant.attacked(selected_enemy, 8):
+                if selected_enemy.hit(15):
+                    if random.choice([False, False, True, False]):
+                        critical_multiplier = 2
+                    else:
+                        critical_multiplier = 1
+                    selected_enemy.hitpoints -= ((selected_combatant.attack * selected_combatant.attack_move.damage_multiplier) - selected_enemy.armor) * critical_multiplier
+                    if selected_combatant.attack_move.effect == "stun":
+                        selected_enemy.stunned = True
+                        selected_combatant.attack_move.cd = 3
+                    recieveinput = True
+                    turninit = False
+                    guis = []
+                    selected_combatant.turns += 1
+                    ally_turns += 1
+                    current_turn = "None"
+                    location = "None"
+                    selected_combatant.state = "idle"
+                    selected_enemy.state = "idle"
+                    selected_combatant.animation_counter = 0
+                    selected_enemy.animation_counter = 0
+                    if selected_combatant == combatants[0]:
+                        unit1attackbar = 0
+                    elif selected_combatant == combatants[1]:
+                        unit2attackbar = 0
+                    elif selected_combatant == combatants[2]:
+                        unit3attackbar = 0
+                    selected_enemy = None
+                    selected_combatant = None
 
         def combatimages(list):
 
@@ -1704,7 +1734,6 @@ def demo():
                 if combatant.stunned and combatant.state != "dead":
                     screen.blit(stun_image, (combatant.pos[0]+170, combatant.pos[1]-60, 30, 30))
         pygame.mouse.set_visible(False)
-        print(enemy_turns, enemy_buffs)
         screen.blit(cursorimg, (pygame.mouse.get_pos()))
         pygame.display.update()
         Clock.tick(120)
