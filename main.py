@@ -216,11 +216,19 @@ def loadedimg(dirr, var):
         var.append(name)
 
 
+'''Units
+Mage(808, 8595, 476, 111, MageFrame)
+Boss(1450, 11700, 637, 95, BossFrame)
+Archer(1602, 6540, 436, 101, ArcherFrame)
+Spear(1082, 8155, 371, 106, SpearFrame)
+'''
+
+
 
 unit1 = Mage(808, 8595, 476, 111, MageFrame)
 unit2 = Boss(1450, 11700, 637, 95, BossFrame)
 unit3 = Archer(1602, 6540, 436, 101, ArcherFrame)
-unit4 = Spear(1082, 8155, 371, 106, SpearFrame)
+unit4 = Boss(1450, 11700, 637, 95, BossFrame)
 unit5 = Mage(808, 8595, 476, 111, MageFrame)
 unit6 = Archer(1602, 6540, 436, 101, ArcherFrame)
 
@@ -581,8 +589,12 @@ def demo():
         if combatant:
             if combatant.stillframe == BossFrame and combatant in allyteam:
                 combatant.xpos = combatant.stillframe.get_width() / 2 - 60
+            if combatant.stillframe == SpearFrame and combatant in allyteam:
+                combatant.xpos = combatant.stillframe.get_width() / 2 + 90
 
             if combatant.stillframe == BossFrame and combatant in enemyteam:
+                combatant.xpos = combatant.stillframe.get_width() / 2 + 60
+            if combatant.stillframe == SpearFrame and combatant in enemyteam:
                 combatant.xpos = combatant.stillframe.get_width() / 2 + 60
 
 
