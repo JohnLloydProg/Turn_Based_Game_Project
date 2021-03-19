@@ -9,6 +9,7 @@ class Move:
         self.type = "None"
         self.starting_turn = 0
         self.cd = 0
+        self.in_cooldown = False
 
     def is_inside(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()

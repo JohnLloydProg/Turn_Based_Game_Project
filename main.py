@@ -568,6 +568,8 @@ def demo():
     global turn
     running = True
     combatants = [unit1, unit2, unit3, unit4, unit5, unit6]
+    transparent = pygame.Surface((100, 100), pygame.SRCALPHA)
+    transparent.fill((0, 0, 0, 125))
     ally_turns = 0
     enemy_turns = 0
     current_turn = "None"
@@ -718,10 +720,11 @@ def demo():
                     recieveinput = False
                     guis = combatants[0].moves
                 if not recieveinput:
-                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                        for gui in guis:
-                            if gui.is_inside():
-                                if combatants[0].turns - gui.starting_turn >= gui.cd:
+                    for gui in guis:
+                        if combatants[0].turns - gui.starting_turn >= gui.cd:
+                            gui.in_cooldown = False
+                            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                                if gui.is_inside():
                                     if gui.type == "attack":
                                         current_turn = combatants[0]
                                         combatants[0].attack_move = gui
@@ -748,6 +751,8 @@ def demo():
                                         guis = []
                                         combatants[0].turns += 1
                                         current_turn = "None"
+                        else:
+                            gui.in_cooldown = True
             elif unit2attackbar >= 100:
                 if combatants[1].stunned:
                     unit2attackbar = 0
@@ -761,10 +766,11 @@ def demo():
                     recieveinput = False
                     guis = combatants[1].moves
                 if not recieveinput:
-                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                        for gui in guis:
-                            if gui.is_inside():
-                                if combatants[1].turns - gui.starting_turn >= gui.cd:
+                    for gui in guis:
+                        if combatants[1].turns - gui.starting_turn >= gui.cd or gui.cd == 0:
+                            gui.in_cooldown = False
+                            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                                if gui.is_inside():
                                     if gui.type == "attack":
                                         current_turn = combatants[1]
                                         combatants[1].attack_move = gui
@@ -790,6 +796,8 @@ def demo():
                                         guis = []
                                         combatants[1].turns += 1
                                         current_turn = "None"
+                        else:
+                            gui.in_cooldown = True
             elif unit3attackbar >= 100:
                 if combatants[2].stunned:
                     unit3attackbar = 0
@@ -803,10 +811,11 @@ def demo():
                     recieveinput = False
                     guis = combatants[2].moves
                 if not recieveinput:
-                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                        for gui in guis:
-                            if gui.is_inside():
-                                if combatants[2].turns - gui.starting_turn >= gui.cd:
+                    for gui in guis:
+                        if combatants[2].turns - gui.starting_turn >= gui.cd or gui.cd == 0:
+                            gui.in_cooldown = False
+                            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                                if gui.is_inside():
                                     if gui.type == "attack":
                                         current_turn = combatants[2]
                                         combatants[2].attack_move = gui
@@ -833,6 +842,8 @@ def demo():
                                         guis = []
                                         combatants[2].turns += 1
                                         current_turn = "None"
+                        else:
+                               gui.in_cooldown = True
             elif unit4attackbar >= 100:
                 if combatants[3].stunned:
                     unit4attackbar = 0
@@ -1130,7 +1141,10 @@ def demo():
             if current_turn != "None":
                 for enemy in enemyteam:
                     if enemy.is_inside() and enemy.state != "dead":
-                        location = (enemy.x + 120, enemy.y - 80)
+                        if enemy != combatants[3]:
+                            location = (enemy.x + 120, enemy.y - 80)
+                        else:
+                            location = (enemy.x + 170, enemy.y - 80)
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                             if current_turn == combatants[0]:
                                 combatant = combatants[0]
@@ -1753,6 +1767,8 @@ def demo():
 
         for gui in guis:
             gui.draw(screen)
+            if gui.in_cooldown:
+                screen.blit(transparent, (gui.x, gui.y))
 
         if location != "None":
             screen.blit(pygame.image.load("pixelarrow.png"), location)
@@ -1779,9 +1795,9 @@ def demo():
                                     elif buff[0] == "armor":
                                         combatant.armor = combatant.base_armor
                                     ally_buffs.remove(buff)
-                            if buff[0] == "attack":
+                            if buff[0] == "attack" and combatant.state != "attacking":
                                 screen.blit(attack_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
-                            elif buff[0] == "armor":
+                            elif buff[0] == "armor" and combatant.state != "attacking":
                                 screen.blit(defence_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
                 for i, buff in enumerate(enemy_buffs):
                     if combatant in enemyteam:
@@ -1793,9 +1809,9 @@ def demo():
                                     elif buff[0] == "armor":
                                         combatant.armor = combatant.base_armor
                                     enemy_buffs.remove(buff)
-                            if buff[0] == "attack":
+                            if buff[0] == "attack" and combatant.state != "attacking":
                                 screen.blit(attack_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
-                            elif buff[0] == "armor":
+                            elif buff[0] == "armor" and combatant.state != "attacking":
                                 screen.blit(defence_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
                 if combatant.stunned and combatant.state != "dead":
                     screen.blit(stun_image, (combatant.x+170, combatant.y-60, 30, 30))

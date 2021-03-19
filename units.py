@@ -56,6 +56,8 @@ class Unit:
             attackbar = 100
         if self.hitpoints < 0:
             self.hitpoints = 0
+        elif self.hitpoints > self.full_health:
+            self.hitpoints = self.full_health
         healt_bar_image = self.health_bar_images[int((self.hitpoints/self.full_health)*100//5)]
         attack_bar_image = self.attack_bar_images[int(attackbar//5)]
         return [(healt_bar_image, coordinates), (attack_bar_image, (coordinates[0], coordinates[1]+32))]
@@ -161,9 +163,6 @@ class Spear(Unit):
         self.attack_animation = [loadtransimg('UnitAnimations/SpearSkeleton/Attack/spear skeleton15.png'), loadtransimg('UnitAnimations/SpearSkeleton/Attack/spear skeleton16.png'),
                                  loadtransimg('UnitAnimations/SpearSkeleton/Attack/spear skeleton17.png'), loadtransimg('UnitAnimations/SpearSkeleton/Attack/spear skeleton18.png'),
                                  loadtransimg('UnitAnimations/SpearSkeleton/Attack/spear skeleton19.png'), loadtransimg('UnitAnimations/SpearSkeleton/Attack/spear skeleton20.png')]
-        self.move_animation = [loadtransimg('UnitAnimations/SpearSkeleton/Move/spear skeleton40.png'), loadtransimg('UnitAnimations/SpearSkeleton/Move/spear skeleton41.png'),
-                               loadtransimg('UnitAnimations/SpearSkeleton/Move/spear skeleton42.png'), loadtransimg('UnitAnimations/SpearSkeleton/Move/spear skeleton43.png'),
-                               loadtransimg('UnitAnimations/SpearSkeleton/Move/spear skeleton44.png'), loadtransimg('UnitAnimations/SpearSkeleton/Move/spear skeleton45.png')]
         self.moves = [moves.SpearAttack(1800, 960, loadtransimg('Unit move Cards/Spear-Basicmove.png')), moves.SpearBuff(1680, 960, loadtransimg('Unit move Cards/Spear-Secondmove.png'))]
         self.attack_move = self.moves[0]
 
@@ -176,44 +175,15 @@ class Spear(Unit):
     def attacked(self, enemy, speed):
         if self.state == "attacking":
             finished = False
-            if self.move(enemy, speed):
-                if self.animation_counter < (len(self.attack_animation)-1)*speed:
-                    self.animation_counter += 1
-                elif self.animation_counter > (len(self.attack_animation)-1)*speed:
-                    self.animation_counter = 0
-                self.stillframe = self.attack_animation[self.animation_counter//speed]
-                if self.animation_counter == (len(self.attack_animation)-1)*speed:
-                    finished = True
-                    if enemy.state != "hit":
-                        enemy.animation_counter = 0
-                        enemy.state = "hit"
-                return finished
-
-    def move(self, enemy, speed):
-        finished = False
-        if (self.x, self.y) != (enemy.x, enemy.y):
-            if self.animation_counter == (len(self.move_animation) - 1) * speed:
-                self.animation_counter = 0
-            self.stillframe = self.move_animation[self.animation_counter // speed]
-            self.animation_counter += 1
-            if self.x < enemy.x:
-                if speed > 10:
-                    self.x += 1
-                else:
-                    self.x += 5
-            elif self.x > enemy.x:
-                if speed > 10:
-                    self.x -= 1
-                else:
-                    self.x -= 5
-            else:
-                if self.y < enemy.y:
-                    self.y += 1
-                elif self.y > enemy.y:
-                    self.y -= 1
-        else:
-            finished = True
-        return finished
+            if self.animation_counter < (len(self.attack_animation)-1)*speed:
+                self.animation_counter += 1
+            self.stillframe = self.attack_animation[self.animation_counter//speed]
+            if self.animation_counter == (len(self.attack_animation)-1)*speed:
+                finished = True
+                if enemy.state != "hit":
+                    enemy.animation_counter = 0
+                    enemy.state = "hit"
+            return finished
 
     def hit(self, speed):
         if self.state == "hit":
@@ -313,9 +283,6 @@ class Boss(Unit):
         self.hit_animation = [loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss29.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss30.png'),
                               loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss31.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss32.png'),
                               loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss33.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Hit/Skeleton Boss34.png')]
-        self.move_animation = [loadtransimg('UnitAnimations/EnchantedSkeleton/Move/Skeleton Boss15.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Move/Skeleton Boss16.png'),
-                               loadtransimg('UnitAnimations/EnchantedSkeleton/Move/Skeleton Boss17.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Move/Skeleton Boss18.png'),
-                               loadtransimg('UnitAnimations/EnchantedSkeleton/Move/Skeleton Boss19.png'), loadtransimg('UnitAnimations/EnchantedSkeleton/Move/Skeleton Boss20.png')]
         self.moves = [moves.BossAttack(1800, 960, loadtransimg('Unit move Cards/EnchSkel-BasicMove.png')), moves.BossBuff(1680, 960,loadtransimg('Unit move Cards/EnchSkel-Defmove.png'))]
         self.attack_move = self.moves[0]
 
@@ -327,45 +294,16 @@ class Boss(Unit):
 
     def attacked(self, enemy, speed):
         if self.state == "attacking":
-            if self.move(enemy, speed):
-                finished = False
-                if self.animation_counter < (len(self.attack_animation)-1)*speed:
-                    self.animation_counter += 1
-                elif self.animation_counter > (len(self.attack_animation)-1)*speed:
-                    self.animation_counter = 0
-                self.stillframe = self.attack_animation[self.animation_counter//speed]
-                if self.animation_counter == (len(self.attack_animation)-1)*speed:
-                    finished = True
-                    if enemy.state != "hit":
-                        enemy.animation_counter = 0
-                        enemy.state = "hit"
-                return finished
-
-    def move(self, enemy, speed):
-        finished = False
-        if (self.x, self.y) != (enemy.x, enemy.y):
-            if self.animation_counter == (len(self.move_animation)-1)*speed:
-                self.animation_counter = 0
-            self.stillframe = self.move_animation[self.animation_counter//speed]
-            self.animation_counter += 1
-            if self.x < enemy.x:
-                if speed > 10:
-                    self.x += 1
-                else:
-                    self.x += 5
-            elif self.x > enemy.x:
-                if speed > 10:
-                    self.x -= 1
-                else:
-                    self.x -= 5
-            else:
-                if self.y < enemy.y:
-                    self.y += 5
-                elif self.y > enemy.y:
-                    self.y -= 5
-        else:
-            finished = True
-        return finished
+            finished = False
+            if self.animation_counter < (len(self.attack_animation)-1)*speed:
+                self.animation_counter += 1
+            self.stillframe = self.attack_animation[self.animation_counter//speed]
+            if self.animation_counter == (len(self.attack_animation)-1)*speed:
+                finished = True
+                if enemy.state != "hit":
+                    enemy.animation_counter = 0
+                    enemy.state = "hit"
+            return finished
 
     def hit(self, speed):
         if self.state == "hit":
