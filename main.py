@@ -1757,6 +1757,15 @@ def demo():
         if location != "None":
             screen.blit(pygame.image.load("pixelarrow.png"), location)
 
+        if combatants[0].state == "dead" and combatants[1].state == "dead" and combatants[2].state == "dead":
+            print("You lose")
+            pygame.quit()
+            quit()
+        elif combatants[3].state == "dead" and combatants[4].state == "dead" and combatants[5].state == "dead":
+            print("You win")
+            pygame.quit()
+            quit()
+
         # ("allies", gui.stat_target, gui.stat_increase, turns, gui.duration)
         for combatant in combatants:
             if combatant:
