@@ -1795,9 +1795,9 @@ def demo():
                                     elif buff[0] == "armor":
                                         combatant.armor = combatant.base_armor
                                     ally_buffs.remove(buff)
-                            if buff[0] == "attack" and combatant.state != "attacking":
+                            if buff[0] == "attack":
                                 screen.blit(attack_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
-                            elif buff[0] == "armor" and combatant.state != "attacking":
+                            elif buff[0] == "armor":
                                 screen.blit(defence_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
                 for i, buff in enumerate(enemy_buffs):
                     if combatant in enemyteam:
@@ -1809,9 +1809,9 @@ def demo():
                                     elif buff[0] == "armor":
                                         combatant.armor = combatant.base_armor
                                     enemy_buffs.remove(buff)
-                            if buff[0] == "attack" and combatant.state != "attacking":
+                            if buff[0] == "attack":
                                 screen.blit(attack_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
-                            elif buff[0] == "armor" and combatant.state != "attacking":
+                            elif buff[0] == "armor":
                                 screen.blit(defence_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
                 if combatant.stunned and combatant.state != "dead":
                     screen.blit(stun_image, (combatant.x+170, combatant.y-60, 30, 30))
