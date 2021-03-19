@@ -228,7 +228,7 @@ Spear(1082, 8155, 371, 106, SpearFrame)
 unit1 = Mage(808, 8595, 476, 111, MageFrame)
 unit2 = Boss(1450, 11700, 637, 95, BossFrame)
 unit3 = Archer(1602, 6540, 436, 101, ArcherFrame)
-unit4 = Boss(1450, 11700, 637, 95, BossFrame)
+unit4 = Spear(1450, 11700, 637, 95, SpearFrame)
 unit5 = Mage(808, 8595, 476, 111, MageFrame)
 unit6 = Archer(1602, 6540, 436, 101, ArcherFrame)
 
@@ -728,9 +728,7 @@ def demo():
                                     elif gui.type == "buff":
                                         for ally in allyteam:
                                             if ally:
-                                                if gui.stat_target == "attack":
-                                                    ally.attack += int(ally.attack * gui.stat_increase)
-                                                elif gui.stat_target == "armor":
+                                                if gui.stat_target == "armor":
                                                     ally.armor += int(ally.armor * gui.stat_increase)
                                                 elif gui.stat_target == "health":
                                                     if ally.hitpoints < ally.full_health:
@@ -773,9 +771,7 @@ def demo():
                                     elif gui.type == "buff":
                                         for ally in allyteam:
                                             if ally:
-                                                if gui.stat_target == "attack":
-                                                    ally.attack += int(ally.attack * gui.stat_increase)
-                                                elif gui.stat_target == "armor":
+                                                if gui.stat_target == "armor":
                                                     ally.armor += int(ally.armor * gui.stat_increase)
                                                 elif gui.stat_target == "health":
                                                     if ally.hitpoints < ally.full_health:
@@ -817,9 +813,7 @@ def demo():
                                     elif gui.type == "buff":
                                         for ally in allyteam:
                                             if ally:
-                                                if gui.stat_target == "attack":
-                                                    ally.attack += int(ally.attack * gui.stat_increase)
-                                                elif gui.stat_target == "armor":
+                                                if gui.stat_target == "armor":
                                                     ally.armor += int(ally.armor * gui.stat_increase)
                                                 elif gui.stat_target == "health":
                                                     if ally.hitpoints < ally.full_health:
@@ -883,9 +877,7 @@ def demo():
                     if selected_move.type == "buff":
                         for ally in enemyteam:
                             if ally:
-                                if selected_move.stat_target == "attack":
-                                    ally.attack += int(ally.attack * selected_move.stat_increase)
-                                elif selected_move.stat_target == "armor":
+                                if selected_move.stat_target == "armor":
                                     ally.armor += int(ally.armor * selected_move.stat_increase)
                         enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, enemy_turns,
                                            selected_move.duration))
@@ -917,16 +909,24 @@ def demo():
                                     critical_multiplier = 1
                                 enemy.hitpoints -= ((combatants[3].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
                                 if selected_move.effect == "stun":
-                                    enemy.stunned = True
+                                    if random.choice([False, False, True, False]):
+                                        enemy.stunned = True
+                                elif selected_move.effect == "buff":
+                                    for ally in enemyteam:
+                                        if ally:
+                                            ally.attack += int(ally.attack * selected_move.stat_increase)
+                                    selected_move.cd = 4
+                                    enemy_buffs.append(
+                                        (selected_move.stat_target, selected_move.stat_increase, ally_turns,
+                                         selected_move.duration))
                                     selected_move.starting_turn = combatants[3].turns + 1
-                                    selected_move.cd = 3
                                 unit4attackbar = 0
                                 recieveinput = True
                                 turninit = False
                                 combatants[3].turns += 1
                                 enemy_turns += 1
-                                combatants[4].state = "idle"
-                                combatants[4].animation_counter = 0
+                                combatants[3].state = "idle"
+                                combatants[3].animation_counter = 0
                                 enemy.state = "idle"
                                 enemy.animation_counter = 0
             elif unit5attackbar >= 100:
@@ -974,9 +974,7 @@ def demo():
                     if selected_move.type == "buff":
                         for ally in enemyteam:
                             if ally:
-                                if selected_move.stat_target == "attack":
-                                    ally.attack += int(ally.attack * selected_move.stat_increase)
-                                elif selected_move.stat_target == "armor":
+                                if selected_move.stat_target == "armor":
                                     ally.armor += int(ally.armor * selected_move.stat_increase)
                         enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, enemy_turns,
                                             selected_move.duration))
@@ -1009,9 +1007,17 @@ def demo():
                                 enemy.hitpoints -= ((combatants[
                                                          4].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
                                 if selected_move.effect == "stun":
-                                    enemy.stunned = True
+                                    if random.choice([False, False, True, False]):
+                                        enemy.stunned = True
+                                elif selected_move.effect == "buff":
+                                    for ally in enemyteam:
+                                        if ally:
+                                            ally.attack += int(ally.attack * selected_move.stat_increase)
+                                    selected_move.cd = 4
+                                    enemy_buffs.append(
+                                        (selected_move.stat_target, selected_move.stat_increase, ally_turns,
+                                         selected_move.duration))
                                     selected_move.starting_turn = combatants[4].turns + 1
-                                    selected_move.cd = 3
                                 unit5attackbar = 0
                                 recieveinput = True
                                 turninit = False
@@ -1065,9 +1071,7 @@ def demo():
                     if selected_move.type == "buff":
                         for ally in enemyteam:
                             if ally:
-                                if selected_move.stat_target == "attack":
-                                    ally.attack += int(ally.attack * selected_move.stat_increase)
-                                elif selected_move.stat_target == "armor":
+                                if selected_move.stat_target == "armor":
                                     ally.armor += int(ally.armor * selected_move.stat_increase)
                         enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, enemy_turns,
                                             selected_move.duration))
@@ -1100,9 +1104,16 @@ def demo():
                                 enemy.hitpoints -= ((combatants[
                                                          5].attack * selected_move.damage_multiplier) - enemy.armor) * critical_multiplier
                                 if selected_move.effect == "stun":
-                                    enemy.stunned = True
+                                    if random.choice([False, False, True, False]):
+                                        enemy.stunned = True
+                                elif selected_move.effect == "buff":
+                                    for ally in enemyteam:
+                                        if ally:
+                                            ally.attack += int(ally.attack * selected_move.stat_increase)
+                                    selected_move.cd = 4
+                                    enemy_buffs.append((selected_move.stat_target, selected_move.stat_increase, ally_turns,
+                                                       selected_move.duration))
                                     selected_move.starting_turn = combatants[5].turns + 1
-                                    selected_move.cd = 3
                                 unit6attackbar = 0
                                 recieveinput = True
                                 turninit = False
@@ -1119,41 +1130,18 @@ def demo():
             if current_turn != "None":
                 for enemy in enemyteam:
                     if enemy.is_inside() and enemy.state != "dead":
-                        location = (enemy.pos[0] + 120, enemy.pos[1] - 80)
+                        location = (enemy.x + 120, enemy.y - 80)
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                             if current_turn == combatants[0]:
                                 combatant = combatants[0]
-                                if not isinstance(combatant, (Archer, Mage, Boss)):
-                                    unit1attackbar = 0
                             elif current_turn == combatants[1]:
                                 combatant = combatants[1]
-                                if not isinstance(combatant, (Archer, Mage, Boss)):
-                                    unit2attackbar = 0
                             elif current_turn == combatants[2]:
                                 combatant = combatants[2]
-                                if not isinstance(combatant, (Archer, Mage, Boss)):
-                                    unit3attackbar = 0
-                            if not isinstance(combatant, (Archer, Mage, Boss)):
-                                if random.choice([False, False, True, False]):
-                                    critical_multiplier = 2
-                                else:
-                                    critical_multiplier = 1
-                                enemy.hitpoints -= ((combatant.attack * combatant.attack_move.damage_multiplier) - enemy.armor) * critical_multiplier
-                                if combatant.attack_move.effect == "stun":
-                                    enemy.stunned = True
-                                    combatant.attack_move.cd = 3
-                                recieveinput = True
-                                turninit = False
-                                guis = []
-                                combatant.turns += 1
-                                ally_turns += 1
-                                current_turn = "None"
-                                location = "None"
-                            else:
-                                selected_enemy = enemy
-                                selected_combatant = combatant
-                                combatant.animation_counter = 0
-                                combatant.state = "attacking"
+                            selected_enemy = enemy
+                            selected_combatant = combatant
+                            combatant.animation_counter = 0
+                            combatant.state = "attacking"
 
         if selected_enemy and selected_combatant:
             if selected_combatant.attacked(selected_enemy, 8):
@@ -1164,8 +1152,16 @@ def demo():
                         critical_multiplier = 1
                     selected_enemy.hitpoints -= ((selected_combatant.attack * selected_combatant.attack_move.damage_multiplier) - selected_enemy.armor) * critical_multiplier
                     if selected_combatant.attack_move.effect == "stun":
-                        selected_enemy.stunned = True
-                        selected_combatant.attack_move.cd = 3
+                        if random.choice([False, False, True, False]):
+                            selected_enemy.stunned = True
+                    elif selected_combatant.attack_move.effect == "buff":
+                        for ally in allyteam:
+                            if ally:
+                                ally.attack += int(ally.attack * selected_combatant.attack_move.stat_increase)
+                        selected_combatant.attack_move.cd = 4
+                        ally_buffs.append((selected_combatant.attack_move.stat_target, selected_combatant.attack_move.stat_increase,
+                                           ally_turns, selected_combatant.attack_move.duration))
+                        selected_combatant.attack_move.starting_turn = selected_combatant.turns + 1
                     recieveinput = True
                     turninit = False
                     guis = []
@@ -1224,110 +1220,158 @@ def demo():
             rightactorbotimg = rightactorbottompreflip
 
             if leftactortop != False and leftactormiddle != False and leftactorbottom == False:
-                screen.blit(leftactortop, (screenx / 2 - list[0].xpos - 500, screeny / 2 - 50))
-                screen.blit(leftactormiddle, (screenx / 2 - list[1].xpos - 700, screeny / 2 + 50))
-                list[0].pos = (screenx / 2 - list[0].xpos - 500, screeny / 2 - 50)
-                list[1].pos = (screenx / 2 - list[1].xpos - 700, screeny / 2 + 50)
+                if list[0].state != "attacking":
+                    list[0].x = screenx / 2 - list[0].xpos - 500
+                    list[0].y = screeny / 2 - 50
+                if list[1].state != "attacking":
+                    list[1].x = screenx / 2 - list[1].xpos - 700
+                    list[1].y = screeny / 2 + 50
+                screen.blit(leftactortop, (list[0].x, list[0].y))
+                screen.blit(leftactormiddle, (list[1].x, list[1].y))
                 leftactortopplacement = True
                 leftactormiddleplacement = True
             if leftactortop != False and leftactorbottom != False and leftactormiddle == False:
-                screen.blit(leftactortop, (screenx / 2 - list[0].xpos - 500, screeny / 2 - 50))
-                screen.blit(leftactorbottom, (screenx / 2 - list[2].xpos - 700, screeny / 2 + 50))
-                list[0].pos = (screenx / 2 - list[0].xpos - 500, screeny / 2 - 50)
-                list[2].pos = (screenx / 2 - list[2].xpos - 700, screeny / 2 + 50)
+                if list[0].state != "attacking":
+                    list[0].x = screenx / 2 - list[0].xpos - 500
+                    list[0].y = screeny / 2 - 50
+                if list[2].state != "attacking":
+                    list[2].x = screenx / 2 - list[2].xpos - 700
+                    list[2].y = screeny / 2 + 50
+                screen.blit(leftactortop, (list[0].x, list[0].y))
+                screen.blit(leftactormiddle, (list[2].x, list[2].y))
                 leftactortopplacement = True
                 leftactorbottomplacement = True
             if leftactormiddle != False and leftactorbottom != False and leftactortop == False:
-                screen.blit(leftactormiddle, (screenx / 2 - list[1].xpos - 500, screeny / 2 - 50))
-                screen.blit(leftactorbottom, (screenx / 2 - list[2].xpos - 700, screeny / 2 + 50))
-                list[1].pos = (screenx / 2 - list[1].xpos - 500, screeny / 2 - 50)
-                list[2].pos = (screenx / 2 - list[2].xpos - 700, screeny / 2 + 50)
+                if list[1].state != "attacking":
+                    list[1].x = screenx / 2 - list[1].xpos - 500
+                    list[1].y = screeny / 2 - 50
+                if list[2].state != "attacking":
+                    list[2].x = screenx / 2 - list[2].xpos - 700
+                    list[2].y = screeny / 2 + 50
+                screen.blit(leftactortop, (list[1].x, list[1].y))
+                screen.blit(leftactormiddle, (list[2].x, list[2].y))
                 leftactormiddleplacement = True
                 leftactorbottomplacement = True
 
             elif leftactortop != False and leftactormiddle == False and leftactorbottom == False:
-                screen.blit(leftactortop, (screenx / 2 - list[0].xpos - 600, screeny / 2))
-                list[0].pos = (screenx / 2 - list[0].xpos - 600, screeny / 2)
+                if list[0].state != "attacking":
+                    list[0].x = screenx / 2 - list[0].xpos - 600
+                    list[0].y = screeny / 2
+                screen.blit(leftactortop, (list[0].x, list[0].y))
                 leftactortopplacement = True
             elif leftactormiddle != False and leftactortop == False and leftactorbottom == False:
-                screen.blit(leftactormiddle, (screenx / 2 - list[1].xpos - 600, screeny / 2))
-                list[1].pos = (screenx / 2 - list[1].xpos - 600, screeny / 2)
+                if list[1].state != "attacking":
+                    list[1].x = screenx / 2 - list[1].xpos - 600
+                    list[1].y = screeny / 2
+                screen.blit(leftactortop, (list[1].x, list[1].y))
                 leftactormiddleplacement = True
             elif leftactorbottom != False and leftactortop == False and leftactormiddle == False:
-                screen.blit(leftactorbottom, (screenx / 2 - list[2].xpos - 600, screeny / 2))
-                list[2].pos = (screenx / 2 - list[2].xpos - 600, screeny / 2)
+                if list[2].state != "attacking":
+                    list[2].x = screenx / 2 - list[2].xpos - 600
+                    list[2].y = screeny / 2
+                screen.blit(leftactortop, (list[2].x, list[2].y))
                 leftactorbottomplacement = True
 
             if leftactortop != False and leftactortopplacement != True:
-                screen.blit(leftactortop, (screenx / 2 - list[0].xpos - 450, screeny / 2 - 100))
-                list[0].pos = (screenx / 2 - list[0].xpos - 450, screeny / 2 - 100)
+                if list[0].state != "attacking":
+                    list[0].x = screenx / 2 - list[0].xpos - 450
+                    list[0].y = screeny / 2 - 100
+                screen.blit(leftactortop, (list[0].x, list[0].y))
             if leftactormiddle != False and leftactormiddleplacement != True:
-                screen.blit(leftactormiddle, (screenx / 2 - list[1].xpos - 600, screeny / 2))
-                list[1].pos = (screenx / 2 - list[1].xpos - 600, screeny / 2)
+                if list[1].state != "attacking":
+                    list[1].x = screenx / 2 - list[1].xpos - 600
+                    list[1].y = screeny / 2
+                screen.blit(leftactormiddle, (list[1].x, list[1].y))
             if leftactorbottom != False and leftactorbottomplacement != True:
-                screen.blit(leftactorbottom, (screenx / 2 - list[2].xpos - 750, screeny / 2 + 100))
-                list[2].pos = (screenx / 2 - list[2].xpos - 750, screeny / 2 + 100)
+                if list[2].state != "attacking":
+                    list[2].x = screenx / 2 - list[2].xpos - 750
+                    list[2].y = screeny / 2 + 100
+                screen.blit(leftactorbottom, (list[2].x, list[2].y))
 
             rightactortop = rightactortoppreflip
             rightactormid = rightactormiddlepreflip
             rightactorbot = rightactorbottompreflip
 
             if rightactortoppreflip != False and rightactormiddlepreflip != False and rightactorbottompreflip == False:
+                if list[3].state != "attacking":
+                    list[3].x = screenx / 2 - list[3].xpos + 500
+                    list[3].y = screeny / 2 - 50
+                if list[4].state != "attacking":
+                    list[4].x = screenx / 2 - list[4].xpos + 700
+                    list[4].y = screeny / 2 + 50
                 screen.blit(pygame.transform.flip(rightactortop, True, False),
-                            (screenx / 2 - list[3].xpos + 500, screeny / 2 - 50))
+                            (list[3].x, list[3].y))
                 screen.blit(pygame.transform.flip(rightactormid, True, False),
-                            (screenx / 2 - list[4].xpos + 700, screeny / 2 + 50))
-                list[3].pos = (screenx / 2 - list[3].xpos + 500, screeny / 2 - 50)
-                list[4].pos = (screenx / 2 - list[4].xpos + 700, screeny / 2 + 50)
+                            (list[4].x, list[4].y))
                 rightactortopplacement = True
                 rightactormiddleplacement = True
             if rightactortoppreflip != False and rightactorbottompreflip != False and rightactormiddlepreflip == False:
+                if list[3].state != "attacking":
+                    list[3].x = screenx / 2 - list[3].xpos + 500
+                    list[3].y = screeny / 2 - 50
+                if list[5].state != "attacking":
+                    list[5].x = screenx / 2 - list[5].xpos + 700
+                    list[5].y = screeny / 2 + 50
                 screen.blit(pygame.transform.flip(rightactortop, True, False),
-                            (screenx / 2 - list[3].xpos + 500, screeny / 2 - 50))
-                screen.blit(pygame.transform.flip(rightactorbot, True, False),
-                            (screenx / 2 - list[5].xpos + 700, screeny / 2 + 50))
-                list[3].pos = (screenx / 2 - list[3].xpos + 500, screeny / 2 - 50)
-                list[5].pos = (screenx / 2 - list[5].xpos + 700, screeny / 2 + 50)
+                            (list[3].x, list[3].y))
+                screen.blit(pygame.transform.flip(rightactormid, True, False),
+                            (list[5].x, list[5].y))
                 rightactortopplacement = True
                 rightactorbottomplacement = True
             if rightactormiddlepreflip != False and rightactorbottompreflip != False and rightactortoppreflip == False:
+                if list[4].state != "attacking":
+                    list[4].x = screenx / 2 - list[4].xpos + 500
+                    list[4].y = screeny / 2 - 50
+                if list[5].state != "attacking":
+                    list[5].x = screenx / 2 - list[5].xpos + 700
+                    list[5].y = screeny / 2 + 50
+                screen.blit(pygame.transform.flip(rightactortop, True, False),
+                            (list[4].x, list[4].y))
                 screen.blit(pygame.transform.flip(rightactormid, True, False),
-                            (screenx / 2 - list[4].xpos + 500, screeny / 2 - 50))
-                screen.blit(pygame.transform.flip(rightactorbot, True, False),
-                            (screenx / 2 - list[5].xpos + 700, screeny / 2 + 50))
-                list[4].pos = (screenx / 2 - list[4].xpos + 500, screeny / 2 - 50)
-                list[5].pos = (screenx / 2 - list[5].xpos + 700, screeny / 2 + 50)
+                            (list[5].x, list[5].y))
                 rightactormiddleplacement = True
                 rightactorbottomplacement = True
 
             elif rightactortoppreflip != False and rightactormiddlepreflip == False and rightactorbottompreflip == False:
+                if list[3].state != "attacking":
+                    list[3].x = screenx / 2 - list[3].xpos + 600
+                    list[3].y = screeny / 2
                 screen.blit(pygame.transform.flip(rightactortop, True, False),
-                            (screenx / 2 - list[3].xpos + 600, screeny / 2))
-                list[3].pos = (screenx / 2 - list[3].xpos + 600, screeny / 2)
+                            (list[3].x, list[3].y))
                 rightactortopplacement = True
             elif rightactormiddlepreflip != False and rightactortoppreflip == False and rightactorbottompreflip == False:
-                screen.blit(pygame.transform.flip(rightactormid, True, False),
-                            (screenx / 2 - list[4].xpos + 600, screeny / 2))
-                list[4].pos = (screenx / 2 - list[4].xpos + 600, screeny / 2)
+                if list[4].state != "attacking":
+                    list[4].x = screenx / 2 - list[4].xpos + 600
+                    list[4].y = screeny / 2
+                screen.blit(pygame.transform.flip(rightactortop, True, False),
+                            (list[4].x, list[4].y))
                 rightactormiddleplacement = True
             elif rightactorbottompreflip != False and rightactortoppreflip == False and rightactormiddlepreflip == False:
-                screen.blit(pygame.transform.flip(rightactorbot, True, False),
-                            (screenx / 2 - list[5].xpos + 600, screeny / 2))
-                list[5].pos = (screenx / 2 - list[5].xpos + 600, screeny / 2)
+                if list[5].state != "attacking":
+                    list[5].x = screenx / 2 - list[5].xpos + 600
+                    list[5].y = screeny / 2
+                screen.blit(pygame.transform.flip(rightactortop, True, False),
+                            (list[5].x, list[5].y))
                 rightactorbottomplacement = True
 
             if rightactortoppreflip != False and rightactortopplacement != True:
+                if list[3].state != "attacking":
+                    list[3].x = screenx / 2 - list[3].xpos + 450
+                    list[3].y = screeny / 2 - 100
                 screen.blit(pygame.transform.flip(rightactortop, True, False),
-                            (screenx / 2 - list[3].xpos + 450, screeny / 2 - 100))
-                list[3].pos = (screenx / 2 - list[3].xpos + 450, screeny / 2 - 100)
+                            (list[3].x, list[3].y))
             if rightactormiddlepreflip != False and rightactormiddleplacement != True:
+                if list[4].state != "attacking":
+                    list[4].x = screenx / 2 - list[4].xpos + 600
+                    list[4].y = screeny / 2
                 screen.blit(pygame.transform.flip(rightactormid, True, False),
-                            (screenx / 2 - list[4].xpos + 600, screeny / 2))
-                list[4].pos = (screenx / 2 - list[4].xpos + 600, screeny / 2)
+                            (list[4].x, list[4].y))
             if rightactorbottompreflip != False and rightactorbottomplacement != True:
+                if list[5].state != "attacking":
+                    list[5].x = screenx / 2 - list[5].xpos + 750
+                    list[5].y = screeny / 2 + 100
                 screen.blit(pygame.transform.flip(rightactorbot, True, False),
-                            (screenx / 2 - list[5].xpos + 750, screeny / 2 + 100))
-                list[5].pos = (screenx / 2 - list[5].xpos + 750, screeny / 2 + 100)
+                            (list[5].x, list[5].y))
 
             # Displaying Unit Bars
 
@@ -1720,31 +1764,32 @@ def demo():
                     if combatant in allyteam:
                         if combatant.state != "dead":
                             if ally_turns - buff[2] == buff[3]:
-                                if buff[0] == "attack":
-                                    combatant.attack = combatant.base_attack
-                                elif buff[0] == "armor":
-                                    combatant.armor = combatant.base_armor
-                                ally_buffs.remove(buff)
+                                if buff in ally_buffs:
+                                    if buff[0] == "attack":
+                                        combatant.attack = combatant.base_attack
+                                    elif buff[0] == "armor":
+                                        combatant.armor = combatant.base_armor
+                                    ally_buffs.remove(buff)
                             if buff[0] == "attack":
-                                screen.blit(attack_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                                screen.blit(attack_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
                             elif buff[0] == "armor":
-                                screen.blit(defence_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                                screen.blit(defence_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
                 for i, buff in enumerate(enemy_buffs):
                     if combatant in enemyteam:
                         if combatant.state != "dead":
-                            if enemy_turns - buff[2] == buff[3]:
-                                print("end enemy buff")
-                                if buff[0] == "attack":
-                                    combatant.attack = combatant.base_attack
-                                elif buff[0] == "armor":
-                                    combatant.armor = combatant.base_armor
-                                enemy_buffs.remove(buff)
+                            if enemy_turns - buff[2] >= buff[3]:
+                                if buff in enemy_buffs:
+                                    if buff[0] == "attack":
+                                        combatant.attack = combatant.base_attack
+                                    elif buff[0] == "armor":
+                                        combatant.armor = combatant.base_armor
+                                    enemy_buffs.remove(buff)
                             if buff[0] == "attack":
-                                screen.blit(attack_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                                screen.blit(attack_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
                             elif buff[0] == "armor":
-                                screen.blit(defence_buff_image, ((combatant.pos[0]+20)+(70*i), combatant.pos[1]-60, 30, 30))
+                                screen.blit(defence_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
                 if combatant.stunned and combatant.state != "dead":
-                    screen.blit(stun_image, (combatant.pos[0]+170, combatant.pos[1]-60, 30, 30))
+                    screen.blit(stun_image, (combatant.x+170, combatant.y-60, 30, 30))
         pygame.mouse.set_visible(False)
         screen.blit(cursorimg, (pygame.mouse.get_pos()))
         pygame.display.update()
