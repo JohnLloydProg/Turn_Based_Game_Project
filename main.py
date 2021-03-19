@@ -1810,9 +1810,17 @@ def demo():
                                         combatant.armor = combatant.base_armor
                                     enemy_buffs.remove(buff)
                             if buff[0] == "attack":
-                                screen.blit(attack_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
+                                if combatant == combatants[3]:
+                                    screen.blit(attack_buff_image,
+                                                ((combatant.x + 90) + (70 * i), combatant.y - 60, 30, 30))
+                                else:
+                                    screen.blit(attack_buff_image, ((combatant.x+40)+(70*i), combatant.y-60, 30, 30))
                             elif buff[0] == "armor":
-                                screen.blit(defence_buff_image, ((combatant.x+20)+(70*i), combatant.y-60, 30, 30))
+                                if combatant == combatants[3]:
+                                    screen.blit(defence_buff_image,
+                                                ((combatant.x + 90) + (70 * i), combatant.y - 60, 30, 30))
+                                else:
+                                    screen.blit(defence_buff_image, ((combatant.x+40)+(70*i), combatant.y-60, 30, 30))
                 if combatant.stunned and combatant.state != "dead":
                     screen.blit(stun_image, (combatant.x+170, combatant.y-60, 30, 30))
         pygame.mouse.set_visible(False)
